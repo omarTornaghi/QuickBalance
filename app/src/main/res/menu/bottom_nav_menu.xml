@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_crediti"
+        android:icon="@drawable/ic_credit_icon"
+        android:title="Crediti">
+    </item>
+    <item
+        android:id="@+id/ic_home"
+        android:icon="@drawable/ic_baseline_account_balance_wallet_24"
+        android:title="Home">
+    </item>
+    <item
+        android:id="@+id/ic_debiti"
+        android:icon="@drawable/ic_debit_icon"
+        android:title="Debiti">
+    </item>
+</menu>
