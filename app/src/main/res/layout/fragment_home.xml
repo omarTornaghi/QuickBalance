@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="0px"
-    android:layout_marginTop="165px"
+    android:layout_marginTop="56dp"
+    android:background="@color/purple_200"
     tools:context=".fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="165px"
     android:layout_marginBottom="0px"
+    android:layout_marginTop="56dp"
     tools:context=".fragments.DebitiFragment">
 
     <TextView
