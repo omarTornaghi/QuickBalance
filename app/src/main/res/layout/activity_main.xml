@@ -17,10 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/design_default_color_primary"
-        app:itemIconTint="@drawable/nav_bottombar_item"
-        app:itemTextColor="@drawable/nav_bottombar_item"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/nav_bottombar_item_orange"
+        app:itemTextColor="@color/nav_bottombar_item_orange"
         app:labelVisibilityMode="selected"
         app:menu="@menu/bottom_nav_menu" />
-
 </RelativeLayout>
