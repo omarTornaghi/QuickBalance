@@ -1,16 +1,21 @@
 package com.example.quickbalance.fragments
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.quickbalance.R
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -18,16 +23,73 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    }
+
+    private fun initPieChart() {
+        //using percentage as values instead of amount
+        pieChart_graph.setUsePercentValues(true)
+
+        //remove the description label on the lower left corner, default true if not set
+        pieChart_graph.description.isEnabled = false
+
+        //enabling the user to rotate the chart, default true
+        pieChart_graph.isRotationEnabled = true
+        //adding friction when rotating the pie chart
+        pieChart_graph.dragDecelerationFrictionCoef = 0.9f
+        //setting the first entry start from right hand side, default starting from top
+        pieChart_graph.rotationAngle = 0f
+        //Set della legenda
+        val legend: Legend = pieChart_graph.getLegend()
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setDrawInside(false);
+        //legend.setFormSize(20F)
+        legend.setTextSize(16F)
+        //highlight the entry when it is tapped, default true if not set
+        pieChart_graph.isHighlightPerTapEnabled = true
+        //adding animation so the entries pop up from 0 degree
+        pieChart_graph.animateY(1400, Easing.EaseInOutQuad)
+        //setting the color of the hole in the middle, default white
+        pieChart_graph.setHoleColor(Color.parseColor(resources.getString(R.color.white.toInt())))
+    }
+
+    private fun showPieChart(){
+        val pieEntries: ArrayList<PieEntry> = ArrayList()
+        val label = ""
+
+        //initializing data
+        val typeAmountMap: MutableMap<String, Int> = HashMap()
+        typeAmountMap[getString(R.string.total_credit)] = 200
+        typeAmountMap[getString(R.string.total_debts)] = 230
+        //initializing colors for the entries
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(Color.parseColor(resources.getString(R.color.green.toInt())))
+        colors.add(Color.parseColor(resources.getString(R.color.orange.toInt())))
+        //input data and fit data into pie chart entry
+
+        //input data and fit data into pie chart entry
+        for (type in typeAmountMap.keys) {
+            pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat(), type))
         }
+
+        //collecting the entries with label name
+        val pieDataSet = PieDataSet(pieEntries, label)
+        //setting text size of the value
+        pieDataSet.valueTextSize = 12f
+        //providing color list for coloring different entries
+        pieDataSet.colors = colors
+        //grouping the data set from entry to chart
+        val pieData = PieData(pieDataSet)
+        //showing the value of the entries, default true if not set
+        pieData.setDrawValues(true)
+        //Set percentage mode
+        pieData.setValueFormatter(PercentFormatter())
+
+        pieChart_graph.data = pieData
+        pieChart_graph.invalidate()
     }
 
     override fun onCreateView(
@@ -35,26 +97,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater!!.inflate(R.layout.fragment_home, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initPieChart()
+        showPieChart()
     }
+
+
 }
