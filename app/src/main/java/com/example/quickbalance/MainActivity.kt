@@ -13,7 +13,7 @@ import com.example.quickbalance.fragments.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    var selectedFragment:Int = 2
+    private var selectedFragment:Int = 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
