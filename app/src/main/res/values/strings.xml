@@ -7,4 +7,6 @@
     <string name="total_credit">Crediti</string>
     <string name="total_debts">Debiti</string>
     <string name="title_home_fragment">La mia home</string>
+    <string name="point">•</string>
+    <string name="resume_home_fragment">Riassunto</string>
 </resources>
