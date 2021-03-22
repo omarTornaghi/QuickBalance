@@ -1,10 +1,13 @@
 package com.example.quickbalance.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.quickbalance.R
 import com.github.mikephil.charting.animation.Easing
@@ -23,22 +26,41 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
+    private lateinit var mContext: Context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
-    private fun initPieChart() {
-        //using percentage as values instead of amount
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater!!.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        cardStorico.setOnClickListener(cardOnClickListener)
+        inizializzaGrafico()
+        popolaGrafico()
+    }
+
+    private fun inizializzaGrafico() {
+        //utilizzo percentuale
         pieChart_graph.setUsePercentValues(true)
-
-        //remove the description label on the lower left corner, default true if not set
+        //elimino label descrittiva
         pieChart_graph.description.isEnabled = false
-
-        //enabling the user to rotate the chart, default true
+        //rotazione grafico
         pieChart_graph.isRotationEnabled = true
-        //adding friction when rotating the pie chart
+        //frizione rotazione
         pieChart_graph.dragDecelerationFrictionCoef = 0.9f
-        //setting the first entry start from right hand side, default starting from top
+        //setto il primo dato lato destro
         pieChart_graph.rotationAngle = 0f
         //Set della legenda
         val legend: Legend = pieChart_graph.getLegend()
@@ -46,17 +68,16 @@ class HomeFragment : Fragment() {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
         legend.setDrawInside(false);
-        //legend.setFormSize(20F)
         legend.setTextSize(16F)
-        //highlight the entry when it is tapped, default true if not set
+        //quando clicco su un elemento lo evidenzio
         pieChart_graph.isHighlightPerTapEnabled = true
-        //adding animation so the entries pop up from 0 degree
+        //animazione iniziale
         pieChart_graph.animateY(1400, Easing.EaseInOutQuad)
-        //setting the color of the hole in the middle, default white
+        //colore del buco
         pieChart_graph.setHoleColor(Color.parseColor(resources.getString(R.color.white.toInt())))
     }
 
-    private fun showPieChart(){
+    private fun popolaGrafico(){
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = ""
 
@@ -92,19 +113,16 @@ class HomeFragment : Fragment() {
         pieChart_graph.invalidate()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_home, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initPieChart()
-        showPieChart()
-    }
 
+    /* Codice per cambiare icona a textView */
+    /*
+    textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
+    */
+
+    /*Gestione click card */
+    val cardOnClickListener= View.OnClickListener { view ->
+        textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
+    }
 
 }

@@ -19,74 +19,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <!--TODO Implementare card textView -->
-            <TextView
-                android:id="@+id/title_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_marginStart="101dp"
-                android:layout_marginLeft="101dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="103dp"
-                android:layout_marginRight="103dp"
-                android:fontFamily="@font/timeline"
-                android:text="@string/title_home_fragment"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView2"
                 android:layout_width="0dp"
-                android:layout_height="202dp"
+                android:layout_height="230dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="11dp"
-                app:layout_constraintBottom_toTopOf="@+id/materialCardView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_textView">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/textViewTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
-                        android:text="@string/title_home_fragment"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toEndOf="@+id/textView13"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="21dp"
                         android:layout_marginLeft="21dp"
-                        android:text="@string/point"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/textViewTitle"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        android:layout_marginTop="9dp"
+                        android:drawableStart="@drawable/ic_chart_icon"
+                        android:drawableLeft="@drawable/ic_chart_icon"
+                        android:text="@string/chart_home_fragment"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pieChart_graph"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
 
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
+                        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
                     </com.github.mikephil.charting.charts.PieChart>
 
@@ -97,15 +73,15 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView"
                 android:layout_width="0dp"
-                android:layout_height="125dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="324dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -118,12 +94,14 @@
                         android:id="@+id/textView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="36dp"
+                        android:layout_marginTop="10dp"
+                        android:drawableStart="@drawable/ic_baseline_arrow_circle_up_icon"
+                        android:drawableLeft="@drawable/ic_baseline_arrow_circle_up_icon"
                         android:text="Totale crediti"
                         android:textColorHighlight="#FFFFFF"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/textView6"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/textViewResume" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -140,9 +118,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:drawableStart="@drawable/ic_baseline_arrow_down_icon"
+                        android:drawableLeft="@drawable/ic_baseline_arrow_down_icon"
                         android:text="Totale debiti"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="@+id/textView9"
+                        app:layout_constraintStart_toStartOf="@+id/textViewDaPag"
                         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                     <TextView
@@ -156,13 +136,17 @@
                         app:layout_constraintStart_toStartOf="@+id/textView11" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/textViewDaPag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="12dp"
+                        android:drawableStart="@drawable/ic_sad"
+                        android:drawableLeft="@drawable/ic_sad"
                         android:text="Da pagare"
+                        android:textColor="@color/material_on_background_emphasis_high_type"
+                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -174,32 +158,76 @@
                         android:layout_marginLeft="73dp"
                         android:text="€700"
                         android:textColor="@color/red"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/textView9"
-                        app:layout_constraintStart_toEndOf="@+id/textView9" />
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textViewDaPag"
+                        app:layout_constraintStart_toEndOf="@+id/textViewDaPag" />
 
                     <TextView
                         android:id="@+id/textViewResume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginLeft="21dp"
                         android:layout_marginTop="9dp"
+                        android:drawableStart="@drawable/ic_baseline_euro_icon"
+                        android:drawableLeft="@drawable/ic_baseline_euro_icon"
                         android:text="@string/resume_home_fragment"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toEndOf="@+id/textView12"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card log operazioni -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStorico"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:clickable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="21dp"
                         android:layout_marginLeft="21dp"
-                        android:text="@string/point"
+                        android:layout_marginTop="9dp"
+                        android:text="@string/history"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/textViewResume"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_op_home_fragment"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toStartOf="@+id/textView3"
+                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_arrow_forward_icon" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
