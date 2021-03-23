@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.quickbalance.R
 import com.github.mikephil.charting.animation.Easing
@@ -83,8 +82,8 @@ class HomeFragment : Fragment() {
 
         //initializing data
         val typeAmountMap: MutableMap<String, Int> = HashMap()
-        typeAmountMap[getString(R.string.total_credit)] = 200
-        typeAmountMap[getString(R.string.total_debts)] = 230
+        typeAmountMap[getString(R.string.credits)] = 200
+        typeAmountMap[getString(R.string.debts)] = 230
         //initializing colors for the entries
         val colors: ArrayList<Int> = ArrayList()
         colors.add(Color.parseColor(resources.getString(R.color.green.toInt())))

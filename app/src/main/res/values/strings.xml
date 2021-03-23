@@ -4,8 +4,11 @@
     <string name="bottom_center_string">Home</string>
     <string name="bottom_right_string">Debiti</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="total_credit">Crediti</string>
-    <string name="total_debts">Debiti</string>
+    <string name="credits">Crediti</string>
+    <string name="debts">Debiti</string>
+    <string name="total_credits">Totale crediti</string>
+    <string name="total_debts">Totale debiti</string>
+    <string name="to_pay">Da pagare</string>
     <string name="chart_home_fragment">Grafico bilancio</string>
     <string name="point">•</string>
     <string name="resume_home_fragment">Riassunto</string>
