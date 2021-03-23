@@ -18,12 +18,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
     private lateinit var mContext: Context
     override fun onCreate(savedInstanceState: Bundle?) {

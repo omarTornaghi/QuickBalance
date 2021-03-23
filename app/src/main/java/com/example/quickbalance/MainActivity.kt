@@ -25,8 +25,15 @@ class MainActivity : AppCompatActivity() {
         val stato: Int? = savedInstanceState?.getInt("selected")
         when(stato){
             null-> {
+                //TODO Rimettere ic_home come primo fragment
+                bottom_navigation.itemIconTintList = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
+                bottom_navigation.itemTextColor = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
+                bottom_navigation.selectedItemId = R.id.ic_crediti
+                creaFragmentCorrente(creditiFragment)
+                /*
                 bottom_navigation.selectedItemId = R.id.ic_home
                 creaFragmentCorrente(homeFragment)
+                 */
             }
             1-> {
                 bottom_navigation.selectedItemId = R.id.ic_crediti
@@ -51,8 +58,6 @@ class MainActivity : AppCompatActivity() {
                 /*Cambio fragment*/
                 R.id.ic_home->{
                     creaFragmentCorrente(homeFragment);
-                    //tv.text = getString(R.string.str_bnv_tab1) //"Tab 1"
-                    //tv.setTextColor(ContextCompat.getColor(this, R.color.colorTab1))
                     bottom_navigation.itemIconTintList = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
                     bottom_navigation.itemTextColor = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
                     selectedFragment = 2;
