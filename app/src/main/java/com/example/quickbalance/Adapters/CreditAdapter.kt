@@ -47,13 +47,12 @@ class CreditAdapter(private val crediti: ArrayList<CreditType>) : RecyclerView.A
         fun bindCredit(credit: CreditType) {
             this.credito = credit
             /* Cambiare i campi */
-            //view.card_title.text = credit.titolo
-            //view.card_subtitle.text = credit.sottotitolo
-
+            view.textViewGeneralita.text = credit.generalita
+            view.textViewDescr.text = credit.descrizione
+            view.textViewSoldi.text = "€" + credit.soldi.toString()
         }
 
         companion object {
-            //5
             private val CREDIT_KEY = "CREDIT"
         }
     }

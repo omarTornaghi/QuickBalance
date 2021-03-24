@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerCD">
+        <item>Nominativo</item>
+        <item>Descrizione</item>
+        <item>Telefono</item>
+    </string-array>
+</resources>

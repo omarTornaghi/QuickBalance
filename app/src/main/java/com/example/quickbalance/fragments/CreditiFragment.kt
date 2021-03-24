@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.CreditAdapter
@@ -52,18 +54,36 @@ class CreditiFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        linearLayoutManager = LinearLayoutManager(mContext)
+        /* Set dello spinner */
+        var qual_adapter:ArrayAdapter<CharSequence>  = ArrayAdapter.createFromResource(mContext, R.array.spinnerCD ,R.layout.custom_spinnercd_layout);
+        qual_adapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
+        spinnerView.setAdapter(qual_adapter)
 
+
+        /* Set del recycler view */
+        linearLayoutManager = LinearLayoutManager(mContext)
         recycler_view.layoutManager = linearLayoutManager
         crediti = ArrayList<CreditType>()
         adapter = CreditAdapter(crediti)
         recycler_view.adapter = adapter
 
         /* Popolazione */
-        val primoCredito:CreditType = CreditType("Titolo 1", "Sottotitolo 1")
-        val secondoCredito:CreditType= CreditType("Titolo 2", "Sottotitolo 2")
-        crediti.add(primoCredito)
-        crediti.add(secondoCredito)
+        val primoCredito:CreditType = CreditType("Tornaghi Omar", "Calcetto", 12.57)
+        val secondoCredito:CreditType= CreditType("Tornaghi Luca", "Compleanno mamma", 20.00)
+        crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
+        crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
+        crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
+        crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
+        crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
+        crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
+        crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
+        crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
+        crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
+        crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
+        crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
+        crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
+        crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
+        crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
     }
 
 }

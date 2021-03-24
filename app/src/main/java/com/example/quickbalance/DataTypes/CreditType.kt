@@ -1,5 +1,5 @@
 package com.example.quickbalance.DataTypes
 
-data class CreditType(val titolo:String, val sottotitolo:String) {
+data class CreditType(val generalita:String, val descrizione:String, val soldi:Double) {
 
 }

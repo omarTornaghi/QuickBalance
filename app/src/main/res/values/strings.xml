@@ -14,4 +14,5 @@
     <string name="resume_home_fragment">Riassunto</string>
     <string name="history">Storico</string>
     <string name="history_op_home_fragment">Tocca per visualizzare lo storico</string>
+    <string name="gives_to_me">Mi deve:</string>
 </resources>
