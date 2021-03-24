@@ -25,13 +25,15 @@
         <TextView
             android:id="@+id/textViewGeneralita"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="7dp"
             android:drawableStart="@drawable/ic_baseline_identity_icon"
             android:drawableLeft="@drawable/ic_baseline_identity_icon"
             android:text="Tornaghi Omar"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +61,8 @@
             android:layout_marginStart="11dp"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="2dp"
-            android:drawableStart="@drawable/ic_baseline_euro_icon"
-            android:drawableLeft="@drawable/ic_baseline_euro_icon"
+            android:drawableStart="@drawable/ic_baseline_euro_green_icon"
+            android:drawableLeft="@drawable/ic_baseline_euro_green_icon"
             android:text="@string/gives_to_me"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDescr" />
@@ -75,6 +77,17 @@
             android:textColor="@color/green"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
             app:layout_constraintStart_toEndOf="@+id/textView13" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:text="Riscatta"
+            android:textSize="10sp"
+            app:backgroundTint="@color/green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescr" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

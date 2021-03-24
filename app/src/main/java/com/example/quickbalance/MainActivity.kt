@@ -30,10 +30,10 @@ class MainActivity : AppCompatActivity() {
                 bottom_navigation.itemTextColor = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
                 bottom_navigation.selectedItemId = R.id.ic_crediti
                 creaFragmentCorrente(creditiFragment)
-                /*
-                bottom_navigation.selectedItemId = R.id.ic_home
-                creaFragmentCorrente(homeFragment)
-                 */
+
+                /*bottom_navigation.selectedItemId = R.id.ic_home
+                creaFragmentCorrente(homeFragment)*/
+
             }
             1-> {
                 bottom_navigation.selectedItemId = R.id.ic_crediti

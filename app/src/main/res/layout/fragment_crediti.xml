@@ -8,7 +8,11 @@
     android:layout_marginBottom="0px"
     android:background="@color/gray_light"
     tools:context=".fragments.CreditiFragment">
-
+    <ScrollView
+        android:id="@+id/Scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +34,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/editTextTextInput"
+                    android:id="@+id/editTextInput"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="10dp"
@@ -41,17 +45,13 @@
                     android:layout_marginBottom="5dp"
                     android:drawableStart="@drawable/ic_search_icon"
                     android:drawableLeft="@drawable/ic_search_icon"
-                    android:ems="10"
-                    android:hint="Cerca per nome,cognome,descrizione..."
-                    android:inputType="textPersonName"
-                    android:textColor="@color/orange"
+                    android:singleLine="true"
+                    android:hint="@string/search_editText"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/spinnerView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-                <!--
-                    android:prompt="@string/to_pay"
-                    -->
                 <Spinner
                     android:id="@+id/spinnerView"
                     android:layout_width="172sp"
@@ -70,6 +70,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:background="@color/gray_light"
+            app:cardCornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,4 +89,5 @@
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </FrameLayout>
