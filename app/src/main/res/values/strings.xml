@@ -16,4 +16,5 @@
     <string name="history_op_home_fragment">Tocca per visualizzare lo storico</string>
     <string name="gives_to_me">Mi deve:</string>
     <string name="search_editText">Cerca per nome,cognome,descrizione...</string>
+    <string name="get_money">Riscatta</string>
 </resources>
