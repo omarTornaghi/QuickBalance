@@ -16,24 +16,7 @@ import kotlinx.android.synthetic.main.fragment_crediti.*
 
 class CreditiFragment : Fragment() {
     private lateinit var mContext: Context
-    private lateinit var adapter: CreditAdapter
-    private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var crediti: ArrayList<CreditType>
-    /*
-    private val lastVisibleItemPosition: Int
-        get() = linearLayoutManager.findLastVisibleItemPosition()
-
-    private fun setRecyclerViewScrollListener() {
-        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                val totalItemCount = recyclerView.layoutManager!!.itemCount
-                if (!imageRequester.isLoadingData && totalItemCount == lastVisibleItemPosition + 1) {
-                    requestPhoto()
-                }
-            }
-        })
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,15 +40,17 @@ class CreditiFragment : Fragment() {
         cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
         spinnerView.setAdapter(cdSpinnerAdapter)
         /* Set del recycler view */
-        linearLayoutManager = LinearLayoutManager(mContext)
-        recycler_view.layoutManager = linearLayoutManager
-        crediti = ArrayList<CreditType>()
-        adapter = CreditAdapter(crediti)
-        recycler_view.adapter = adapter
+        //linearLayoutManager = LinearLayoutManager(mContext)
+        //recycler_view.layoutManager = linearLayoutManager
 
+        //adapter = CreditAdapter(crediti)
+        //recycler_view.adapter = adapter
+
+        val recyclerViewAdapter = CreditAdapter(mutableListOf())
+        recycler_view.adapter = recyclerViewAdapter
+        recycler_view.layoutManager = LinearLayoutManager(mContext)
         /* Popolazione */
-        val primoCredito:CreditType = CreditType("Tornaghi Omar", "Calcetto", 12.57)
-        val secondoCredito:CreditType= CreditType("Tornaghi Luca", "Compleanno mamma", 20.00)
+        crediti = ArrayList<CreditType>()
         crediti.add(CreditType("Tornaghi Omar", "Calcetto", 12.57))
         crediti.add(CreditType("Tornaghi Luca", "Compleanno mamma", 20.00))
         crediti.add(CreditType("Tornaghi Alessio", "Soldi", 35.00))
@@ -75,6 +60,8 @@ class CreditiFragment : Fragment() {
         crediti.add(CreditType("Gallo Gino", "Casa", 42.00))
         crediti.add(CreditType("Masin Davide", "Casa", 43.00))
         crediti.add(CreditType("Pricolo Francesco", "Casa", 44.00))
+        recyclerViewAdapter.updateTasks(crediti)
+
     }
 
 }
