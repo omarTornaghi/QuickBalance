@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
         //quando clicco su un elemento lo evidenzio
         pieChart_graph.isHighlightPerTapEnabled = true
         //animazione iniziale
-        pieChart_graph.animateY(1400, Easing.EaseInOutQuad)
+        pieChart_graph.animateY(1000, Easing.EaseInOutQuart)
         //colore del buco
         pieChart_graph.setHoleColor(Color.parseColor(resources.getString(R.color.white.toInt())))
     }

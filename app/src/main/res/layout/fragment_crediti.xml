@@ -25,6 +25,7 @@
             android:id="@+id/materialCardView3"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,13 +46,14 @@
                     android:layout_marginBottom="5dp"
                     android:drawableStart="@drawable/ic_search_icon"
                     android:drawableLeft="@drawable/ic_search_icon"
-                    android:singleLine="true"
                     android:hint="@string/search_editText"
+                    android:singleLine="true"
 
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/spinnerView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <Spinner
                     android:id="@+id/spinnerView"
                     android:layout_width="172sp"
@@ -86,6 +88,20 @@
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
                 android:scrollbars="vertical" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floating_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="Crea un nuovo credito"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+                app:layout_constraintEnd_toStartOf="@+id/recycler_view"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

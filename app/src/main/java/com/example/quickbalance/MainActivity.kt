@@ -14,42 +14,39 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private var selectedFragment:Int = 2
+    private var homeFragment:HomeFragment = HomeFragment()
+    private  var creditiFragment: CreditiFragment = CreditiFragment()
+    private  var debitiFragment: DebitiFragment = DebitiFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val homeFragment = HomeFragment();
-        val creditiFragment = CreditiFragment();
-        val debitiFragment = DebitiFragment()
+        if(savedInstanceState != null){
+            selectedFragment = savedInstanceState.getInt("selected")
+            var cf: CreditiFragment?
+            cf = getSupportFragmentManager().getFragment(savedInstanceState, "creditiFragment") as CreditiFragment?
+            creditiFragment = if(cf == null) CreditiFragment() else cf
+        }
 
-        val stato: Int? = savedInstanceState?.getInt("selected")
-        when(stato){
+        when(selectedFragment){
             null-> {
-                //TODO Rimettere ic_home come primo fragment
-                bottom_navigation.itemIconTintList = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
-                bottom_navigation.itemTextColor = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
-                bottom_navigation.selectedItemId = R.id.ic_crediti
-                creaFragmentCorrente(creditiFragment)
-
-                /*bottom_navigation.selectedItemId = R.id.ic_home
-                creaFragmentCorrente(homeFragment)*/
-
+                bottom_navigation.selectedItemId = R.id.ic_home
+                selezionaFHome(homeFragment)
             }
             1-> {
                 bottom_navigation.selectedItemId = R.id.ic_crediti
-                creaFragmentCorrente(creditiFragment)
+                selezionaFCrediti(creditiFragment)
             }
             2-> {
                 bottom_navigation.selectedItemId = R.id.ic_home
-                creaFragmentCorrente(homeFragment)
+                selezionaFHome(homeFragment)
             }
             3-> {
                 bottom_navigation.selectedItemId = R.id.ic_debiti
-                creaFragmentCorrente(debitiFragment)
+                selezionaFDebiti(debitiFragment)
             }
         }
-
-
 
         /*Gestione bottom navigation menu*/
 
@@ -57,30 +54,51 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 /*Cambio fragment*/
                 R.id.ic_home->{
-                    creaFragmentCorrente(homeFragment);
-                    bottom_navigation.itemIconTintList = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
-                    bottom_navigation.itemTextColor = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
-                    selectedFragment = 2;
+                    homeFragment = HomeFragment()
+                    selezionaFHome(homeFragment)
                     true
                 }
                 R.id.ic_crediti->{
-                    creaFragmentCorrente(creditiFragment)
-                    bottom_navigation.itemIconTintList = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
-                    bottom_navigation.itemTextColor = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
-                    selectedFragment = 1;
+                    creditiFragment = CreditiFragment()
+                    selezionaFCrediti(creditiFragment)
                     true
                 }
                 R.id.ic_debiti->{
-                    creaFragmentCorrente(debitiFragment)
-                    bottom_navigation.itemIconTintList = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_red)
-                    bottom_navigation.itemTextColor = ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_red)
-                    selectedFragment = 3;
+                    debitiFragment = DebitiFragment()
+                    selezionaFDebiti(debitiFragment)
                     true
                 }
                 else -> false
             }
             true
         }
+    }
+
+    private fun selezionaFDebiti(debitiFragment: DebitiFragment) {
+        creaFragmentCorrente(debitiFragment)
+        selectedFragment = 3
+        bottom_navigation.itemIconTintList =
+            ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_red)
+        bottom_navigation.itemTextColor =
+            ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_red)
+    }
+
+    private fun selezionaFHome(homeFragment: HomeFragment) {
+        creaFragmentCorrente(homeFragment);
+        selectedFragment = 2
+        bottom_navigation.itemIconTintList =
+            ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
+        bottom_navigation.itemTextColor =
+            ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
+    }
+
+    private fun selezionaFCrediti(creditiFragment: CreditiFragment) {
+        selectedFragment = 1
+        creaFragmentCorrente(creditiFragment)
+        bottom_navigation.itemIconTintList =
+            ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
+        bottom_navigation.itemTextColor =
+            ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
     }
 
     private fun creaFragmentCorrente(fragment: Fragment) =
@@ -92,10 +110,8 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("selected", selectedFragment)
+        if(creditiFragment.isAdded())
+            getSupportFragmentManager().putFragment(outState, "creditiFragment", creditiFragment);
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        selectedFragment = savedInstanceState.getInt("selected")
-    }
 }
