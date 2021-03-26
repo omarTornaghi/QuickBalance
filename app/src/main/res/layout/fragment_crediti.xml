@@ -56,7 +56,7 @@
 
                 <Spinner
                     android:id="@+id/spinnerView"
-                    android:layout_width="172sp"
+                    android:layout_width="173sp"
                     android:layout_height="0dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
