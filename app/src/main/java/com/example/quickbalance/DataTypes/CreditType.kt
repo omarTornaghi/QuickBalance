@@ -1,5 +1,7 @@
 package com.example.quickbalance.DataTypes
 
-data class CreditType(val generalita:String, val descrizione:String, val soldi:Double) {
-    var visibile:Boolean = false
+import java.time.LocalDate
+import java.util.*
+
+data class CreditType(val generalita:String, val descrizione:String, val soldiTotali:Double, val soldiRicevuti:Double, val numeroTelefono:String, val dataInizio:String, val dataFine:String?) {
 }

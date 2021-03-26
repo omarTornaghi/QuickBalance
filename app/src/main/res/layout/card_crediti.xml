@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewGeneralita"
+            android:id="@+id/textViewCreditoGeneralita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
@@ -31,7 +31,6 @@
             android:layout_marginTop="7dp"
             android:drawableStart="@drawable/ic_baseline_identity_icon"
             android:drawableLeft="@drawable/ic_baseline_identity_icon"
-            android:text="Tornaghi Omar"
             android:textColor="@color/blue"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,19 +51,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewDescr"
-            android:layout_width="match_parent"
+            android:id="@+id/textViewCreditoDescr"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
             android:layout_marginLeft="11dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:drawableStart="@drawable/ic_baseline_description_icon"
             android:drawableLeft="@drawable/ic_baseline_description_icon"
-            android:inputType="textMultiLine|textImeMultiLine"
-            android:text="Descrizione molto bella"
-            app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewGeneralita" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewCreditoGeneralita" />
 
         <TextView
             android:id="@+id/textView13"
@@ -72,20 +69,19 @@
             android:layout_height="20dp"
             android:layout_marginStart="11dp"
             android:layout_marginLeft="11dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:drawableStart="@drawable/ic_baseline_euro_green_icon"
             android:drawableLeft="@drawable/ic_baseline_euro_green_icon"
             android:text="@string/gives_to_me"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDescr" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewCreditoDescr" />
 
         <TextView
-            android:id="@+id/textViewSoldi"
+            android:id="@+id/textViewCreditoSoldiRimanenti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:text="€500"
             android:textColor="@color/green"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
             app:layout_constraintStart_toEndOf="@+id/textView13" />
@@ -99,13 +95,14 @@
             android:text="@string/get_money"
             android:textSize="12sp"
             app:backgroundTint="@color/green"
+            app:cornerRadius="7dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDescr" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewCreditoDescr" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_card_credit"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="130dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13">
@@ -116,52 +113,52 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="11dp"
                 android:layout_marginLeft="11dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/ic_baseline_euro_orange_icon"
-                android:text="Ha pagato:"
+                android:drawableLeft="@drawable/ic_baseline_euro_orange_icon"
+                android:text="@string/payed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                 />
 
             <TextView
-                android:id="@+id/textView10"
-                android:layout_width="24dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/textViewCreditoSoldiRicevuti"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="€20"
                 android:textColor="@color/orange_dark"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView9"
                 app:layout_constraintStart_toEndOf="@+id/textView9" />
 
             <TextView
-                android:id="@+id/textView12"
-                android:layout_width="0dp"
+                android:id="@+id/textViewCreditoTelefono"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginStart="11dp"
                 android:layout_marginLeft="11dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/ic_baseline_smartphone_icon"
-                android:text="3387135186"
+                android:drawableLeft="@drawable/ic_baseline_smartphone_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="su"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
-                app:layout_constraintStart_toEndOf="@+id/textView10" />
+                android:text="@string/of"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewCreditoSoldiRicevuti"
+                app:layout_constraintStart_toEndOf="@+id/textViewCreditoSoldiRicevuti" />
 
             <TextView
-                android:id="@+id/textView15"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/textViewCreditoSoldiTotali"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="€520"
                 android:textColor="@color/orange_dark"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
                 app:layout_constraintStart_toEndOf="@+id/textView14" />
@@ -172,19 +169,20 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="11dp"
                 android:layout_marginLeft="11dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/ic_baseline_calendar_icon"
-                android:text="Credito dal:"
+                android:drawableLeft="@drawable/ic_baseline_calendar_icon"
+                android:text="@string/credit_from"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewCreditoTelefono"
+                 />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/textViewCreditoDataInizio"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="25/03/2021"
                 android:textColor="@color/blue_light"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
                 app:layout_constraintStart_toEndOf="@+id/textView16" />
@@ -195,32 +193,55 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="al"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView17"
-                app:layout_constraintStart_toEndOf="@+id/textView17" />
+                android:text="@string/to"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewCreditoDataInizio"
+                app:layout_constraintStart_toEndOf="@+id/textViewCreditoDataInizio" />
 
             <TextView
-                android:id="@+id/textView19"
-                android:layout_width="76dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/textViewCreditoDataFine"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="non definito"
                 android:textColor="@color/blue_light"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView18"
                 app:layout_constraintStart_toEndOf="@+id/textView18" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonRiscatta2"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_marginEnd="7dp"
-                android:layout_marginRight="7dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
                 android:text="@string/get_money"
                 android:textSize="12sp"
                 app:backgroundTint="@color/green"
+                app:cornerRadius="7dp"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonModificaCredito"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView19" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonModificaCredito" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonModificaCredito"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:text="@string/update"
+                android:textColor="@color/orange_light"
+                android:textSize="12sp"
+                app:cornerRadius="7dp"
+                app:layout_constraintEnd_toStartOf="@+id/buttonRiscatta2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

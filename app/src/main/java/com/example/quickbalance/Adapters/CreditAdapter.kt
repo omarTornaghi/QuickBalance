@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
 import com.example.quickbalance.DataTypes.CreditType
@@ -27,15 +26,19 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
 
     class CreditHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
-        private var credito: CreditType? = null
         private var isExpanded = false
 
         fun bind(credit: CreditType) {
-            this.credito = credit
             /* Cambiare i campi */
-            view.textViewGeneralita.text = credit.generalita
-            view.textViewDescr.text = credit.descrizione
-            view.textViewSoldi.text = "€" + credit.soldi.toString()
+            view.textViewCreditoGeneralita.text = credit.generalita
+            view.textViewCreditoDescr.text = credit.descrizione
+            view.textViewCreditoSoldiRimanenti.text = "€" + (credit.soldiTotali - credit.soldiRicevuti).toString()
+            view.textViewCreditoSoldiRicevuti.text = "€" + credit.soldiRicevuti
+            view.textViewCreditoSoldiTotali.text = "€" + credit.soldiTotali
+            view.textViewCreditoTelefono.text = credit.numeroTelefono
+            view.textViewCreditoDataInizio.text = credit.dataInizio
+            val dataFine: String = if(credit.dataFine == null) "Non definito" else credit.dataFine.toString()
+            view.textViewCreditoDataFine.text = dataFine
             view.setOnClickListener {
                 if (isExpanded) collapse() else expand()
             }
@@ -44,7 +47,6 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
                 itemView.buttonRiscatta1.visibility = View.GONE
                 collapse()
             }
-            Log.d("BIND", credito!!.generalita + " : " + isExpanded.toString())
         }
 
         private fun expand()
@@ -60,12 +62,6 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             itemView.buttonRiscatta1.visibility = View.VISIBLE
             itemView.buttonCancellaCredito.visibility = View.GONE
             isExpanded = false
-        }
-
-
-
-        companion object {
-            private val CREDIT_KEY = "CREDIT"
         }
     }
 
