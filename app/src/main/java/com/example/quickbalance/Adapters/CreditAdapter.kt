@@ -1,28 +1,41 @@
 package com.example.quickbalance.Adapters
 
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
 import com.example.quickbalance.DataTypes.CreditType
+import com.example.quickbalance.NuovaOpActivity
 import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.card_crediti.view.*
+
 
 class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
     fun updateTasks(nuovoCredit: List<CreditType>)
     {
         crediti.clear()
         crediti.addAll(nuovoCredit)
-        notifyDataSetChanged()
+        //notifyDataSetChanged()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditHolder
     {
-        return CreditHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_crediti, parent, false))
+        return CreditHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.card_crediti,
+                parent,
+                false
+            )
+        )
     }
     override fun getItemCount(): Int = crediti.size
-    override fun onBindViewHolder(holder: CreditHolder, position: Int) = holder.bind(crediti[position])
+    override fun onBindViewHolder(holder: CreditHolder, position: Int){
+        holder.bind(crediti[position])
+
+    }
 
     class CreditHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
@@ -39,9 +52,11 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             view.textViewCreditoDataInizio.text = credit.dataInizio
             val dataFine: String = if(credit.dataFine == null) "Non definito" else credit.dataFine.toString()
             view.textViewCreditoDataFine.text = dataFine
-            view.setOnClickListener {
-                if (isExpanded) collapse() else expand()
-            }
+
+            //Set dei listener
+            view.setOnClickListener(cardOnClickListener)
+            view.buttonRiscatta1.setOnClickListener(buttonRiscattaOnClickListener)
+            view.buttonRiscatta2.setOnClickListener(buttonRiscattaOnClickListener)
             if(isExpanded == false){
                 itemView.CL_card_credit.visibility = View.GONE
                 itemView.buttonRiscatta1.visibility = View.GONE
@@ -62,6 +77,16 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             itemView.buttonRiscatta1.visibility = View.VISIBLE
             itemView.buttonCancellaCredito.visibility = View.GONE
             isExpanded = false
+        }
+
+        val cardOnClickListener= View.OnClickListener {
+            if (isExpanded) collapse() else expand()
+        }
+
+        val buttonRiscattaOnClickListener= View.OnClickListener {
+            //Cambiare activity da lanciare
+            val int:Intent = Intent(view.context, NuovaOpActivity::class.java)
+            startActivity(view.context,int,null)
         }
     }
 

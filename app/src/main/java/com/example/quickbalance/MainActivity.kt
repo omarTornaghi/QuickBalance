@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         if(savedInstanceState != null){
             selectedFragment = savedInstanceState.getInt("selected")
             var cf: CreditiFragment?
