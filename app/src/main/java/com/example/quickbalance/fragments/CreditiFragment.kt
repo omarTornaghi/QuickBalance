@@ -3,7 +3,6 @@ package com.example.quickbalance.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.CreditAdapter
-import com.example.quickbalance.Adapters.itemClickListener
 import com.example.quickbalance.DataTypes.CreditType
 import com.example.quickbalance.NuovaOpActivity
 import com.example.quickbalance.R
-import kotlinx.android.synthetic.main.custom_spinnercd_layout.*
 import kotlinx.android.synthetic.main.fragment_crediti.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlin.collections.ArrayList
 
 class CreditiFragment() : Fragment(){
