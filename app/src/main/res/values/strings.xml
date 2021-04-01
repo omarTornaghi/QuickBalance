@@ -15,7 +15,7 @@
     <string name="history">Storico</string>
     <string name="history_op_home_fragment">Tocca per visualizzare lo storico</string>
     <string name="gives_to_me">Mi deve:</string>
-    <string name="search_editText">Cerca per nome,cognome,descrizione...</string>
+    <string name="search_editText">Cerca per nome,cognome,descrizione…</string>
     <string name="get_money">Riscatta</string>
     <string name="payed">Ha pagato:</string>
     <string name="of">su</string>
@@ -23,4 +23,5 @@
     <string name="to">al</string>
     <string name="not_defined">non definito</string>
     <string name="update">Modifica</string>
+    <string name="fields_not_valid">Campi non validi</string>
 </resources>

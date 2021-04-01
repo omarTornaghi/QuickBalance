@@ -29,11 +29,11 @@
             android:text="Tornaghi Omar"
             android:textColor="@color/blue"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView12"
+            app:layout_constraintStart_toStartOf="@+id/textViewTelefono"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/textViewTelefono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
