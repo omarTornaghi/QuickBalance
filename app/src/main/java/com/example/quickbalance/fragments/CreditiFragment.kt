@@ -3,9 +3,11 @@ package com.example.quickbalance.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -57,6 +59,14 @@ class CreditiFragment() : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        editTextInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Call onDone result here
+                    Log.d("XXXX", "CERCO")
+                true
+            }
+            false
+        }
         //Set dello spinner
         setSpinner()
         //set dello stato
@@ -106,4 +116,5 @@ class CreditiFragment() : Fragment(){
         val int:Intent = Intent(mContext, NuovaOpActivity::class.java)
         startActivity(int)
     }
+
 }

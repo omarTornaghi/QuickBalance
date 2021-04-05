@@ -1,10 +1,13 @@
 package com.example.quickbalance
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.quickbalance.fragments.CreditiFragment
@@ -112,5 +115,15 @@ class MainActivity : AppCompatActivity() {
         if(creditiFragment.isAdded())
             getSupportFragmentManager().putFragment(outState, "creditiFragment", creditiFragment);
     }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus != null) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
 
 }
