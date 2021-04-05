@@ -24,17 +24,26 @@ class NuovaOpActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creazione_stepuno)
+        //Listeners vari
         topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
         buttonAggiungiPartecipante.setOnClickListener(aggiungiPartecipanteOnClickListener)
         buttonImportaRubrica.setOnClickListener(buttonImportaRubricaOnClickListener)
         editTextGeneralita.setOnFocusChangeListener(editTextNominativoFocusListener)
         editTextNumero.setOnFocusChangeListener(editTextNumeroFocusListener)
+        //RecyclerView
         recyclerViewAdapter = setRecyclerView()
+        //Reset dello stato
+        if (savedInstanceState != null) {
+            editTextGeneralita.setText(savedInstanceState.getString("testoTextViewGeneralita"))
+            editTextNumero.setText(savedInstanceState.getString("testoTextViewNumero"))
+            recyclerViewAdapter.updateTasks(savedInstanceState.getParcelableArrayList<PartecipanteType>("listaPartecipanti") as ArrayList<PartecipanteType>)
+
+        }
     }
 
     private fun setRecyclerView(): PartecipanteAdapter {
         /* Set del recycler view */
-        val recyclerViewAdapter = PartecipanteAdapter(mutableListOf(), textViewDatiVuoti)
+        val recyclerViewAdapter = PartecipanteAdapter(arrayListOf(), textViewDatiVuoti)
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         return recyclerViewAdapter
@@ -60,6 +69,9 @@ class NuovaOpActivity: AppCompatActivity() {
             )} == null){
             if(generalita.isNotBlank() && controllaNumero(telefono)){
                 recyclerViewAdapter.addItem(PartecipanteType(generalita, telefono))
+                editTextGeneralita.setText("")
+                editTextNumero.setText("")
+                editTextGeneralita.requestFocus()
             }
             else
                 Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT).show()
@@ -103,6 +115,13 @@ class NuovaOpActivity: AppCompatActivity() {
 
     val navigationIconOnClickListener= View.OnClickListener {
         finish()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("testoTextViewGeneralita", editTextGeneralita.text.toString())
+        outState.putString("testoTextViewNumero", editTextNumero.text.toString())
+        outState.putParcelableArrayList("listaPartecipanti", recyclerViewAdapter.getList())
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
