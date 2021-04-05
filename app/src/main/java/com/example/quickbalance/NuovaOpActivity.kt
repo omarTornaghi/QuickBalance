@@ -1,7 +1,9 @@
 package com.example.quickbalance
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -17,7 +19,6 @@ import java.util.regex.Pattern
 
 
 class NuovaOpActivity: AppCompatActivity() {
-    private lateinit var list:ArrayList<PartecipanteType>
     private lateinit var recyclerViewAdapter:PartecipanteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +26,10 @@ class NuovaOpActivity: AppCompatActivity() {
         setContentView(R.layout.activity_creazione_stepuno)
         topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
         buttonAggiungiPartecipante.setOnClickListener(aggiungiPartecipanteOnClickListener)
+        buttonImportaRubrica.setOnClickListener(buttonImportaRubricaOnClickListener)
         editTextGeneralita.setOnFocusChangeListener(editTextNominativoFocusListener)
         editTextNumero.setOnFocusChangeListener(editTextNumeroFocusListener)
         recyclerViewAdapter = setRecyclerView()
-        list = ArrayList()
     }
 
     private fun setRecyclerView(): PartecipanteAdapter {
@@ -54,11 +55,10 @@ class NuovaOpActivity: AppCompatActivity() {
     }
 
     private fun aggiungiPartecipante(generalita: String, telefono: String){
-        if(list.find{it.generalita.equals(generalita)} == null && list.find{it.numeroTelefono.equals(
+        if(recyclerViewAdapter.getList().find{it.generalita.equals(generalita)} == null && recyclerViewAdapter.getList().find{it.numeroTelefono.equals(
                 telefono
             )} == null){
             if(generalita.isNotBlank() && controllaNumero(telefono)){
-                list.add(PartecipanteType(generalita, telefono))
                 recyclerViewAdapter.addItem(PartecipanteType(generalita, telefono))
             }
             else
@@ -95,6 +95,12 @@ class NuovaOpActivity: AppCompatActivity() {
                 editTextNumero.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_smartphone_gray_icon, 0, 0, 0)
             }
         }
+
+    val buttonImportaRubricaOnClickListener= View.OnClickListener {
+        val int: Intent = Intent(this, ImportaContattiActivity::class.java)
+        startActivity(int)
+    }
+
     val navigationIconOnClickListener= View.OnClickListener {
         finish()
     }

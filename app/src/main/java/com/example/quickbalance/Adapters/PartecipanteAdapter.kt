@@ -23,6 +23,8 @@ class PartecipanteAdapter(private val partecipanti: MutableList<PartecipanteType
         notifyDataSetChanged()
     }
 
+    fun getList(): MutableList<PartecipanteType> { return partecipanti}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DestinatarioHolder
     {
         return DestinatarioHolder(
