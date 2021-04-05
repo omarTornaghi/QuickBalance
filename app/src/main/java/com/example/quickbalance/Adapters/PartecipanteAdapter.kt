@@ -1,26 +1,25 @@
 package com.example.quickbalance.Adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quickbalance.DataTypes.DestinatarioType
+import com.example.quickbalance.DataTypes.PartecipanteType
 import com.example.quickbalance.R
-import kotlinx.android.synthetic.main.card_destinatario.view.*
+import kotlinx.android.synthetic.main.card_partecipante.view.*
 
-class DestinatarioAdapter(private val destinatari: MutableList<DestinatarioType>, private var textView:TextView) : RecyclerView.Adapter<DestinatarioAdapter.DestinatarioHolder>(){
-    fun updateTasks(nuovaLista: List<DestinatarioType>)
+class PartecipanteAdapter(private val partecipanti: MutableList<PartecipanteType>, private var textView:TextView) : RecyclerView.Adapter<PartecipanteAdapter.DestinatarioHolder>(){
+    fun updateTasks(nuovaLista: List<PartecipanteType>)
     {
-        destinatari.clear()
-        destinatari.addAll(nuovaLista)
+        partecipanti.clear()
+        partecipanti.addAll(nuovaLista)
         notifyDataSetChanged()
     }
 
-    fun addItem(item:DestinatarioType){
-        destinatari.add(item)
+    fun addItem(item:PartecipanteType){
+        partecipanti.add(item)
         notifyDataSetChanged()
     }
 
@@ -28,22 +27,22 @@ class DestinatarioAdapter(private val destinatari: MutableList<DestinatarioType>
     {
         return DestinatarioHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.card_destinatario,
+                R.layout.card_partecipante,
                 parent,
                 false
             )
         )
     }
-    override fun getItemCount(): Int = destinatari.size
+    override fun getItemCount(): Int = partecipanti.size
     override fun onBindViewHolder(holder: DestinatarioHolder, position: Int){
-        holder.bind(destinatari[position])
+        holder.bind(partecipanti[position])
         holder.buttonRimuovi.setOnClickListener { removeItem(position) }
         textView.visibility= View.GONE
     }
     fun removeItem(position: Int) {
-        destinatari.removeAt(position)
+        partecipanti.removeAt(position)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position,destinatari.size)
+        notifyItemRangeChanged(position,partecipanti.size)
         if(itemCount == 0)
             textView.visibility = View.VISIBLE
 
@@ -51,12 +50,12 @@ class DestinatarioAdapter(private val destinatari: MutableList<DestinatarioType>
     class DestinatarioHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
         lateinit var buttonRimuovi: Button
-        fun bind(destinatario: DestinatarioType) {
+        fun bind(partecipante: PartecipanteType) {
             buttonRimuovi = view.buttonRimuoviDestinatario
-            view.textViewGeneralita.text = destinatario.getGeneralita()
-            view.textViewTelefono.text = if(destinatario.numeroTelefono.isNullOrBlank()) view.getResources().getString(
+            view.textViewGeneralita.text = partecipante.getGeneralita()
+            view.textViewTelefono.text = if(partecipante.numeroTelefono.isNullOrBlank()) view.getResources().getString(
                 R.string.not_defined
-            ) else destinatario.numeroTelefono
+            ) else partecipante.numeroTelefono
         }
 
     }

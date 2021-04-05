@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickBalance">
         <activity android:name=".MainActivity" android:windowSoftInputMode="adjustPan">
-            <!-- TODO RIMETTERLA COME MAIN
+            <!-- TODO RIMETTERLA COME MAIN -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".NuovaOpActivity" android:windowSoftInputMode="adjustPan">
             <intent-filter>
