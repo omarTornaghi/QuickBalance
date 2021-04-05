@@ -52,7 +52,7 @@ class PartecipanteAdapter(private val partecipanti: MutableList<PartecipanteType
         lateinit var buttonRimuovi: Button
         fun bind(partecipante: PartecipanteType) {
             buttonRimuovi = view.buttonRimuoviDestinatario
-            view.textViewGeneralita.text = partecipante.getGeneralita()
+            view.textViewGeneralita.text = partecipante.generalita
             view.textViewTelefono.text = if(partecipante.numeroTelefono.isNullOrBlank()) view.getResources().getString(
                 R.string.not_defined
             ) else partecipante.numeroTelefono

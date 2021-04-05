@@ -2,6 +2,7 @@ package com.example.quickbalance
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,8 @@ class NuovaOpActivity: AppCompatActivity() {
         setContentView(R.layout.activity_creazione_stepuno)
         topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
         buttonAggiungiPartecipante.setOnClickListener(aggiungiPartecipanteOnClickListener)
+        editTextGeneralita.setOnFocusChangeListener(editTextNominativoFocusListener)
+        editTextNumero.setOnFocusChangeListener(editTextNumeroFocusListener)
         recyclerViewAdapter = setRecyclerView()
         list = ArrayList()
     }
@@ -47,29 +50,48 @@ class NuovaOpActivity: AppCompatActivity() {
         return false
     }
 
-    private fun aggiungiPartecipante(cognome: String, nome: String, telefono: String){
-        if(cognome.isNotBlank() && nome.isNotBlank() && controllaNumero(telefono)){
-            list.add(PartecipanteType(cognome, nome, telefono))
-            recyclerViewAdapter.addItem(PartecipanteType(cognome, nome, telefono))
+    private fun aggiungiPartecipante(generalita: String, telefono: String){
+        if(list.find{it.generalita.equals(generalita)} == null && list.find{it.numeroTelefono.equals(
+                telefono
+            )} == null){
+            if(generalita.isNotBlank() && controllaNumero(telefono)){
+                list.add(PartecipanteType(generalita, telefono))
+                recyclerViewAdapter.addItem(PartecipanteType(generalita, telefono))
+            }
+            else
+                Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT).show()
         }
         else
-            Toast.makeText(this,getString(R.string.fields_not_valid),Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.member_already_exists), Toast.LENGTH_SHORT).show()
     }
 
-    private fun normalizzaStringa(sIn:String):String{
-        var s = sIn.replace(" ", "")
-        s = s.capitalize()
-        return s
+    private fun normalizzaStringa(sIn: String):String{
+        return sIn.trim().capitalize()
     }
 
     val aggiungiPartecipanteOnClickListener=View.OnClickListener {
         aggiungiPartecipante(
-            normalizzaStringa(editTextCognome.text.toString()),
-            normalizzaStringa(editTextNome.text.toString()),
+            normalizzaStringa(editTextGeneralita.text.toString()),
             editTextNumero.text.toString()
         )
     }
 
+    private val editTextNominativoFocusListener =
+        OnFocusChangeListener { view, gainFocus ->
+            if (gainFocus) {
+                editTextGeneralita.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_identity_green_icon, 0, 0, 0)
+            } else {
+                editTextGeneralita.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_identity_gray_icon, 0, 0, 0)
+            }
+        }
+    private val editTextNumeroFocusListener =
+        OnFocusChangeListener { view, gainFocus ->
+            if (gainFocus) {
+                editTextNumero.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_smartphone_green_icon, 0, 0, 0)
+            } else {
+                editTextNumero.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_smartphone_gray_icon, 0, 0, 0)
+            }
+        }
     val navigationIconOnClickListener= View.OnClickListener {
         finish()
     }

@@ -24,4 +24,5 @@
     <string name="not_defined">non definito</string>
     <string name="update">Modifica</string>
     <string name="fields_not_valid">Campi non validi</string>
+    <string name="member_already_exists">Partecipante già esistente</string>
 </resources>

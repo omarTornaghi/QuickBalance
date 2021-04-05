@@ -138,7 +138,7 @@
                     android:layout_height="match_parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextCognome"
+                        android:id="@+id/editTextGeneralita"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
@@ -147,8 +147,10 @@
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/circular_edittext"
+                        android:drawableStart="@drawable/ic_baseline_identity_gray_icon"
+                        android:drawableLeft="@drawable/ic_baseline_identity_gray_icon"
                         android:ems="10"
-                        android:hint="Cognome"
+                        android:hint="Cognome e nome"
                         android:inputType="textPersonName"
                         android:nextFocusLeft="@+id/editTextNome"
                         android:nextFocusRight="@+id/editTextNome"
@@ -156,29 +158,9 @@
                         android:nextFocusDown="@+id/editTextNome"
                         android:textColorHighlight="@color/green"
                         android:textColorLink="@color/green"
-                        app:layout_constraintEnd_toStartOf="@+id/editTextNome"
-                        app:layout_constraintHorizontal_bias="0.3"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/editTextNome"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/circular_edittext"
-                        android:ems="10"
-                        android:hint="Nome"
-                        android:inputType="textPersonName"
-                        android:textColorHighlight="@color/green"
-                        android:textColorLink="@color/green"
-                        app:layout_constraintBottom_toBottomOf="@+id/editTextCognome"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/editTextCognome" />
 
                     <EditText
                         android:id="@+id/editTextNumero"
@@ -190,12 +172,14 @@
                         android:layout_marginEnd="14dp"
                         android:layout_marginRight="14dp"
                         android:background="@drawable/circular_edittext"
+                        android:drawableLeft="@drawable/ic_baseline_smartphone_gray_icon"
                         android:ems="10"
                         android:hint="Numero di telefono"
                         android:inputType="phone"
+                        android:imeOptions="actionDone"
                         app:layout_constraintEnd_toStartOf="@+id/buttonAggiungiPartecipante"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editTextCognome" />
+                        app:layout_constraintTop_toBottomOf="@+id/editTextGeneralita" />
 
                     <TextView
                         android:id="@+id/textView19"
