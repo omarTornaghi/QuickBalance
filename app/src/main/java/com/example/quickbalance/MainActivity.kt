@@ -1,13 +1,13 @@
 package com.example.quickbalance
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.quickbalance.fragments.CreditiFragment
@@ -15,7 +15,7 @@ import com.example.quickbalance.fragments.DebitiFragment
 import com.example.quickbalance.fragments.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private var selectedFragment:Int = 2
     private var homeFragment:HomeFragment = HomeFragment()
     private  var creditiFragment: CreditiFragment = CreditiFragment()
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        topAppBar.setOnMenuItemClickListener(this)
         if(savedInstanceState != null){
             selectedFragment = savedInstanceState.getInt("selected")
             var cf: CreditiFragment?
@@ -116,6 +117,17 @@ class MainActivity : AppCompatActivity() {
             getSupportFragmentManager().putFragment(outState, "creditiFragment", creditiFragment);
     }
 
+    override fun onMenuItemClick(item: MenuItem):Boolean {
+        when (item.itemId){
+            R.id.search-> {
+                //Start activity delle impostazioni
+                return true
+            }
+        }
+        return false;
+    }
+
+    //Nasconde keyboard quando non si clicca su editText
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (currentFocus != null) {
             val imm: InputMethodManager =

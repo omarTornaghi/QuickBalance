@@ -172,6 +172,7 @@
                         android:layout_marginEnd="14dp"
                         android:layout_marginRight="14dp"
                         android:background="@drawable/circular_edittext"
+                        android:drawableStart="@drawable/ic_baseline_smartphone_gray_icon"
                         android:drawableLeft="@drawable/ic_baseline_smartphone_gray_icon"
                         android:ems="10"
                         android:hint="@string/cellphone"
@@ -179,7 +180,8 @@
                         android:imeOptions="actionDone"
                         app:layout_constraintEnd_toStartOf="@+id/buttonAggiungiPartecipante"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editTextGeneralita" />
+                        app:layout_constraintTop_toBottomOf="@+id/editTextGeneralita"
+                         />
 
                     <TextView
                         android:id="@+id/textView19"
