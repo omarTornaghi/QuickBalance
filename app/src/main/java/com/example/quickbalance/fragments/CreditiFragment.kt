@@ -1,6 +1,7 @@
 package com.example.quickbalance.fragments
 
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -17,7 +19,7 @@ import com.example.quickbalance.DataTypes.CreditType
 import com.example.quickbalance.NuovaOpActivity
 import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.fragment_crediti.*
-import kotlin.collections.ArrayList
+
 
 class CreditiFragment() : Fragment(){
     private lateinit var mContext: Context
@@ -60,12 +62,13 @@ class CreditiFragment() : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         editTextInput.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                // Call onDone result here
-                    Log.d("XXXX", "CERCO")
-                true
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                editTextInput.clearFocus()
+                val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view!!.getWindowToken(), 0)
+                Log.d("XXXX", "CERCO")
             }
-            false
+            true
         }
         //Set dello spinner
         setSpinner()
@@ -83,11 +86,61 @@ class CreditiFragment() : Fragment(){
         data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Tornag", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Tornaghi", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Tornaghi O", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Tornaghi Om", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Tornaghi Oma", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Tornaghi Omar", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Tornaghi Omar2", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+        data.add(
+            CreditType(
+                "Tornaghi O",
+                "Prova",
+                300.00,
+                150.00,
+                "3387135186",
+                "26/11/2000",
+                null
+            )
+        )
+        data.add(
+            CreditType(
+                "Tornaghi Om",
+                "Prova",
+                300.00,
+                150.00,
+                "3387135186",
+                "26/11/2000",
+                null
+            )
+        )
+        data.add(
+            CreditType(
+                "Tornaghi Oma",
+                "Prova",
+                300.00,
+                150.00,
+                "3387135186",
+                "26/11/2000",
+                null
+            )
+        )
+        data.add(
+            CreditType(
+                "Tornaghi Omar",
+                "Prova",
+                300.00,
+                150.00,
+                "3387135186",
+                "26/11/2000",
+                null
+            )
+        )
+        data.add(
+            CreditType(
+                "Tornaghi Omar2",
+                "Prova",
+                300.00,
+                150.00,
+                "3387135186",
+                "26/11/2000",
+                null
+            )
+        )
 
         recyclerViewAdapter.updateTasks(data)
 
