@@ -86,62 +86,6 @@ class CreditiFragment() : Fragment(){
         data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Tornag", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Tornaghi", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(
-            CreditType(
-                "Tornaghi O",
-                "Prova",
-                300.00,
-                150.00,
-                "3387135186",
-                "26/11/2000",
-                null
-            )
-        )
-        data.add(
-            CreditType(
-                "Tornaghi Om",
-                "Prova",
-                300.00,
-                150.00,
-                "3387135186",
-                "26/11/2000",
-                null
-            )
-        )
-        data.add(
-            CreditType(
-                "Tornaghi Oma",
-                "Prova",
-                300.00,
-                150.00,
-                "3387135186",
-                "26/11/2000",
-                null
-            )
-        )
-        data.add(
-            CreditType(
-                "Tornaghi Omar",
-                "Prova",
-                300.00,
-                150.00,
-                "3387135186",
-                "26/11/2000",
-                null
-            )
-        )
-        data.add(
-            CreditType(
-                "Tornaghi Omar2",
-                "Prova",
-                300.00,
-                150.00,
-                "3387135186",
-                "26/11/2000",
-                null
-            )
-        )
-
         recyclerViewAdapter.updateTasks(data)
 
     }

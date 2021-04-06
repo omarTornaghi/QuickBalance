@@ -35,4 +35,6 @@
     <string name="no_member_added">Nessun partecipante aggiunto</string>
     <string name="next">Avanti</string>
     <string name="import_contacts">Importa contatti</string>
+    <string name="no_contacts">Nessun contatto</string>
+    <string name="search_by_name">Cerca per nome</string>
 </resources>

@@ -18,7 +18,7 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
     {
         crediti.clear()
         crediti.addAll(nuovoCredit)
-        //notifyDataSetChanged()
+        notifyDataSetChanged()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditHolder
     {
