@@ -1,6 +1,5 @@
 package com.example.quickbalance
 
-//Nuove
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -13,6 +12,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -28,7 +28,9 @@ import com.example.quickbalance.Adapters.ContattoAdapter
 import com.example.quickbalance.DataTypes.ContattoType
 import com.example.quickbalance.DataTypes.PartecipanteType
 import kotlinx.android.synthetic.main.activity_importa_contatti.*
-
+import kotlinx.android.synthetic.main.activity_importa_contatti.recyclerView
+import kotlinx.android.synthetic.main.activity_importa_contatti.textViewDatiVuoti
+import kotlinx.android.synthetic.main.activity_importa_contatti.topAppBar
 
 class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private lateinit var recyclerViewAdapter: ContattoAdapter
@@ -67,9 +69,17 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         })
         //RecyclerView
         recyclerViewAdapter = setRecyclerView()
-        richiediPermessoContatti()
-        listContatti = ArrayList(recyclerViewAdapter.getList().map { it.copy() })
-        circularProgress.visibility = View.GONE
+        if (savedInstanceState != null) {
+            editTextRicercaContatto.setText(savedInstanceState.getString("editTextRicerca"))
+            listContatti = savedInstanceState.getParcelableArrayList<ContattoType>("listContatti") as ArrayList<ContattoType>
+            listContattiSelezionati = savedInstanceState.getParcelableArrayList<PartecipanteType>("listContattiSelezionati") as ArrayList<PartecipanteType>
+            recyclerViewAdapter.updateTasks(savedInstanceState.getParcelableArrayList<ContattoType>("listContattiRecycler") as ArrayList<ContattoType>)
+        }else
+        {
+            richiediPermessoContatti()
+            listContatti = ArrayList(recyclerViewAdapter.getList().map { it.copy() })
+            circularProgress.visibility = View.GONE
+        }
     }
 
     fun ricerca(){
@@ -179,8 +189,13 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         /* Set del recycler view */
         val recyclerViewAdapter = ContattoAdapter(arrayListOf(), textViewDatiVuoti) {
             val rIt: ContattoType = it
+            var idUno:Int= listContatti.indexOf(it)
             rIt.selezionato = !rIt.selezionato!!
             recyclerViewAdapter.setItem(it, rIt)
+            listContatti.set(idUno, rIt)
+
+            var idDue:Int = listContatti.indexOf(rIt)
+
             val partecipante = PartecipanteType(rIt.generalita, rIt.numeroTelefono)
             if (rIt.selezionato == true)
                 listContattiSelezionati.add(partecipante)
@@ -223,6 +238,14 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
 
     val navigationIconOnClickListener = View.OnClickListener {
         finish()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("editTextRicerca", editTextRicercaContatto.text.toString())
+        outState.putParcelableArrayList("listContatti", listContatti)
+        outState.putParcelableArrayList("listContattiSelezionati", listContattiSelezionati)
+        outState.putParcelableArrayList("listContattiRecycler", recyclerViewAdapter.getList())
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
