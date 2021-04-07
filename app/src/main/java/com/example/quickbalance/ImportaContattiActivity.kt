@@ -193,9 +193,6 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
             rIt.selezionato = !rIt.selezionato!!
             recyclerViewAdapter.setItem(it, rIt)
             listContatti.set(idUno, rIt)
-
-            var idDue:Int = listContatti.indexOf(rIt)
-
             val partecipante = PartecipanteType(rIt.generalita, rIt.numeroTelefono)
             if (rIt.selezionato == true)
                 listContattiSelezionati.add(partecipante)
