@@ -3,7 +3,7 @@ package com.example.quickbalance.DataTypes
 import android.os.Parcel
 import android.os.Parcelable
 
-data class ContattoType(var generalita:String?, var numeroTelefono:String?, var selezionato:Boolean?) : Parcelable {
+data class ContattoType(var generalita: String?, var numeroTelefono: String?, var selezionato:Boolean?) : Parcelable {
     constructor(parcel: Parcel) : this(
         generalita = parcel.readString(),
         numeroTelefono = parcel.readString(),

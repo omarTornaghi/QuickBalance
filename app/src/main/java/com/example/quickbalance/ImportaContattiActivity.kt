@@ -2,14 +2,17 @@ package com.example.quickbalance
 
 //Nuove
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -22,15 +25,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.ContattoAdapter
-import com.example.quickbalance.Adapters.PartecipanteAdapter
 import com.example.quickbalance.DataTypes.ContattoType
+import com.example.quickbalance.DataTypes.PartecipanteType
 import kotlinx.android.synthetic.main.activity_importa_contatti.*
 
 
 class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
-    private lateinit var recyclerViewAdapter:ContattoAdapter
-    private var contattiSelezionati:Int = 0
-    private var listContattiSelezionati:ArrayList<PartecipanteAdapter> = ArrayList()
+    private lateinit var recyclerViewAdapter: ContattoAdapter
+    private var listContattiSelezionati: ArrayList<PartecipanteType> = ArrayList()
+    private var listContatti: ArrayList<ContattoType> = ArrayList()
     var namePhoneMap: HashMap<String, String> = HashMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,17 +50,40 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
                     editTextRicercaContatto.getWindowToken(),
                     InputMethodManager.RESULT_UNCHANGED_SHOWN
                 )
-                Log.d("XXXX", "CERCO")
+                ricerca()
                 true
             }
             false
         }
+        editTextRicercaContatto.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                ricerca()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
         //RecyclerView
         recyclerViewAdapter = setRecyclerView()
-        requestContactPermission()
+        richiediPermessoContatti()
+        listContatti = ArrayList(recyclerViewAdapter.getList().map { it.copy() })
+        circularProgress.visibility = View.GONE
     }
 
-    fun requestContactPermission() {
+    fun ricerca(){
+        if (editTextRicercaContatto.text.isNotBlank()) {
+            var listaRicerca: ArrayList<ContattoType> =
+                ArrayList(listContatti.filter { it ->
+                    it.generalita!!.toLowerCase().contains(editTextRicercaContatto.text.toString().toLowerCase())
+                })
+            recyclerViewAdapter.updateTasks(listaRicerca)
+        }
+        else recyclerViewAdapter.updateTasks(listContatti)
+    }
+
+    fun richiediPermessoContatti() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -102,6 +128,7 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 if (grantResults.size > 0
@@ -120,37 +147,6 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         }
     }
 
-
-    private fun setRecyclerView(): ContattoAdapter {
-        /* Set del recycler view */
-        val recyclerViewAdapter = ContattoAdapter(arrayListOf(), textViewDatiVuoti){
-            val rIt:ContattoType = it
-            rIt.selezionato = !rIt.selezionato!!
-            recyclerViewAdapter.setItem(it, rIt)
-            if(rIt.selezionato == true)
-                contattiSelezionati++;
-            else
-                contattiSelezionati = if(contattiSelezionati == 0) 0 else contattiSelezionati - 1
-
-            if(contattiSelezionati > 0) abilitaIconaTopAppBar() else disabilitaIconaTopAppBar()
-        }
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        return recyclerViewAdapter
-    }
-
-    private fun disabilitaIconaTopAppBar(){
-        val moveLocationMenuItem = topAppBar.menu.findItem(R.id.checkIcon)
-        moveLocationMenuItem.icon.mutate().alpha = 130
-        moveLocationMenuItem.isEnabled = false
-    }
-
-    private fun abilitaIconaTopAppBar(){
-        val moveLocationMenuItem = topAppBar.menu.findItem(R.id.checkIcon)
-        moveLocationMenuItem.icon.mutate().alpha = 255
-        moveLocationMenuItem.isEnabled = true
-    }
-    //Importa contatti
     private fun getContactList() {
         val phones: Cursor? = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -169,7 +165,7 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
                 namePhoneMap.put(phoneNumber, name)
             }
         }
-        var contactList:ArrayList<ContattoType> = ArrayList()
+        var contactList: ArrayList<ContattoType> = ArrayList()
         for ((key, value) in namePhoneMap) {
             contactList.add(ContattoType(value, key, false))
         }
@@ -179,18 +175,53 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         }
     }
 
+    private fun setRecyclerView(): ContattoAdapter {
+        /* Set del recycler view */
+        val recyclerViewAdapter = ContattoAdapter(arrayListOf(), textViewDatiVuoti) {
+            val rIt: ContattoType = it
+            rIt.selezionato = !rIt.selezionato!!
+            recyclerViewAdapter.setItem(it, rIt)
+            val partecipante = PartecipanteType(rIt.generalita, rIt.numeroTelefono)
+            if (rIt.selezionato == true)
+                listContattiSelezionati.add(partecipante)
+            else
+                listContattiSelezionati.remove(partecipante)
 
-    override fun onMenuItemClick(item: MenuItem):Boolean {
-        when (item.itemId){
+            if (listContattiSelezionati.size > 0) abilitaIconaTopAppBar() else disabilitaIconaTopAppBar()
+        }
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        return recyclerViewAdapter
+    }
+
+    private fun disabilitaIconaTopAppBar() {
+        val moveLocationMenuItem = topAppBar.menu.findItem(R.id.checkIcon)
+        moveLocationMenuItem.icon.mutate().alpha = 130
+        moveLocationMenuItem.isEnabled = false
+    }
+
+    private fun abilitaIconaTopAppBar() {
+        val moveLocationMenuItem = topAppBar.menu.findItem(R.id.checkIcon)
+        moveLocationMenuItem.icon.mutate().alpha = 255
+        moveLocationMenuItem.isEnabled = true
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.checkIcon -> {
                 //Importo i contatti nell'activity di creazione
+                val intent = Intent().apply {
+                    putParcelableArrayListExtra("listaContatti", listContattiSelezionati)
+                }
+                setResult(Activity.RESULT_OK, intent)
+                finish()
                 return true
             }
         }
         return false;
     }
 
-    val navigationIconOnClickListener= View.OnClickListener {
+    val navigationIconOnClickListener = View.OnClickListener {
         finish()
     }
 
@@ -202,6 +233,7 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         }
         return super.dispatchTouchEvent(ev)
     }
+
     companion object {
         val PERMISSIONS_REQUEST_READ_CONTACTS = 100
     }

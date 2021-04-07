@@ -1,5 +1,7 @@
 package com.example.quickbalance
 
+import android.app.Activity
+import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.PartecipanteAdapter
@@ -108,9 +111,18 @@ class NuovaOpActivity: AppCompatActivity() {
             }
         }
 
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val list:ArrayList<PartecipanteType> = data?.getParcelableArrayListExtra<PartecipanteType>("listaContatti") as ArrayList<PartecipanteType>
+            list.forEach{recyclerViewAdapter.addItem(it)}
+        }
+    }
+
     val buttonImportaRubricaOnClickListener= View.OnClickListener {
         val int: Intent = Intent(this, ImportaContattiActivity::class.java)
-        startActivity(int)
+        resultLauncher.launch(int)
     }
 
     val navigationIconOnClickListener= View.OnClickListener {
