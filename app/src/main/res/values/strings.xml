@@ -37,4 +37,7 @@
     <string name="import_contacts">Importa contatti</string>
     <string name="no_contacts">Nessun contatto</string>
     <string name="search_by_name">Cerca per nome</string>
+    <string name="read_contacts_permission">Richiesta lettura contatti</string>
+    <string name="read_contacts_permission_message">Fornisci i permessi per accedere alla rubrica</string>
+    <string name="disabled_read_contacts_permission">Hai disabilitato i permessi per accedere alla rubrica</string>
 </resources>
