@@ -74,6 +74,7 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
             listContatti = savedInstanceState.getParcelableArrayList<ContattoType>("listContatti") as ArrayList<ContattoType>
             listContattiSelezionati = savedInstanceState.getParcelableArrayList<PartecipanteType>("listContattiSelezionati") as ArrayList<PartecipanteType>
             recyclerViewAdapter.updateTasks(savedInstanceState.getParcelableArrayList<ContattoType>("listContattiRecycler") as ArrayList<ContattoType>)
+            circularProgress.visibility = View.GONE
         }else
         {
             richiediPermessoContatti()

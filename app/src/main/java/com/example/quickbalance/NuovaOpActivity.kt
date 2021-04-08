@@ -80,7 +80,7 @@ class NuovaOpActivity: AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT).show()
         }
         else
-            Toast.makeText(this, getString(R.string.member_already_exists), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "$generalita ${getString(R.string.already_exists)}", Toast.LENGTH_SHORT).show()
     }
 
     private fun normalizzaStringa(sIn: String):String{
@@ -116,7 +116,18 @@ class NuovaOpActivity: AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val list:ArrayList<PartecipanteType> = data?.getParcelableArrayListExtra<PartecipanteType>("listaContatti") as ArrayList<PartecipanteType>
-            list.forEach{recyclerViewAdapter.addItem(it)}
+            list.forEach{
+                val generalita = it.generalita
+                val telefono = it.numeroTelefono
+                if (generalita != null) {
+                    if(generalita.isNotBlank() && recyclerViewAdapter.getList().find{it.generalita.equals(generalita)} == null && recyclerViewAdapter.getList().find{it.numeroTelefono.equals(
+                            telefono
+                        )} == null)
+                        recyclerViewAdapter.addItem(it)
+                    else
+                        Toast.makeText(this, "$generalita ${getString(R.string.already_exists)}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
