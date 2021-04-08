@@ -40,13 +40,20 @@ class NuovaOpActivity: AppCompatActivity() {
             editTextGeneralita.setText(savedInstanceState.getString("testoTextViewGeneralita"))
             editTextNumero.setText(savedInstanceState.getString("testoTextViewNumero"))
             recyclerViewAdapter.updateTasks(savedInstanceState.getParcelableArrayList<PartecipanteType>("listaPartecipanti") as ArrayList<PartecipanteType>)
-
         }
+        aggiornaStatoButtonContinua()
+    }
+
+    fun aggiornaStatoButtonContinua(){
+        if(recyclerViewAdapter.itemCount > 0)
+            buttonContinua.isEnabled = true
+        else
+            buttonContinua.isEnabled = false
     }
 
     private fun setRecyclerView(): PartecipanteAdapter {
         /* Set del recycler view */
-        val recyclerViewAdapter = PartecipanteAdapter(arrayListOf(), textViewDatiVuoti)
+        val recyclerViewAdapter = PartecipanteAdapter(arrayListOf(), textViewDatiVuoti, buttonContinua)
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         return recyclerViewAdapter
@@ -92,6 +99,7 @@ class NuovaOpActivity: AppCompatActivity() {
             normalizzaStringa(editTextGeneralita.text.toString()),
             editTextNumero.text.toString()
         )
+        aggiornaStatoButtonContinua()
     }
 
     private val editTextNominativoFocusListener =
@@ -128,6 +136,7 @@ class NuovaOpActivity: AppCompatActivity() {
                         Toast.makeText(this, "$generalita ${getString(R.string.already_exists)}", Toast.LENGTH_SHORT).show()
                 }
             }
+            aggiornaStatoButtonContinua()
         }
     }
 

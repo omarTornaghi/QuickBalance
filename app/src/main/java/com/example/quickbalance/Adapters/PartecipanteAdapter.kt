@@ -10,7 +10,7 @@ import com.example.quickbalance.DataTypes.PartecipanteType
 import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.card_partecipante.view.*
 
-class PartecipanteAdapter(private val partecipanti: ArrayList<PartecipanteType>, private var textView:TextView) : RecyclerView.Adapter<PartecipanteAdapter.DestinatarioHolder>(){
+class PartecipanteAdapter(private val partecipanti: ArrayList<PartecipanteType>, private var textView:TextView, private var button:Button) : RecyclerView.Adapter<PartecipanteAdapter.DestinatarioHolder>(){
     fun updateTasks(nuovaLista: ArrayList<PartecipanteType>)
     {
         partecipanti.clear()
@@ -45,8 +45,10 @@ class PartecipanteAdapter(private val partecipanti: ArrayList<PartecipanteType>,
         partecipanti.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position,partecipanti.size)
-        if(itemCount == 0)
+        if(itemCount == 0){
             textView.visibility = View.VISIBLE
+            button.isEnabled = false
+        }
 
     }
     class DestinatarioHolder(v: View) : RecyclerView.ViewHolder(v){
