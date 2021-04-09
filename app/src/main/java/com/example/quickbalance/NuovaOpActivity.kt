@@ -1,11 +1,9 @@
 package com.example.quickbalance
 
 import android.app.Activity
-import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -31,6 +29,7 @@ class NuovaOpActivity: AppCompatActivity() {
         topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
         buttonAggiungiPartecipante.setOnClickListener(aggiungiPartecipanteOnClickListener)
         buttonImportaRubrica.setOnClickListener(buttonImportaRubricaOnClickListener)
+        buttonAvanti.setOnClickListener(buttonAvantiOnClickListener)
         editTextGeneralita.setOnFocusChangeListener(editTextNominativoFocusListener)
         editTextNumero.setOnFocusChangeListener(editTextNumeroFocusListener)
         //RecyclerView
@@ -46,14 +45,14 @@ class NuovaOpActivity: AppCompatActivity() {
 
     fun aggiornaStatoButtonContinua(){
         if(recyclerViewAdapter.itemCount > 0)
-            buttonContinua.isEnabled = true
+            buttonAvanti.isEnabled = true
         else
-            buttonContinua.isEnabled = false
+            buttonAvanti.isEnabled = false
     }
 
     private fun setRecyclerView(): PartecipanteAdapter {
         /* Set del recycler view */
-        val recyclerViewAdapter = PartecipanteAdapter(arrayListOf(), textViewDatiVuoti, buttonContinua)
+        val recyclerViewAdapter = PartecipanteAdapter(arrayListOf(), textViewDatiVuoti, buttonAvanti)
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         return recyclerViewAdapter
@@ -143,6 +142,11 @@ class NuovaOpActivity: AppCompatActivity() {
     val buttonImportaRubricaOnClickListener= View.OnClickListener {
         val int: Intent = Intent(this, ImportaContattiActivity::class.java)
         resultLauncher.launch(int)
+    }
+
+    val buttonAvantiOnClickListener= View.OnClickListener {
+        val int: Intent = Intent(this, OpAggDataActivity::class.java)
+        startActivity(int)
     }
 
     val navigationIconOnClickListener= View.OnClickListener {

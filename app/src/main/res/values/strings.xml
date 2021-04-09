@@ -23,6 +23,7 @@
     <string name="to">al</string>
     <string name="not_defined">non definito</string>
     <string name="update">Modifica</string>
+    <string name="new_transaction">Nuova transazione</string>
     <string name="fields_not_valid">Campi non validi</string>
     <string name="member_already_exists">Partecipante già esistente</string>
     <string name="already_exists">già esistente</string>
@@ -41,4 +42,5 @@
     <string name="read_contacts_permission">Richiesta lettura contatti</string>
     <string name="read_contacts_permission_message">Fornisci i permessi per accedere alla rubrica</string>
     <string name="disabled_read_contacts_permission">Hai disabilitato i permessi per accedere alla rubrica</string>
+    <string name="transaction_data">Dati transazione</string>
 </resources>
