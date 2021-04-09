@@ -11,31 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickBalance">
-        <activity android:name=".OpAggDataActivity"></activity>
+
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
-
             <!-- TODO RIMETTERLA COME MAIN -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".NuovaOpActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity
-            android:name=".ImportaContattiActivity"
+            android:name=".OpAggDataActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ImportaContattiActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
