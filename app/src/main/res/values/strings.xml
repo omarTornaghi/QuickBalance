@@ -43,4 +43,6 @@
     <string name="read_contacts_permission_message">Fornisci i permessi per accedere alla rubrica</string>
     <string name="disabled_read_contacts_permission">Hai disabilitato i permessi per accedere alla rubrica</string>
     <string name="transaction_data">Dati transazione</string>
+    <string name="credit">CREDITO</string>
+    <string name="debit">DEBITO</string>
 </resources>

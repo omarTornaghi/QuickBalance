@@ -141,19 +141,59 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <Spinner
-                        android:id="@+id/spinnerView"
-                        android:layout_width="0dp"
+                    <RadioGroup
+                        android:id="@+id/toggleButton"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="15dp"
                         android:layout_marginRight="15dp"
-                        android:spinnerMode="dialog"
+                        android:background="@drawable/background_switch_green"
+                        android:checkedButton="@+id/offer"
+                        android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+                        <RadioButton
+                            android:id="@+id/debitoToggleButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:radius="50dp"
+                            android:text="@string/debit"
+                            android:letterSpacing="0.1"
+                            android:textColor="@color/white" />
+
+                        <RadioButton
+                            android:id="@+id/creditoToggleButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/toggle_widget_background"
+                            android:button="@null"
+                            android:fontFamily="sans-serif-medium"
+                            android:gravity="center"
+                            android:radius="50dp"
+                            android:text="@string/credit"
+                            android:letterSpacing="0.1"
+                            android:textColor="@color/green" />
+                    </RadioGroup>
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextDescrizione"
@@ -173,8 +213,9 @@
                         android:textColorHighlight="@color/green"
                         android:textColorLink="@color/green"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/spinnerView" />
+                        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextimporto"
@@ -196,6 +237,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>

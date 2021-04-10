@@ -5,8 +5,4 @@
         <item>Descrizione</item>
         <item>Telefono</item>
     </string-array>
-    <string-array name="spinnerData">
-        <item>Credito</item>
-        <item>Debito</item>
-    </string-array>
 </resources>
