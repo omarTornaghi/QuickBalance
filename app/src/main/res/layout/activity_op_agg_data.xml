@@ -113,7 +113,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
@@ -171,9 +171,9 @@
                             android:button="@null"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
+                            android:letterSpacing="0.1"
                             android:radius="50dp"
                             android:text="@string/debit"
-                            android:letterSpacing="0.1"
                             android:textColor="@color/white" />
 
                         <RadioButton
@@ -189,9 +189,9 @@
                             android:button="@null"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center"
+                            android:letterSpacing="0.1"
                             android:radius="50dp"
                             android:text="@string/credit"
-                            android:letterSpacing="0.1"
                             android:textColor="@color/green" />
                     </RadioGroup>
 
@@ -238,6 +238,27 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
 
+                    <EditText
+                        android:id="@+id/editTextDataInizio"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/circular_datepicker"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/ic_baseline_calendar_gray_icon"
+                        android:drawableLeft="@drawable/ic_baseline_calendar_gray_icon"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Data di inizio"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextimporto"
+                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
