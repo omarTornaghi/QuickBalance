@@ -45,4 +45,5 @@
     <string name="transaction_data">Dati transazione</string>
     <string name="credit">CREDITO</string>
     <string name="debit">DEBITO</string>
+    <string name="cancel">Annulla</string>
 </resources>

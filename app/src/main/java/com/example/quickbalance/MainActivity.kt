@@ -113,6 +113,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private fun creaFragmentCorrente(fragment: Fragment) =
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction().apply {
+                setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 replace(R.id.fl_wrapper, fragment)
                 commit()
             }

@@ -3,11 +3,17 @@ package com.example.quickbalance
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_creazione_stepuno.*
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
@@ -44,14 +50,86 @@ class OpAggDataActivity : AppCompatActivity() {
                     0,
                     0
                 )
-                DatePickerDialog(
+                val dialog = DatePickerDialog(
                     this@OpAggDataActivity, dataInizio, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)
-                ).show()
+                )
+                dialog.setButton(
+                    DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel)
+                ) { dialog, which ->
+                    if (which == DialogInterface.BUTTON_NEGATIVE) {
+                        editTextDataInizio.setCompoundDrawablesWithIntrinsicBounds(
+                            R.drawable.ic_baseline_calendar_gray_icon,
+                            0,
+                            0,
+                            0
+                        )
+                    }
+                }
+                dialog.show()
             }
         })
         //fine datepicker dataInizio
+        //datepicker dataScadenza
+        val dataScadenza =
+            OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateLabelDatePicker(calendar, editTextDataScadenza)
+            }
+        editTextDataScadenza.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                editTextDataScadenza.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_baseline_calendar_green_icon,
+                    0,
+                    0,
+                    0
+                )
+                val dialog = DatePickerDialog(
+                    this@OpAggDataActivity, dataScadenza, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                )
+                dialog.setButton(
+                    DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel)
+                ) { dialog, which ->
+                    if (which == DialogInterface.BUTTON_NEGATIVE) {
+                        editTextDataScadenza.setCompoundDrawablesWithIntrinsicBounds(
+                            R.drawable.ic_baseline_calendar_gray_icon,
+                            0,
+                            0,
+                            0
+                        )
+                    }
+                }
+                dialog.show()
+            }
+        })
+        editTextDataScadenza.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(editTextDataScadenza.text.toString().isNotBlank()){
+                    buttonCancellaDataScadenza.visibility = View.VISIBLE
+                    val params = editTextDataScadenza.layoutParams as ConstraintLayout.LayoutParams
+                    params.rightToLeft = buttonCancellaDataScadenza.id
+                    editTextDataScadenza.requestLayout()
+                }
+                else {
+                    buttonCancellaDataScadenza.visibility = View.GONE
+                    val params = editTextDataScadenza.layoutParams as ConstraintLayout.LayoutParams
+                    params.rightToLeft = consLayDate.id
+                    editTextDataScadenza.requestLayout()
+                }
+            }
+        })
+        //fine datepicker dataScadenza
         if(savedInstanceState != null){
             statoToggle = savedInstanceState.getBoolean("statoToggle")
             if(statoToggle == true) setToggleCredito() else setToggleDebito()
@@ -65,6 +143,7 @@ class OpAggDataActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat(formatoData)
             editTextDataInizio.setText(sdf.format(Date()))
         }
+        buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
     }
 
     fun getCurrentLocale(context: Context): Locale? {
@@ -75,7 +154,7 @@ class OpAggDataActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateLabelDatePicker(myCalendar: Calendar, editText:EditText) {
+    private fun updateLabelDatePicker(myCalendar: Calendar, editText: EditText) {
         val sdf = SimpleDateFormat(formatoData, getCurrentLocale(this))
         editText.setText(sdf.format(myCalendar.getTime()))
         editText.setCompoundDrawablesWithIntrinsicBounds(

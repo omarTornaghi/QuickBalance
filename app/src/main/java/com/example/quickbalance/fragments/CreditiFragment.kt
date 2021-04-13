@@ -83,12 +83,13 @@ class CreditiFragment : Fragment(){
         floatinButtonAggiungi.setOnClickListener(addFBOnClickListener)
         //Set dello spinner
         setSpinner()
-        Handler(Looper.getMainLooper()).postDelayed({
-            //Set del recyclerView
-            val recyclerViewAdapter = setRecyclerView()
-            // Popolazione
-            recyclerViewAdapter.updateTasks(data)
-        }, 0)
+        //Set del recyclerView
+        val recyclerViewAdapter = setRecyclerView()
+        // Popolazione
+        recyclerViewAdapter.updateTasks(data)
+        //Handler(Looper.getMainLooper()).postDelayed({
+
+       // }, 0)
 
     }
 
