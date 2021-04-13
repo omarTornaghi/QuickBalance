@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +23,7 @@ import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.fragment_crediti.*
 
 
-class CreditiFragment() : Fragment(){
+class CreditiFragment : Fragment(){
     private lateinit var mContext: Context
     private lateinit var data: ArrayList<CreditType>
     private var stringTextInput: String = ""
@@ -30,6 +32,17 @@ class CreditiFragment() : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        if (savedInstanceState != null) {
+            stringTextInput = savedInstanceState.getString("testoTextViewRicerca")!!
+            intCampo = savedInstanceState.getInt("testoSpinner")!!
+        }
+        /* Popolazione */
+        data = ArrayList<CreditType>()
+        data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+        data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+        data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+        data.add(CreditType("Tornag", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+        data.add(CreditType("Tornaghi", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
     }
 
     override fun onAttach(context: Context) {
@@ -51,42 +64,31 @@ class CreditiFragment() : Fragment(){
         outState.putInt("testoSpinner", spinnerView.selectedItemPosition)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null) {
-            stringTextInput = savedInstanceState.getString("testoTextViewRicerca")!!
-            intCampo = savedInstanceState.getInt("testoSpinner")!!
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //set dello stato
+        editTextInput.setText(stringTextInput)
+        spinnerView.setSelection(intCampo)
         editTextInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 editTextInput.clearFocus()
                 val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(view!!.getWindowToken(), 0)
+                imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0)
                 Log.d("XXXX", "CERCO")
             }
             true
         }
-        //Set dello spinner
-        setSpinner()
-        //set dello stato
-        editTextInput.setText(stringTextInput)
-        spinnerView.setSelection(intCampo)
-        //Set del recyclerView
-        val recyclerViewAdapter = setRecyclerView()
         //Set del click del floating button
         floatinButtonAggiungi.setOnClickListener(addFBOnClickListener)
-        /* Popolazione */
-        data = ArrayList<CreditType>()
-        data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Tornag", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        data.add(CreditType("Tornaghi", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-        recyclerViewAdapter.updateTasks(data)
+        //Set dello spinner
+        setSpinner()
+        Handler(Looper.getMainLooper()).postDelayed({
+            //Set del recyclerView
+            val recyclerViewAdapter = setRecyclerView()
+            // Popolazione
+            recyclerViewAdapter.updateTasks(data)
+        }, 0)
 
     }
 

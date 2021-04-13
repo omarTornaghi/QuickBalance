@@ -3,9 +3,12 @@ package com.example.quickbalance
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -24,6 +27,9 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getWindow().setFlags(
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
         topAppBar.setOnMenuItemClickListener(this)
         if(savedInstanceState != null){
             selectedFragment = savedInstanceState.getInt("selected")
@@ -105,10 +111,12 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun creaFragmentCorrente(fragment: Fragment) =
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fl_wrapper, fragment)
-            commit()
-        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fl_wrapper, fragment)
+                commit()
+            }
+        }, 200)
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
