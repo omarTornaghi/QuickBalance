@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
+import com.example.quickbalance.Animations.AnimationUtils
+import com.example.quickbalance.Animations.AnimationUtils.collapse
+import com.example.quickbalance.Animations.AnimationUtils.expand
 import kotlinx.android.synthetic.main.activity_creazione_stepuno.*
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
 import java.text.SimpleDateFormat
@@ -23,6 +26,7 @@ import java.util.*
 
 class OpAggDataActivity : AppCompatActivity() {
     var statoToggle:Boolean = false
+    var cardDateEspansa:Boolean = true
     val formatoData:String = "dd/MM/yyyy"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,6 +134,8 @@ class OpAggDataActivity : AppCompatActivity() {
             }
         })
         //fine datepicker dataScadenza
+        buttonColExpCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
+        textViewCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
         if(savedInstanceState != null){
             statoToggle = savedInstanceState.getBoolean("statoToggle")
             if(statoToggle == true) setToggleCredito() else setToggleDebito()
@@ -163,6 +169,22 @@ class OpAggDataActivity : AppCompatActivity() {
             0,
             0
         )
+    }
+
+    private fun ecCardDate(){
+        if(cardDateEspansa){
+            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_24, 0, 0, 0);
+            expand(consLayDate)
+        }
+        else{
+            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
+            collapse(consLayDate)
+        }
+    }
+
+    private val buttonColExpCardDateOnClickListener = View.OnClickListener { view->
+        cardDateEspansa = !cardDateEspansa
+        ecCardDate()
     }
 
     private val toggleButtonOnClickListener = View.OnClickListener { view ->
