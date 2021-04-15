@@ -13,12 +13,12 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
-import com.example.quickbalance.Animations.AnimationUtils
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.quickbalance.Adapters.NotificheAdapter
 import com.example.quickbalance.Animations.AnimationUtils.collapse
 import com.example.quickbalance.Animations.AnimationUtils.expand
-import kotlinx.android.synthetic.main.activity_creazione_stepuno.*
+import com.example.quickbalance.DataTypes.NotificaType
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -150,6 +150,11 @@ class OpAggDataActivity : AppCompatActivity() {
             editTextDataInizio.setText(sdf.format(Date()))
         }
         buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
+
+        val recyclerViewAdapter = NotificheAdapter(arrayListOf())
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerViewAdapter.addItem(NotificaType("prova"))
     }
 
     fun getCurrentLocale(context: Context): Locale? {
