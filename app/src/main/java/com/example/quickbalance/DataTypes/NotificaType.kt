@@ -1,14 +1,14 @@
 package com.example.quickbalance.DataTypes
 
-data class NotificaType(var descrizione:String){
-    var numGiorni:Int = 1
+import android.content.Context
+import com.example.quickbalance.R
 
 
-    companion object{
-        fun getDescrizione(num:Int):String{
-            if(num == 1)
-                return num.toString() + " day before"
-            return num.toString() + " days before"
+data class NotificaType(var numGiorni:Int, val context:Context){
+    override fun toString(): String {
+        when(numGiorni){
+            1->return "$numGiorni ${context.getString(R.string.day_before)}"
+            else-> return "$numGiorni ${context.getString(R.string.days_before)}"
         }
     }
 }

@@ -151,10 +151,10 @@ class OpAggDataActivity : AppCompatActivity() {
         }
         buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
 
-        val recyclerViewAdapter = NotificheAdapter(arrayListOf())
+        val recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerViewAdapter.addItem(NotificaType("prova"))
+        recyclerViewAdapter.addItem(NotificaType(1, this))
     }
 
     fun getCurrentLocale(context: Context): Locale? {

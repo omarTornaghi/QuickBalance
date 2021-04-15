@@ -50,30 +50,22 @@ class ContattoAdapter(private val contatti: ArrayList<ContattoType>, private var
     }
 
     class ContattoHolder(v: View) : RecyclerView.ViewHolder(v){
-        public var view: View = v
+        var view: View = v
         private lateinit var contact: ContattoType
         fun bind(contatto: ContattoType) {
             contact = contatto
-            //view.setOnClickListener(cardOnClick)
             view.textViewNomeContatto.text = if(contatto.generalita.isNullOrBlank()) view.getResources().getString(
                 R.string.not_defined
             ) else contatto.generalita
             view.textViewNumeroContatto.text = if(contatto.numeroTelefono.isNullOrBlank()) view.getResources().getString(
                 R.string.not_defined
             ) else contatto.numeroTelefono
-            /*view.checkSelezionato.setOnCheckedChangeListener{ buttonView, isChecked ->
-                contatto.selezionato = view.checkSelezionato.isChecked
-            }*/
             if(contatto.selezionato == true)
                 view.checkSelezionato.isChecked = true
             else
                 view.checkSelezionato.isChecked = false
         }
 
-        val cardOnClick= View.OnClickListener {
-            view.checkSelezionato.isChecked = !view.checkSelezionato.isChecked
-            contact.selezionato = view.checkSelezionato.isChecked
-        }
 
     }
 }
