@@ -49,4 +49,5 @@
     <string name="none">Nessuno</string>
     <string name="day_before">giorno prima</string>
     <string name="days_before">giorni prima</string>
+    <string name="add_reminder">Aggiungi promemoria</string>
 </resources>

@@ -25,6 +25,7 @@ import java.util.*
 
 class OpAggDataActivity : AppCompatActivity() {
     var statoToggle:Boolean = false
+    var cardDatiTransEspansa:Boolean = true
     var cardDateEspansa:Boolean = true
     val formatoData:String = "dd/MM/yyyy"
 
@@ -37,6 +38,8 @@ class OpAggDataActivity : AppCompatActivity() {
         toggleButton.setOnClickListener(toggleButtonOnClickListener)
         creditoToggleButton.setOnClickListener{setToggleCredito()}
         debitoToggleButton.setOnClickListener({ setToggleDebito() })
+        textViewDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
+        buttonColExpCardDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
         //Datepicker dataInizio
         val calendar: Calendar = Calendar.getInstance()
         val dataInizio =
@@ -136,12 +139,21 @@ class OpAggDataActivity : AppCompatActivity() {
         //fine datepicker dataScadenza
         buttonColExpCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
         textViewCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
+        buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
+        //Recycler view
+        val recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        //Recupero dello stato
         if(savedInstanceState != null){
             statoToggle = savedInstanceState.getBoolean("statoToggle")
             if(statoToggle == true) setToggleCredito() else setToggleDebito()
             editTextDescrizione.setText(savedInstanceState.getString("editTextDescrizione"))
             editTextimportoTotale.setText(savedInstanceState.getString("editTextImporto"))
             editTextDataInizio.setText(savedInstanceState.getString("editTextDataInizio"))
+            cardDatiTransEspansa = savedInstanceState.getBoolean("cardDatiTransEspansa")
+            cardDateEspansa = savedInstanceState.getBoolean("cardDateEspansa")
         }
         else {
             //TODO Set toggle in base a chi ha chiamato l'operazione
@@ -149,11 +161,9 @@ class OpAggDataActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat(formatoData)
             editTextDataInizio.setText(sdf.format(Date()))
         }
-        buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
+        ecCardDatiTrans()
+        ecCardDate()
 
-        val recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerViewAdapter.addItem(NotificaType(1, this))
     }
 
@@ -176,6 +186,17 @@ class OpAggDataActivity : AppCompatActivity() {
         )
     }
 
+    private fun ecCardDatiTrans(){
+        if(cardDatiTransEspansa){
+            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_24, 0, 0, 0);
+            expand(consLayDatiTrans)
+        }
+        else{
+            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
+            collapse(consLayDatiTrans)
+        }
+    }
+
     private fun ecCardDate(){
         if(cardDateEspansa){
             buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_24, 0, 0, 0);
@@ -185,6 +206,11 @@ class OpAggDataActivity : AppCompatActivity() {
             buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
             collapse(consLayDate)
         }
+    }
+
+    private val buttonColExpCardDatiTransOnClickListener = View.OnClickListener { view->
+        cardDatiTransEspansa = !cardDatiTransEspansa
+        ecCardDatiTrans()
     }
 
     private val buttonColExpCardDateOnClickListener = View.OnClickListener { view->
@@ -283,5 +309,7 @@ class OpAggDataActivity : AppCompatActivity() {
         outState.putString("editTextDescrizione", editTextDescrizione.text.toString())
         outState.putString("editTextImporto", editTextimportoTotale.text.toString())
         outState.putString("editTextDataInizio", editTextDataInizio.text.toString())
+        outState.putBoolean("cardDatiTransEspansa", cardDatiTransEspansa)
+        outState.putBoolean("cardDateEspansa", cardDateEspansa)
     }
 }

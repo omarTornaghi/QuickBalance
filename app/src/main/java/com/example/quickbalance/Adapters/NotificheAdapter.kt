@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.DataTypes.NotificaType
@@ -27,6 +28,11 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
         notifiche.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, notifiche.size)
+    }
+
+    fun updateItem(position:Int, newN:NotificaType){
+        notifiche.set(position, newN)
+        notifyItemChanged(position)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -50,11 +56,10 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
         return NotificaHolder(itemView)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: NotificaHolder, position: Int) {
         if (position == notifiche.size) {
             holder.buttonAggiungi?.setOnClickListener {
-                var n = NotificaType(1, context)
+                var n = NotificaType(0, context)
                 if (notifiche.size > 0)
                     n = notifiche.get(notifiche.size - 1)
                 addItem(NotificaType((n.numGiorni + 1) % 7, context))
@@ -62,17 +67,33 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
         } else {
             val notifica: NotificaType = notifiche.get(position)
             holder.textViewInfo?.setText(notifica.toString())
-            holder.layout?.setOnClickListener {
-                Log.d("XXXX", "APRO DIALOG")
-            }
+            holder.textViewInfo?.setOnClickListener{creaDialog(position)}
+            holder.buttonRimuovi?.setOnClickListener { removeItem(position) }
+            holder.layout?.setOnClickListener{creaDialog(position)}
+        }
+    }
 
-            holder.textViewInfo?.setOnClickListener{
-                Log.d("XXXX", "APRO DIALOG")
-            }
-            holder.buttonRimuovi?.setOnClickListener {
-                removeItem(position)
+    private fun creaDialog(position:Int){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(context.getString(R.string.add_reminder))
+        var list:ArrayList<String> = ArrayList()
+        list.add("Nessuno")
+        for(i in 1..7){
+            list.add(NotificaType(i, context).toString())
+        }
+
+        builder.setItems(list.toTypedArray()) { dialog, which ->
+            when (which) {
+                0 -> {  removeItem(position)}
+                else -> {
+                    updateItem(position, NotificaType(which, context))
+                }
             }
         }
+        builder.setNegativeButton(R.string.cancel, { dialog, which ->  dialog.dismiss()})
+        // create and show the alert dialog
+        val dialog = builder.create()
+        dialog.show()
     }
 
     override fun getItemCount(): Int {
