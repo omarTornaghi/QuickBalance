@@ -142,7 +142,7 @@
                         android:layout_marginTop="9dp"
                         android:drawableStart="@drawable/ic_baseline_edit_note_icon"
                         android:drawableLeft="@drawable/ic_baseline_edit_note_icon"
-                        android:text="Dati transazione"
+                        android:text="@string/transaction_data"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -220,7 +220,7 @@
                             android:drawableStart="@drawable/ic_baseline_description_gray_icon"
                             android:drawableLeft="@drawable/ic_baseline_description_gray_icon"
                             android:ems="10"
-                            android:hint="Descrizione"
+                            android:hint="@string/description"
                             android:inputType="textPersonName"
                             android:textColorHighlight="@color/green"
                             android:textColorLink="@color/green"
@@ -242,7 +242,7 @@
                             android:drawableStart="@drawable/ic_baseline_euro_gray_icon"
                             android:drawableLeft="@drawable/ic_baseline_euro_gray_icon"
                             android:ems="10"
-                            android:hint="Importo"
+                            android:hint="@string/amount"
                             android:inputType="numberDecimal"
                             android:textColorHighlight="@color/green"
                             android:textColorLink="@color/green"
@@ -263,7 +263,7 @@
                             android:drawableStart="@drawable/ic_money_person_gray_icon"
                             android:drawableLeft="@drawable/ic_money_person_gray_icon"
                             android:ems="10"
-                            android:hint="A persona"
+                            android:hint="@string/per_person"
                             android:inputType="numberDecimal"
                             android:textColorHighlight="@color/green"
                             android:textColorLink="@color/green"
@@ -279,7 +279,7 @@
                             android:layout_marginStart="15dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="10dp"
-                            android:text="Descrizione:"
+                            android:text="@string/description_field"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
@@ -290,7 +290,7 @@
                             android:layout_marginStart="15dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="10dp"
-                            android:text="Importo totale:"
+                            android:text="@string/total_import_field"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
 
@@ -299,7 +299,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Importo a persona:"
+                            android:text="@string/import_per_person_field"
                             app:layout_constraintStart_toStartOf="@+id/editTextImportoPersona"
                             app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -342,7 +342,7 @@
                         android:layout_marginTop="9dp"
                         android:drawableStart="@drawable/ic_baseline_edit_calendar_orange_icon"
                         android:drawableLeft="@drawable/ic_baseline_edit_calendar_orange_icon"
-                        android:text="Scadenze transazione"
+                        android:text="@string/transaction_ends"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -382,7 +382,7 @@
                             android:drawableLeft="@drawable/ic_baseline_calendar_gray_icon"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Data di inizio"
+                            android:hint="@string/start_date"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
@@ -394,7 +394,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:layout_marginLeft="15dp"
-                            android:text="Data di inizio:"
+                            android:text="@string/start_date_field"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -405,7 +405,7 @@
                             android:layout_marginStart="15dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="10dp"
-                            android:text="Data di scadenza:"
+                            android:text="@string/end_date_field"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/editTextDataInizio" />
 
@@ -425,7 +425,7 @@
                             android:drawableLeft="@drawable/ic_baseline_calendar_gray_icon"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:hint="Data scadenza"
+                            android:hint="@string/end_date"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -472,7 +472,7 @@
                         android:layout_marginLeft="21dp"
                         android:layout_marginTop="9dp"
                         android:drawableStart="@drawable/ic_baseline_notifications_icon"
-                        android:text="Gestione notifiche"
+                        android:text="@string/notification_management"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"

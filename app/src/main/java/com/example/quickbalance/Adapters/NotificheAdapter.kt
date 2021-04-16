@@ -62,7 +62,7 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
                 var n = NotificaType(0, context)
                 if (notifiche.size > 0)
                     n = notifiche.get(notifiche.size - 1)
-                addItem(NotificaType((n.numGiorni + 1) % 7, context))
+                addItem(NotificaType((((n.numGiorni + 1)-1) % 7)+1, context))
             }
         } else {
             val notifica: NotificaType = notifiche.get(position)
@@ -77,7 +77,7 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
         val builder = AlertDialog.Builder(context)
         builder.setTitle(context.getString(R.string.add_reminder))
         var list:ArrayList<String> = ArrayList()
-        list.add("Nessuno")
+        list.add(context.getString(R.string.nothing))
         for(i in 1..7){
             list.add(NotificaType(i, context).toString())
         }

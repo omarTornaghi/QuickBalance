@@ -50,4 +50,17 @@
     <string name="day_before">giorno prima</string>
     <string name="days_before">giorni prima</string>
     <string name="add_reminder">Aggiungi promemoria</string>
+    <string name="nothing">Nessuno</string>
+    <string name="description">Descrizione</string>
+    <string name="description_field">Descrizione:</string>
+    <string name="amount">Importo</string>
+    <string name="per_person">A persona</string>
+    <string name="total_import_field">Importo totale:</string>
+    <string name="import_per_person_field">Importo a persona:</string>
+    <string name="transaction_ends">Scadenze transazione</string>
+    <string name="start_date">Data di inizio</string>
+    <string name="start_date_field">Data di inizio:</string>
+    <string name="end_date_field">Data di scadenza:</string>
+    <string name="end_date">Data scadenza</string>
+    <string name="notification_management">Gestione notifiche</string>
 </resources>
