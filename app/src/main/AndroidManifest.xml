@@ -17,6 +17,7 @@
             android:windowSoftInputMode="adjustPan"
             android:hardwareAccelerated="true">
             <!-- TODO RIMETTERLA COME MAIN -->
+
         </activity>
         <activity
             android:name=".NuovaOpActivity"

@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +32,8 @@ class OpAggDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_op_agg_data)
         editTextDescrizione.setOnFocusChangeListener(editTextDescrizioneFocusListener)
-        editTextimporto.setOnFocusChangeListener(editTextImportoFocusListener)
+        editTextimportoTotale.setOnFocusChangeListener(editTextImportoFocusListener)
+        editTextImportoPersona.setOnFocusChangeListener(editTextImportoPersonaFocusListener)
         toggleButton.setOnClickListener(toggleButtonOnClickListener)
         creditoToggleButton.setOnClickListener{setToggleCredito()}
         debitoToggleButton.setOnClickListener({ setToggleDebito() })
@@ -140,7 +140,7 @@ class OpAggDataActivity : AppCompatActivity() {
             statoToggle = savedInstanceState.getBoolean("statoToggle")
             if(statoToggle == true) setToggleCredito() else setToggleDebito()
             editTextDescrizione.setText(savedInstanceState.getString("editTextDescrizione"))
-            editTextimporto.setText(savedInstanceState.getString("editTextImporto"))
+            editTextimportoTotale.setText(savedInstanceState.getString("editTextImporto"))
             editTextDataInizio.setText(savedInstanceState.getString("editTextDataInizio"))
         }
         else {
@@ -254,14 +254,14 @@ class OpAggDataActivity : AppCompatActivity() {
     private val editTextImportoFocusListener =
         View.OnFocusChangeListener { view, gainFocus ->
             if (gainFocus) {
-                editTextimporto.setCompoundDrawablesWithIntrinsicBounds(
+                editTextimportoTotale.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.ic_baseline_euro_green_icon,
                     0,
                     0,
                     0
                 )
             } else {
-                editTextimporto.setCompoundDrawablesWithIntrinsicBounds(
+                editTextimportoTotale.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.ic_baseline_euro_gray_icon,
                     0,
                     0,
@@ -269,12 +269,19 @@ class OpAggDataActivity : AppCompatActivity() {
                 )
             }
         }
+    private val editTextImportoPersonaFocusListener =
+        View.OnFocusChangeListener{ view, gainFocus->
+            if(gainFocus)
+                editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_money_person_green_icon, 0,0,0)
+            else
+                editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_money_person_gray_icon, 0,0,0)
+        }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean("statoToggle", statoToggle)
         outState.putString("editTextDescrizione", editTextDescrizione.text.toString())
-        outState.putString("editTextImporto", editTextimporto.text.toString())
+        outState.putString("editTextImporto", editTextimportoTotale.text.toString())
         outState.putString("editTextDataInizio", editTextDataInizio.text.toString())
     }
 }

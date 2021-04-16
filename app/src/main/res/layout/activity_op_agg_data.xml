@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_light"
     tools:context=".OpAggDataActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -34,7 +35,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:paddingTop="5dp">
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -117,7 +119,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView5"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
@@ -205,7 +207,7 @@
                         android:layout_height="40dp"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginEnd="15dp"
                         android:layout_marginRight="15dp"
                         android:background="@drawable/circular_edittext"
@@ -219,17 +221,17 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextimporto"
+                        android:id="@+id/editTextimportoTotale"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
                         android:background="@drawable/circular_edittext"
                         android:drawableStart="@drawable/ic_baseline_euro_gray_icon"
                         android:drawableLeft="@drawable/ic_baseline_euro_gray_icon"
@@ -238,9 +240,63 @@
                         android:inputType="numberDecimal"
                         android:textColorHighlight="@color/green"
                         android:textColorLink="@color/green"
+                        app:layout_constraintEnd_toStartOf="@+id/editTextImportoPersona"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+                    <EditText
+                        android:id="@+id/editTextImportoPersona"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/circular_edittext"
+                        android:ems="10"
+                        android:hint="A persona"
+                        android:inputType="numberDecimal"
+                        android:textColorHighlight="@color/green"
+                        android:textColorLink="@color/green"
+                        android:drawableStart="@drawable/ic_money_person_gray_icon"
+                        android:drawableLeft="@drawable/ic_money_person_gray_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/editTextimportoTotale"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/editTextimportoTotale" />
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Descrizione:"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Importo totale:"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
+
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Importo a persona:"
+                        app:layout_constraintStart_toStartOf="@+id/editTextImportoPersona"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
