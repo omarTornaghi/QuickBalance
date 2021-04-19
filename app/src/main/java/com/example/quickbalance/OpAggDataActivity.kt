@@ -21,6 +21,7 @@ import com.example.quickbalance.DataTypes.NotificaType
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class OpAggDataActivity : AppCompatActivity() {
@@ -30,16 +31,17 @@ class OpAggDataActivity : AppCompatActivity() {
     var cardDatiTransEspansa:Boolean = true
     var cardDateEspansa:Boolean = true
     val formatoData:String = "dd/MM/yyyy"
+    private lateinit var recyclerViewAdapter: NotificheAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_op_agg_data)
         //Recycler view
-        val recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
+        recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        recyclerViewAdapter.addItem(NotificaType(1, this))
+
 
         //Recupero dello stato
         if(savedInstanceState != null){
@@ -54,6 +56,9 @@ class OpAggDataActivity : AppCompatActivity() {
             cardDatiTransEspansa = savedInstanceState.getBoolean("cardDatiTransEspansa")
             cardDateEspansa = savedInstanceState.getBoolean("cardDateEspansa")
             activityModifica = savedInstanceState.getBoolean("activityModifica")
+            //Recupero notifiche selezionate
+            var nList:ArrayList<Int> = savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
+            nList.forEach { recyclerViewAdapter.addItem(NotificaType(it, this)) }
         }
         else {
             //TODO Set toggle in base a chi ha chiamato l'operazione
@@ -61,6 +66,7 @@ class OpAggDataActivity : AppCompatActivity() {
             //Setto giorno corrente
             val sdf = SimpleDateFormat(formatoData)
             editTextDataInizio.setText(sdf.format(Date()))
+            recyclerViewAdapter.addItem(NotificaType(1, this))
         }
         //Visualizzo o meno card per mdoficare partecipante
         setCardDatiUtente()
@@ -398,5 +404,9 @@ class OpAggDataActivity : AppCompatActivity() {
         outState.putBoolean("cardDateEspansa", cardDateEspansa)
         outState.putBoolean("cardDatiUtenteEspansa", cardDatiUtenteEspansa)
         outState.putBoolean("activityModifica", activityModifica)
+        //Salvo notifiche selezionate
+        var listNot:ArrayList<Int> = ArrayList()
+        recyclerViewAdapter.getList().forEach { listNot.add(it.numGiorni) }
+        outState.putIntegerArrayList("listaNotifiche", listNot)
     }
 }

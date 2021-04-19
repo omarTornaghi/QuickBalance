@@ -35,6 +35,8 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
         notifyItemChanged(position)
     }
 
+    fun getList():ArrayList<NotificaType>{return notifiche}
+
     override fun getItemViewType(position: Int): Int {
         return if (position == notifiche.size) R.layout.item_notifiche_button_aggiungi else R.layout.item_notifiche_info
     }
