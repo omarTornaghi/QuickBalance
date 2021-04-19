@@ -24,7 +24,9 @@ import java.util.*
 
 
 class OpAggDataActivity : AppCompatActivity() {
+    var activityModifica = true
     var statoToggle:Boolean = false
+    var cardDatiUtenteEspansa:Boolean = true
     var cardDatiTransEspansa:Boolean = true
     var cardDateEspansa:Boolean = true
     val formatoData:String = "dd/MM/yyyy"
@@ -32,12 +34,50 @@ class OpAggDataActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_op_agg_data)
+        //Recycler view
+        val recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        recyclerViewAdapter.addItem(NotificaType(1, this))
+
+        //Recupero dello stato
+        if(savedInstanceState != null){
+            statoToggle = savedInstanceState.getBoolean("statoToggle")
+            if(statoToggle == true) setToggleCredito() else setToggleDebito()
+            editTextNominativo.setText(savedInstanceState.getString("editTextNominativo"))
+            editTextTelefono.setText(savedInstanceState.getString("editTextTelefono"))
+            editTextDescrizione.setText(savedInstanceState.getString("editTextDescrizione"))
+            editTextimportoTotale.setText(savedInstanceState.getString("editTextImporto"))
+            editTextDataInizio.setText(savedInstanceState.getString("editTextDataInizio"))
+            cardDatiUtenteEspansa = savedInstanceState.getBoolean("cardDatiUtenteEspansa")
+            cardDatiTransEspansa = savedInstanceState.getBoolean("cardDatiTransEspansa")
+            cardDateEspansa = savedInstanceState.getBoolean("cardDateEspansa")
+            activityModifica = savedInstanceState.getBoolean("activityModifica")
+        }
+        else {
+            //TODO Set toggle in base a chi ha chiamato l'operazione
+            setToggleCredito()
+            //Setto giorno corrente
+            val sdf = SimpleDateFormat(formatoData)
+            editTextDataInizio.setText(sdf.format(Date()))
+        }
+        //Visualizzo o meno card per mdoficare partecipante
+        setCardDatiUtente()
+        ecCardDatiUtente()
+        ecCardDatiTrans()
+        ecCardDate()
+
+        editTextNominativo.setOnFocusChangeListener(editTextNominativoFocusListener)
+        editTextTelefono.setOnFocusChangeListener(editTextTelefonoFocusListener)
         editTextDescrizione.setOnFocusChangeListener(editTextDescrizioneFocusListener)
         editTextimportoTotale.setOnFocusChangeListener(editTextImportoFocusListener)
         editTextImportoPersona.setOnFocusChangeListener(editTextImportoPersonaFocusListener)
         toggleButton.setOnClickListener(toggleButtonOnClickListener)
         creditoToggleButton.setOnClickListener{setToggleCredito()}
         debitoToggleButton.setOnClickListener({ setToggleDebito() })
+        textViewCardDatiUtente.setOnClickListener(buttonColExpCardDatiUtenteOnClickListener)
+        buttonColExpCardDatiUtente.setOnClickListener(buttonColExpCardDatiUtenteOnClickListener)
         textViewDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
         buttonColExpCardDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
         //Datepicker dataInizio
@@ -140,31 +180,6 @@ class OpAggDataActivity : AppCompatActivity() {
         buttonColExpCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
         textViewCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
         buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
-        //Recycler view
-        val recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        //Recupero dello stato
-        if(savedInstanceState != null){
-            statoToggle = savedInstanceState.getBoolean("statoToggle")
-            if(statoToggle == true) setToggleCredito() else setToggleDebito()
-            editTextDescrizione.setText(savedInstanceState.getString("editTextDescrizione"))
-            editTextimportoTotale.setText(savedInstanceState.getString("editTextImporto"))
-            editTextDataInizio.setText(savedInstanceState.getString("editTextDataInizio"))
-            cardDatiTransEspansa = savedInstanceState.getBoolean("cardDatiTransEspansa")
-            cardDateEspansa = savedInstanceState.getBoolean("cardDateEspansa")
-        }
-        else {
-            //TODO Set toggle in base a chi ha chiamato l'operazione
-            setToggleCredito()
-            val sdf = SimpleDateFormat(formatoData)
-            editTextDataInizio.setText(sdf.format(Date()))
-        }
-        ecCardDatiTrans()
-        ecCardDate()
-
-        recyclerViewAdapter.addItem(NotificaType(1, this))
     }
 
     fun getCurrentLocale(context: Context): Locale? {
@@ -184,6 +199,33 @@ class OpAggDataActivity : AppCompatActivity() {
             0,
             0
         )
+    }
+
+    private fun setCardDatiUtente(){
+        if(activityModifica) {
+            cardPartecipanteOp.visibility = View.VISIBLE
+            Line1.visibility = View.GONE
+            Line2.visibility = View.GONE
+            Line3.visibility = View.GONE
+            imageView1.visibility = View.GONE
+            imageView2.visibility = View.GONE
+            textView13.visibility = View.GONE
+            textView14.visibility = View.GONE
+        }
+        else {
+            cardPartecipanteOp.visibility = View.GONE
+        }
+    }
+
+    private fun ecCardDatiUtente(){
+        if(cardDatiUtenteEspansa){
+            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_24, 0, 0, 0);
+            expand(consLayDatiUtente)
+        }
+        else{
+            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
+            collapse(consLayDatiUtente)
+        }
     }
 
     private fun ecCardDatiTrans(){
@@ -206,6 +248,11 @@ class OpAggDataActivity : AppCompatActivity() {
             buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
             collapse(consLayDate)
         }
+    }
+
+    private val buttonColExpCardDatiUtenteOnClickListener = View.OnClickListener { view ->
+        cardDatiUtenteEspansa = !cardDatiUtenteEspansa
+        ecCardDatiUtente()
     }
 
     private val buttonColExpCardDatiTransOnClickListener = View.OnClickListener { view->
@@ -259,6 +306,42 @@ class OpAggDataActivity : AppCompatActivity() {
         statoToggle = false
     }
 
+    private val editTextNominativoFocusListener =
+        View.OnFocusChangeListener { view, gainFocus ->
+            if (gainFocus) {
+                editTextNominativo.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_baseline_identity_green_icon,
+                    0,
+                    0,
+                    0
+                )
+            } else {
+                editTextNominativo.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_baseline_identity_gray_icon,
+                    0,
+                    0,
+                    0
+                )
+            }
+        }
+    private val editTextTelefonoFocusListener =
+        View.OnFocusChangeListener { view, gainFocus ->
+            if (gainFocus) {
+                editTextTelefono.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_baseline_smartphone_green_icon,
+                    0,
+                    0,
+                    0
+                )
+            } else {
+                editTextTelefono.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_baseline_smartphone_gray_icon,
+                    0,
+                    0,
+                    0
+                )
+            }
+        }
     private val editTextDescrizioneFocusListener =
         View.OnFocusChangeListener { view, gainFocus ->
             if (gainFocus) {
@@ -306,10 +389,14 @@ class OpAggDataActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean("statoToggle", statoToggle)
+        outState.putString("editTextNominativo", editTextNominativo.text.toString())
+        outState.putString("editTextTelefono", editTextTelefono.text.toString())
         outState.putString("editTextDescrizione", editTextDescrizione.text.toString())
         outState.putString("editTextImporto", editTextimportoTotale.text.toString())
         outState.putString("editTextDataInizio", editTextDataInizio.text.toString())
         outState.putBoolean("cardDatiTransEspansa", cardDatiTransEspansa)
         outState.putBoolean("cardDateEspansa", cardDateEspansa)
+        outState.putBoolean("cardDatiUtenteEspansa", cardDatiUtenteEspansa)
+        outState.putBoolean("activityModifica", activityModifica)
     }
 }

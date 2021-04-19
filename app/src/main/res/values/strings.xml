@@ -63,4 +63,7 @@
     <string name="end_date_field">Data di scadenza:</string>
     <string name="end_date">Data scadenza</string>
     <string name="notification_management">Gestione notifiche</string>
+    <string name="full_name_field">Nominativo:</string>
+    <string name="user_data">Dati utente</string>
+    <string name="cellphone_field">Numero di telefono:</string>
 </resources>
