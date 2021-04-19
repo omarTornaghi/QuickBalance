@@ -25,12 +25,13 @@ import kotlin.collections.ArrayList
 
 
 class OpAggDataActivity : AppCompatActivity() {
-    var activityModifica = true
-    var statoToggle:Boolean = false
-    var cardDatiUtenteEspansa:Boolean = true
-    var cardDatiTransEspansa:Boolean = true
-    var cardDateEspansa:Boolean = true
-    val formatoData:String = "dd/MM/yyyy"
+    private var cardNotificheEspansa: Boolean = true
+    private var activityModifica = true
+    private var statoToggle:Boolean = false
+    private var cardDatiUtenteEspansa:Boolean = true
+    private var cardDatiTransEspansa:Boolean = true
+    private var cardDateEspansa:Boolean = true
+    private val formatoData:String = "dd/MM/yyyy"
     private lateinit var recyclerViewAdapter: NotificheAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +41,6 @@ class OpAggDataActivity : AppCompatActivity() {
         recyclerViewAdapter = NotificheAdapter(arrayListOf(), this)
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-
 
         //Recupero dello stato
         if(savedInstanceState != null){
@@ -55,6 +54,7 @@ class OpAggDataActivity : AppCompatActivity() {
             cardDatiUtenteEspansa = savedInstanceState.getBoolean("cardDatiUtenteEspansa")
             cardDatiTransEspansa = savedInstanceState.getBoolean("cardDatiTransEspansa")
             cardDateEspansa = savedInstanceState.getBoolean("cardDateEspansa")
+            cardNotificheEspansa = savedInstanceState.getBoolean("cardNotificheEspansa")
             activityModifica = savedInstanceState.getBoolean("activityModifica")
             //Recupero notifiche selezionate
             var nList:ArrayList<Int> = savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
@@ -73,6 +73,7 @@ class OpAggDataActivity : AppCompatActivity() {
         ecCardDatiUtente()
         ecCardDatiTrans()
         ecCardDate()
+        ecCardNotifiche()
 
         editTextNominativo.setOnFocusChangeListener(editTextNominativoFocusListener)
         editTextTelefono.setOnFocusChangeListener(editTextTelefonoFocusListener)
@@ -86,6 +87,8 @@ class OpAggDataActivity : AppCompatActivity() {
         buttonColExpCardDatiUtente.setOnClickListener(buttonColExpCardDatiUtenteOnClickListener)
         textViewDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
         buttonColExpCardDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
+        textViewCardNotifiche.setOnClickListener(buttonColExpCardNotificheOnClickListener)
+        buttonColExpCardNotifiche.setOnClickListener(buttonColExpCardNotificheOnClickListener)
         //Datepicker dataInizio
         val calendar: Calendar = Calendar.getInstance()
         val dataInizio =
@@ -225,34 +228,45 @@ class OpAggDataActivity : AppCompatActivity() {
 
     private fun ecCardDatiUtente(){
         if(cardDatiUtenteEspansa){
-            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_24, 0, 0, 0);
+            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_orange_24, 0, 0, 0);
             expand(consLayDatiUtente)
         }
         else{
-            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
+            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_orange_24, 0, 0, 0);
             collapse(consLayDatiUtente)
         }
     }
 
     private fun ecCardDatiTrans(){
         if(cardDatiTransEspansa){
-            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_24, 0, 0, 0);
+            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_orange_24, 0, 0, 0);
             expand(consLayDatiTrans)
         }
         else{
-            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
+            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_orange_24, 0, 0, 0);
             collapse(consLayDatiTrans)
         }
     }
 
     private fun ecCardDate(){
         if(cardDateEspansa){
-            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_24, 0, 0, 0);
+            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_orange_24, 0, 0, 0);
             expand(consLayDate)
         }
         else{
-            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_24, 0, 0, 0);
+            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_orange_24, 0, 0, 0);
             collapse(consLayDate)
+        }
+    }
+
+    private fun ecCardNotifiche(){
+        if(cardNotificheEspansa){
+            buttonColExpCardNotifiche.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_blue_24, 0, 0, 0);
+            expand(recyclerView)
+        }
+        else{
+            buttonColExpCardNotifiche.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_blue_24, 0, 0, 0);
+            collapse(recyclerView)
         }
     }
 
@@ -269,6 +283,11 @@ class OpAggDataActivity : AppCompatActivity() {
     private val buttonColExpCardDateOnClickListener = View.OnClickListener { view->
         cardDateEspansa = !cardDateEspansa
         ecCardDate()
+    }
+
+    private val buttonColExpCardNotificheOnClickListener = View.OnClickListener { view->
+        cardNotificheEspansa = !cardNotificheEspansa
+        ecCardNotifiche()
     }
 
     private val toggleButtonOnClickListener = View.OnClickListener { view ->
@@ -403,6 +422,7 @@ class OpAggDataActivity : AppCompatActivity() {
         outState.putBoolean("cardDatiTransEspansa", cardDatiTransEspansa)
         outState.putBoolean("cardDateEspansa", cardDateEspansa)
         outState.putBoolean("cardDatiUtenteEspansa", cardDatiUtenteEspansa)
+        outState.putBoolean("cardNotificheEspansa", cardNotificheEspansa)
         outState.putBoolean("activityModifica", activityModifica)
         //Salvo notifiche selezionate
         var listNot:ArrayList<Int> = ArrayList()
