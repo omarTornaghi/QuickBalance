@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
 import com.example.quickbalance.DataTypes.CreditType
 import com.example.quickbalance.NuovaOpActivity
+import com.example.quickbalance.OpAggDataActivity
 import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.card_crediti.view.*
 
@@ -56,6 +57,7 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             view.setOnClickListener(cardOnClickListener)
             view.buttonRiscatta1.setOnClickListener(buttonRiscattaOnClickListener)
             view.buttonRiscatta2.setOnClickListener(buttonRiscattaOnClickListener)
+            view.buttonModificaCredito.setOnClickListener(buttonModificaOnClickListener)
             if(isExpanded == false){
                 itemView.CL_card_credit.visibility = View.GONE
                 itemView.buttonRiscatta1.visibility = View.GONE
@@ -83,8 +85,13 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
         }
 
         val buttonRiscattaOnClickListener= View.OnClickListener {
-            //Cambiare activity da lanciare
-            val int:Intent = Intent(view.context, NuovaOpActivity::class.java)
+
+        }
+
+        val buttonModificaOnClickListener = View.OnClickListener {
+            val int:Intent = Intent(view.context, OpAggDataActivity::class.java)
+            int.putExtra("activityModifica", true)
+            //TODO Aggiungo all'intent l'oggetto(credito)
             startActivity(view.context,int,null)
         }
     }

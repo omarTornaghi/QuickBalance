@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_creazione_stepuno.*
 
 class NuovaOpActivity: AppCompatActivity() {
     private lateinit var recyclerViewAdapter:PartecipanteAdapter
-
+    private var transCredito:Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creazione_stepuno)
@@ -33,6 +33,8 @@ class NuovaOpActivity: AppCompatActivity() {
         buttonAvanti.setOnClickListener(buttonAvantiOnClickListener)
         editTextGeneralita.setOnFocusChangeListener(editTextNominativoFocusListener)
         editTextNumero.setOnFocusChangeListener(editTextNumeroFocusListener)
+        //Tipo transazione
+        transCredito = intent.getBooleanExtra("operazioneCredito", true)
         //RecyclerView
         recyclerViewAdapter = setRecyclerView()
         //Reset dello stato
@@ -131,6 +133,7 @@ class NuovaOpActivity: AppCompatActivity() {
 
     val buttonAvantiOnClickListener= View.OnClickListener {
         val int: Intent = Intent(this, OpAggDataActivity::class.java)
+        int.putExtra("operazioneCredito", transCredito)
         startActivity(int)
     }
 

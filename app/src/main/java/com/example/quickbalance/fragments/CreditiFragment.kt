@@ -114,6 +114,7 @@ class CreditiFragment : Fragment(){
 
     val addFBOnClickListener= View.OnClickListener {
         val int:Intent = Intent(mContext, NuovaOpActivity::class.java)
+        int.putExtra("operazioneCredito", true)
         startActivity(int)
     }
 

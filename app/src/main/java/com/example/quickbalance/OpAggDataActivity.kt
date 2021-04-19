@@ -77,12 +77,20 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             nList.forEach { recyclerViewAdapter.addItem(NotificaType(it, this)) }
         }
         else {
-            //TODO Set toggle in base a chi ha chiamato l'operazione
-            setToggleCredito()
-            //Setto giorno corrente
-            val sdf = SimpleDateFormat(formatoData)
-            editTextDataInizio.setText(sdf.format(Date()))
-            recyclerViewAdapter.addItem(NotificaType(1, this))
+            activityModifica = intent.getBooleanExtra("activityModifica", false)
+            if(!activityModifica){
+                val credito = intent.getBooleanExtra("operazioneCredito", true)
+                if(credito) setToggleCredito() else setToggleDebito()
+                //Setto giorno corrente
+                val sdf = SimpleDateFormat(formatoData)
+                editTextDataInizio.setText(sdf.format(Date()))
+                recyclerViewAdapter.addItem(NotificaType(1, this))
+            }
+            else
+            {
+                //Modifica una transazione(o credito o debito) quindi recupero i dati
+                //e li inserisco negli appositi campi
+            }
         }
         //Visualizzo o meno card per mdoficare partecipante
         setCardDatiUtente()
