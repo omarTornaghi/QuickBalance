@@ -22,7 +22,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_icon"
             app:title="@string/import_contacts"
-            app:menu="@menu/top_app_bar_importa_contatti"/>
+            app:menu="@menu/top_app_bar_ok_button"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

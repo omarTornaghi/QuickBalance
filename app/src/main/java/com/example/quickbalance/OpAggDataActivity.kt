@@ -1,16 +1,22 @@
 package com.example.quickbalance
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,15 +24,25 @@ import com.example.quickbalance.Adapters.NotificheAdapter
 import com.example.quickbalance.Animations.AnimationUtils.collapse
 import com.example.quickbalance.Animations.AnimationUtils.expand
 import com.example.quickbalance.DataTypes.NotificaType
+import com.example.quickbalance.Utils.FieldUtils.Companion.controllaNumero
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
+import kotlinx.android.synthetic.main.activity_op_agg_data.Line1
+import kotlinx.android.synthetic.main.activity_op_agg_data.Line2
+import kotlinx.android.synthetic.main.activity_op_agg_data.Line3
+import kotlinx.android.synthetic.main.activity_op_agg_data.imageView1
+import kotlinx.android.synthetic.main.activity_op_agg_data.imageView2
+import kotlinx.android.synthetic.main.activity_op_agg_data.recyclerView
+import kotlinx.android.synthetic.main.activity_op_agg_data.textView13
+import kotlinx.android.synthetic.main.activity_op_agg_data.textView14
+import kotlinx.android.synthetic.main.activity_op_agg_data.topAppBar
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class OpAggDataActivity : AppCompatActivity() {
+class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
     private var cardNotificheEspansa: Boolean = true
-    private var activityModifica = true
+    private var activityModifica = false
     private var statoToggle:Boolean = false
     private var cardDatiUtenteEspansa:Boolean = true
     private var cardDatiTransEspansa:Boolean = true
@@ -75,6 +91,8 @@ class OpAggDataActivity : AppCompatActivity() {
         ecCardDate()
         ecCardNotifiche()
 
+        topAppBar.setOnMenuItemClickListener(this)
+        topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
         editTextNominativo.setOnFocusChangeListener(editTextNominativoFocusListener)
         editTextTelefono.setOnFocusChangeListener(editTextTelefonoFocusListener)
         editTextDescrizione.setOnFocusChangeListener(editTextDescrizioneFocusListener)
@@ -410,6 +428,28 @@ class OpAggDataActivity : AppCompatActivity() {
             else
                 editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_money_person_gray_icon, 0,0,0)
         }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.checkIcon -> {
+                //Controllo i dati
+                var rilevatoErrore:Boolean = false
+                if(activityModifica){
+                    if(editTextNominativo.text.isNullOrBlank() || !controllaNumero(editTextTelefono.text.toString()))
+                        rilevatoErrore = true
+                }
+                if(editTextDataScadenza.text.toString() < editTextDataInizio.text.toString()) rilevatoErrore = true
+                if(rilevatoErrore)
+                    Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+        return false;
+    }
+
+    val navigationIconOnClickListener= View.OnClickListener {
+        finish()
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
