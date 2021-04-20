@@ -87,14 +87,11 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         }
         else {
             activityModifica = intent.getBooleanExtra("activityModifica", false)
-            //listPartecipanti = intent.getParcelableArrayListExtra<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
+            listPartecipanti = intent.getParcelableArrayListExtra<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
+            //TODO Prendere tipo della transazione al momento lo setto nell'else sempre su credito
             if(!activityModifica){
                 val credito = intent.getBooleanExtra("operazioneCredito", true)
                 if(credito) setToggleCredito() else setToggleDebito()
-                //Lista partecipanti
-                listPartecipanti = ArrayList<PartecipanteType>()
-                listPartecipanti.add(PartecipanteType("Tornaghi Omar", "3387135186"))
-                listPartecipanti.add(PartecipanteType("Tornaghi Omar", "3387135186"))
                 //Setto giorno corrente
                 val sdf = SimpleDateFormat(formatoData)
                 editTextDataInizio.setText(sdf.format(Date()))
@@ -104,6 +101,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi
+                setToggleCredito()
             }
         }
         //Visualizzo o meno card per mdoficare partecipante

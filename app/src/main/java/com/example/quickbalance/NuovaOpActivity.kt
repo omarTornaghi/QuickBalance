@@ -134,6 +134,7 @@ class NuovaOpActivity: AppCompatActivity() {
     val buttonAvantiOnClickListener= View.OnClickListener {
         val int: Intent = Intent(this, OpAggDataActivity::class.java)
         int.putExtra("operazioneCredito", transCredito)
+        int.putExtra("listPartecipanti", recyclerViewAdapter.getList())
         startActivity(int)
     }
 

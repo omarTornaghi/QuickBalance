@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
 import com.example.quickbalance.DataTypes.CreditType
+import com.example.quickbalance.DataTypes.PartecipanteType
 import com.example.quickbalance.NuovaOpActivity
 import com.example.quickbalance.OpAggDataActivity
 import com.example.quickbalance.R
@@ -40,8 +41,9 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
     class CreditHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
         private var isExpanded = false
-
+        private lateinit var item:CreditType
         fun bind(credit: CreditType) {
+            item = credit
             /* Cambiare i campi */
             view.textViewCreditoGeneralita.text = credit.generalita
             view.textViewCreditoDescr.text = credit.descrizione
@@ -92,6 +94,10 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             val int:Intent = Intent(view.context, OpAggDataActivity::class.java)
             int.putExtra("activityModifica", true)
             //TODO Aggiungo all'intent l'oggetto(credito)
+            //TODO Migliorare questo passaggio
+            val ar:ArrayList<PartecipanteType> = ArrayList()
+            ar.add(PartecipanteType(item.generalita, item.numeroTelefono))
+            int.putExtra("listPartecipanti", ar)
             startActivity(view.context,int,null)
         }
     }
