@@ -13,7 +13,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -535,5 +537,14 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         var listNot:ArrayList<Int> = ArrayList()
         recyclerViewAdapter.getList().forEach { listNot.add(it.numGiorni) }
         outState.putIntegerArrayList("listaNotifiche", listNot)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus != null) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }
