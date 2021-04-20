@@ -56,7 +56,7 @@
     <string name="amount">Importo</string>
     <string name="per_person">A persona</string>
     <string name="total_import_field">Importo totale:</string>
-    <string name="import_per_person_field">Importo a persona:</string>
+    <string name="import_per_person_field">Importo a persona</string>
     <string name="transaction_ends">Scadenze transazione</string>
     <string name="start_date">Data di inizio</string>
     <string name="start_date_field">Data di inizio:</string>

@@ -8,6 +8,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -24,6 +25,8 @@ import com.example.quickbalance.Adapters.NotificheAdapter
 import com.example.quickbalance.Animations.AnimationUtils.collapse
 import com.example.quickbalance.Animations.AnimationUtils.expand
 import com.example.quickbalance.DataTypes.NotificaType
+import com.example.quickbalance.DataTypes.PartecipanteType
+import com.example.quickbalance.Utils.FieldUtils.Companion.controllaDate
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaNumero
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
 import kotlinx.android.synthetic.main.activity_op_agg_data.Line1
@@ -41,12 +44,15 @@ import kotlin.collections.ArrayList
 
 
 class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
+    private lateinit var listPartecipanti: ArrayList<PartecipanteType>
     private var cardNotificheEspansa: Boolean = true
     private var activityModifica = false
     private var statoToggle:Boolean = false
     private var cardDatiUtenteEspansa:Boolean = true
     private var cardDatiTransEspansa:Boolean = true
     private var cardDateEspansa:Boolean = true
+    private var possoSettareTPersona = true
+    private var possoSettareTTotale = true
     private val formatoData:String = "dd/MM/yyyy"
     private lateinit var recyclerViewAdapter: NotificheAdapter
 
@@ -72,15 +78,21 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             cardDateEspansa = savedInstanceState.getBoolean("cardDateEspansa")
             cardNotificheEspansa = savedInstanceState.getBoolean("cardNotificheEspansa")
             activityModifica = savedInstanceState.getBoolean("activityModifica")
+            listPartecipanti = savedInstanceState.getParcelableArrayList<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
             //Recupero notifiche selezionate
             var nList:ArrayList<Int> = savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
             nList.forEach { recyclerViewAdapter.addItem(NotificaType(it, this)) }
         }
         else {
             activityModifica = intent.getBooleanExtra("activityModifica", false)
+            //listPartecipanti = intent.getParcelableArrayListExtra<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
             if(!activityModifica){
                 val credito = intent.getBooleanExtra("operazioneCredito", true)
                 if(credito) setToggleCredito() else setToggleDebito()
+                //Lista partecipanti
+                listPartecipanti = ArrayList<PartecipanteType>()
+                listPartecipanti.add(PartecipanteType("Tornaghi Omar", "3387135186"))
+                listPartecipanti.add(PartecipanteType("Tornaghi Omar", "3387135186"))
                 //Setto giorno corrente
                 val sdf = SimpleDateFormat(formatoData)
                 editTextDataInizio.setText(sdf.format(Date()))
@@ -98,7 +110,9 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         ecCardDatiTrans()
         ecCardDate()
         ecCardNotifiche()
-
+        //Setto textView numero partecipanti
+        textViewNumPersone.setText("(${listPartecipanti.size}):")
+        //Listeners vari
         topAppBar.setOnMenuItemClickListener(this)
         topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
         editTextNominativo.setOnFocusChangeListener(editTextNominativoFocusListener)
@@ -113,8 +127,47 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         buttonColExpCardDatiUtente.setOnClickListener(buttonColExpCardDatiUtenteOnClickListener)
         textViewDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
         buttonColExpCardDatiTrans.setOnClickListener(buttonColExpCardDatiTransOnClickListener)
+        textViewCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
+        buttonColExpCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
+        buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
         textViewCardNotifiche.setOnClickListener(buttonColExpCardNotificheOnClickListener)
         buttonColExpCardNotifiche.setOnClickListener(buttonColExpCardNotificheOnClickListener)
+        editTextimportoTotale.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if(possoSettareTPersona) {
+                    val num: Double = if (editTextimportoTotale.text.toString()
+                            .isNotBlank()
+                    ) editTextimportoTotale.text.toString().toDouble() else 0.00
+                    possoSettareTTotale = false
+                    editTextImportoPersona.setText((num / listPartecipanti.size).toString())
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+        editTextImportoPersona.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if(possoSettareTTotale) {
+                    val num: Double = if (editTextImportoPersona.text.toString()
+                            .isNotBlank()
+                    ) editTextImportoPersona.text.toString().toDouble() else 0.00
+                    possoSettareTPersona = false
+                    editTextimportoTotale.setText((num * listPartecipanti.size).toString())
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
         //Datepicker dataInizio
         val calendar: Calendar = Calendar.getInstance()
         val dataInizio =
@@ -212,9 +265,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             }
         })
         //fine datepicker dataScadenza
-        buttonColExpCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
-        textViewCardDate.setOnClickListener(buttonColExpCardDateOnClickListener)
-        buttonCancellaDataScadenza.setOnClickListener { editTextDataScadenza.text.clear() }
+
     }
 
     fun getCurrentLocale(context: Context): Locale? {
@@ -414,6 +465,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
     private val editTextImportoFocusListener =
         View.OnFocusChangeListener { view, gainFocus ->
             if (gainFocus) {
+                possoSettareTPersona = true
                 editTextimportoTotale.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.ic_baseline_euro_green_icon,
                     0,
@@ -431,9 +483,15 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         }
     private val editTextImportoPersonaFocusListener =
         View.OnFocusChangeListener{ view, gainFocus->
-            if(gainFocus)
-                editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_money_person_green_icon, 0,0,0)
-            else
+            if(gainFocus) {
+                possoSettareTTotale = true
+                editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_money_person_green_icon,
+                    0,
+                    0,
+                    0
+                )
+            }else
                 editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_money_person_gray_icon, 0,0,0)
         }
 
@@ -446,7 +504,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
                     if(editTextNominativo.text.isNullOrBlank() || !controllaNumero(editTextTelefono.text.toString()))
                         rilevatoErrore = true
                 }
-                if(editTextDataScadenza.text.toString() < editTextDataInizio.text.toString()) rilevatoErrore = true
+                if(controllaDate(editTextDataScadenza.text.toString(),editTextDataInizio.text.toString(), formatoData)) rilevatoErrore = true
                 if(rilevatoErrore)
                     Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT).show()
                 return true
@@ -472,6 +530,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         outState.putBoolean("cardDatiUtenteEspansa", cardDatiUtenteEspansa)
         outState.putBoolean("cardNotificheEspansa", cardNotificheEspansa)
         outState.putBoolean("activityModifica", activityModifica)
+        outState.putParcelableArrayList("listPartecipanti", listPartecipanti)
         //Salvo notifiche selezionate
         var listNot:ArrayList<Int> = ArrayList()
         recyclerViewAdapter.getList().forEach { listNot.add(it.numGiorni) }
