@@ -41,40 +41,52 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         when(selectedFragment){
             null-> {
                 bottom_navigation.selectedItemId = R.id.ic_home
-                selezionaFHome(homeFragment)
+                selezionaFHome(homeFragment, R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
             }
             1-> {
                 bottom_navigation.selectedItemId = R.id.ic_crediti
-                selezionaFCrediti(creditiFragment)
+                selezionaFCrediti(creditiFragment, R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
             }
             2-> {
                 bottom_navigation.selectedItemId = R.id.ic_home
-                selezionaFHome(homeFragment)
+                selezionaFHome(homeFragment, R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
             }
             3-> {
                 bottom_navigation.selectedItemId = R.id.ic_debiti
-                selezionaFDebiti(debitiFragment)
+                selezionaFDebiti(debitiFragment, R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
             }
         }
 
         /*Gestione bottom navigation menu*/
 
         bottom_navigation.setOnNavigationItemSelectedListener{
+            //android.R.anim.slide_in_left, android.R.anim.slide_out_right
+            var primaAnim:Int
+            var secondaAnim:Int
+            if(selectedFragment > getNumPagina(it.itemId)){
+                primaAnim = R.anim.slide_in_left
+                secondaAnim = R.anim.slide_out_right
+            }
+            else
+            {
+                primaAnim = R.anim.slide_in_right
+                secondaAnim = R.anim.slide_out_left
+            }
             when(it.itemId){
                 /*Cambio fragment*/
                 R.id.ic_home->{
                     homeFragment = HomeFragment()
-                    selezionaFHome(homeFragment)
+                    selezionaFHome(homeFragment, primaAnim, secondaAnim)
                     true
                 }
                 R.id.ic_crediti->{
                     creditiFragment = CreditiFragment()
-                    selezionaFCrediti(creditiFragment)
+                    selezionaFCrediti(creditiFragment, primaAnim, secondaAnim)
                     true
                 }
                 R.id.ic_debiti->{
                     debitiFragment = DebitiFragment()
-                    selezionaFDebiti(debitiFragment)
+                    selezionaFDebiti(debitiFragment, primaAnim, secondaAnim)
                     true
                 }
                 else -> false
@@ -83,8 +95,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    private fun selezionaFDebiti(debitiFragment: DebitiFragment) {
-        creaFragmentCorrente(debitiFragment)
+    private fun getNumPagina(res:Int):Int{
+        when(res) {
+            R.id.ic_crediti -> return 1
+            R.id.ic_home -> return 2
+            R.id.ic_debiti -> return 3
+            else -> return -1
+        }
+    }
+
+    private fun selezionaFDebiti(debitiFragment: DebitiFragment, primaAnim:Int, secondaAnim:Int) {
+        creaFragmentCorrente(debitiFragment, primaAnim, secondaAnim)
         selectedFragment = 3
         bottom_navigation.itemIconTintList =
             ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_red)
@@ -92,8 +113,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_red)
     }
 
-    private fun selezionaFHome(homeFragment: HomeFragment) {
-        creaFragmentCorrente(homeFragment);
+    private fun selezionaFHome(homeFragment: HomeFragment, primaAnim:Int, secondaAnim:Int) {
+        creaFragmentCorrente(homeFragment, primaAnim, secondaAnim);
         selectedFragment = 2
         bottom_navigation.itemIconTintList =
             ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
@@ -101,19 +122,19 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_orange)
     }
 
-    private fun selezionaFCrediti(creditiFragment: CreditiFragment) {
+    private fun selezionaFCrediti(creditiFragment: CreditiFragment, primaAnim:Int, secondaAnim:Int) {
         selectedFragment = 1
-        creaFragmentCorrente(creditiFragment)
+        creaFragmentCorrente(creditiFragment, primaAnim, secondaAnim)
         bottom_navigation.itemIconTintList =
             ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
         bottom_navigation.itemTextColor =
             ContextCompat.getColorStateList(this, R.color.nav_bottombar_item_green)
     }
 
-    private fun creaFragmentCorrente(fragment: Fragment) =
+    private fun creaFragmentCorrente(fragment: Fragment, animPrima:Int, animSeconda:Int) =
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction().apply {
-                setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                setCustomAnimations(animPrima, animSeconda)
                 replace(R.id.fl_wrapper, fragment)
                 commit()
             }

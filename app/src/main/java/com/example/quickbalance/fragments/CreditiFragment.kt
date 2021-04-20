@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +13,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.CreditAdapter
 import com.example.quickbalance.DataTypes.CreditType
 import com.example.quickbalance.NuovaOpActivity
@@ -26,6 +23,8 @@ import kotlinx.android.synthetic.main.fragment_crediti.*
 class CreditiFragment : Fragment(){
     private lateinit var mContext: Context
     private lateinit var data: ArrayList<CreditType>
+    private lateinit var recyclerViewAdapter:CreditAdapter
+    private lateinit var cdSpinnerAdapter:ArrayAdapter<CharSequence>
     private var stringTextInput: String = ""
     private var intCampo: Int = 0
 
@@ -36,13 +35,25 @@ class CreditiFragment : Fragment(){
             stringTextInput = savedInstanceState.getString("testoTextViewRicerca")!!
             intCampo = savedInstanceState.getInt("testoSpinner")!!
         }
+        //Set spinner
+        cdSpinnerAdapter= ArrayAdapter.createFromResource(
+            mContext,
+            R.array.spinnerCD,
+            R.layout.custom_spinnercd_layout
+        )
+        cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
+        //Set recyclerView
+        recyclerViewAdapter = CreditAdapter(mutableListOf())
+
         /* Popolazione */
-        data = ArrayList<CreditType>()
+        /*data = ArrayList<CreditType>()
         data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Tornag", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
         data.add(CreditType("Tornaghi", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+        // Popolazione
+        recyclerViewAdapter.updateTasks(data)*/
     }
 
     override fun onAttach(context: Context) {
@@ -54,8 +65,9 @@ class CreditiFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crediti, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_crediti, container, false)
+
+        return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -82,34 +94,15 @@ class CreditiFragment : Fragment(){
         //Set del click del floating button
         floatinButtonAggiungi.setOnClickListener(addFBOnClickListener)
         //Set dello spinner
-        setSpinner()
-        //Set del recyclerView
-        val recyclerViewAdapter = setRecyclerView()
-        // Popolazione
-        recyclerViewAdapter.updateTasks(data)
-        //Handler(Looper.getMainLooper()).postDelayed({
-
-       // }, 0)
-
-    }
-
-    private fun setRecyclerView(): CreditAdapter {
-        /* Set del recycler view */
-        val recyclerViewAdapter = CreditAdapter(mutableListOf())
-        recycler_view.adapter = recyclerViewAdapter
-        recycler_view.layoutManager = LinearLayoutManager(mContext)
-        return recyclerViewAdapter
-    }
-
-    private fun setSpinner() {
-        /* Set dello spinner */
-        var cdSpinnerAdapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
-            mContext,
-            R.array.spinnerCD,
-            R.layout.custom_spinnercd_layout
-        );
-        cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
         spinnerView.setAdapter(cdSpinnerAdapter)
+        //Set del recyclerView
+        /*recycler_view.adapter = recyclerViewAdapter
+        recycler_view.layoutManager = LinearLayoutManager(mContext)*/
+        /*
+        Handler(Looper.getMainLooper()).postDelayed({
+
+        }, 200)
+        */
     }
 
     val addFBOnClickListener= View.OnClickListener {
