@@ -42,13 +42,14 @@
                     android:drawableStart="@drawable/ic_search_icon"
                     android:drawableLeft="@drawable/ic_search_icon"
                     android:hint="@string/search_editText"
-                    android:singleLine="true"
-                    android:inputType="text"
                     android:imeOptions="actionSearch"
+                    android:inputType="textNoSuggestions"
+                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/spinnerView"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                     />
 
                 <Spinner
                     android:id="@+id/spinnerView"

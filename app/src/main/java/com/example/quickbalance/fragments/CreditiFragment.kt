@@ -1,5 +1,6 @@
 package com.example.quickbalance.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
@@ -8,6 +9,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -17,6 +19,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +30,7 @@ import com.example.quickbalance.R
 import com.example.quickbalance.Utils.InitializeAsync
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_crediti.*
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -96,6 +100,7 @@ class CreditiFragment : Fragment() {
         mContext = context
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -133,6 +138,31 @@ class CreditiFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(editTextInput.text.toString().isNotBlank())
+                    editTextInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,R.drawable.ic_baseline_clear_24, 0)
+                else
+                    editTextInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,0, 0)
+            }
+        })
+        editTextInput.setOnTouchListener(object : View.OnTouchListener {
+            @SuppressLint("ClickableViewAccessibility")
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                val DRAWABLE_RIGHT = 2;
+                if (event != null) {
+                    try {
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            if (event.getRawX() >= (editTextInput.getRight() - editTextInput.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds()
+                                    .width())
+                            ) {
+                                editTextInput.text.clear()
+                                editTextInput.requestFocus()
+                                return true;
+                            }
+                        }
+                    }
+                    catch(ex:Exception){Log.d("XXXX", "CLICK")}
+                }
+                return false;
             }
         })
         editTextInput.setOnEditorActionListener { _, actionId, _ ->
