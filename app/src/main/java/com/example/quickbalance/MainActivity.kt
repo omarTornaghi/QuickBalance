@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         /*Gestione bottom navigation menu*/
         bottom_navigation.setOnNavigationItemSelectedListener{
+            if(selectedFragment == getNumPagina(it.itemId)) return@setOnNavigationItemSelectedListener true
             var primaAnim:Int
             var secondaAnim:Int
             if(selectedFragment > getNumPagina(it.itemId)){
