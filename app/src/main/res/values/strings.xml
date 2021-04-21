@@ -15,7 +15,8 @@
     <string name="history">Storico</string>
     <string name="history_op_home_fragment">Tocca per visualizzare lo storico</string>
     <string name="gives_to_me">Mi deve:</string>
-    <string name="search_editText">Cerca per nome,cognome,descrizione…</string>
+    <string name="search_editText_credit">Cerca credito…</string>
+    <string name="search_editText_debit">Cerca debito…</string>
     <string name="get_money">Riscatta</string>
     <string name="payed">Ha pagato:</string>
     <string name="of">su</string>
@@ -66,4 +67,7 @@
     <string name="full_name_field">Nominativo:</string>
     <string name="user_data">Dati utente</string>
     <string name="cellphone_field">Numero di telefono:</string>
+    <string name="confirm_delete_credit">Vuoi cancellare il credito?</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
 </resources>

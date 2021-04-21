@@ -59,7 +59,7 @@ class CreditiFragment : Fragment() {
             )
             cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
             //Set recyclerView
-            recyclerViewAdapter = CreditAdapter(mutableListOf())
+            recyclerViewAdapter = CreditAdapter(mutableListOf(), mContext)
             // Popolazione
             data = ArrayList<CreditType>()
             data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))

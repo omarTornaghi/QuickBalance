@@ -41,7 +41,7 @@
                     android:layout_marginBottom="5dp"
                     android:drawableStart="@drawable/ic_search_icon"
                     android:drawableLeft="@drawable/ic_search_icon"
-                    android:hint="@string/search_editText"
+                    android:hint="@string/search_editText_credit"
                     android:imeOptions="actionSearch"
                     android:inputType="textNoSuggestions"
                     android:singleLine="true"

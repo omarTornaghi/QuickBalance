@@ -1,27 +1,34 @@
 package com.example.quickbalance.Adapters
 
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
 import com.example.quickbalance.DataTypes.CreditType
-import com.example.quickbalance.DataTypes.PartecipanteType
-import com.example.quickbalance.NuovaOpActivity
 import com.example.quickbalance.OpAggDataActivity
 import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.card_crediti.view.*
 
 
-class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
+class CreditAdapter(private val crediti: MutableList<CreditType>, private val context: Context) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
     fun updateTasks(nuovoCredit: List<CreditType>)
     {
         crediti.clear()
         crediti.addAll(nuovoCredit)
         notifyDataSetChanged()
+    }
+    fun removeItem(position: Int){
+        crediti.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position,crediti.size)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditHolder
     {
@@ -36,13 +43,26 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
     override fun getItemCount(): Int = crediti.size
     override fun onBindViewHolder(holder: CreditHolder, position: Int){
         holder.bind(crediti[position])
-
+        holder.buttonRimuovi.setOnClickListener { clickButtonRimuovi(position) }
     }
-
+    private fun clickButtonRimuovi(position: Int){
+        val dialogClickListener =
+            DialogInterface.OnClickListener { dialog, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        //TODO Query per eliminare credito
+                        removeItem(position)
+                    }
+                }
+            }
+        val ab: AlertDialog.Builder = AlertDialog.Builder(context)
+        ab.setMessage(context.getString(R.string.confirm_delete_credit)).setPositiveButton(context.getString(R.string.yes), dialogClickListener)
+            .setNegativeButton(context.getString(R.string.no), dialogClickListener).show()
+    }
     class CreditHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
-        private var isExpanded = false
         private lateinit var item:CreditType
+        lateinit var buttonRimuovi: Button
         fun bind(credit: CreditType) {
             item = credit
             if(item.espanso == false){
@@ -54,6 +74,7 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
                 view.CL_card_credit.visibility = View.VISIBLE
                 expand()
             }
+            buttonRimuovi = view.buttonCancellaCredito
             /* Cambiare i campi */
             view.textViewCreditoGeneralita.text = credit.generalita
             view.textViewCreditoDescr.text = credit.descrizione
@@ -70,8 +91,6 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             view.buttonRiscatta1.setOnClickListener(buttonRiscattaOnClickListener)
             view.buttonRiscatta2.setOnClickListener(buttonRiscattaOnClickListener)
             view.buttonModificaCredito.setOnClickListener(buttonModificaOnClickListener)
-            Log.d("XXXX", "Sono nella bind")
-            Log.d("XXXX", "Card: " + item.generalita + " espansa: " + item.espanso)
 
         }
 
@@ -103,8 +122,9 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             val int:Intent = Intent(view.context, OpAggDataActivity::class.java)
             int.putExtra("activityModifica", true)
             int.putExtra("item", item)
-            startActivity(view.context,int,null)
+            startActivity(view.context, int, null)
         }
+
     }
 
 }
