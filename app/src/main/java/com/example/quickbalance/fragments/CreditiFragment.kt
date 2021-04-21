@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatDelegate
@@ -43,26 +42,48 @@ class CreditiFragment : Fragment(){
             stringTextInput = savedInstanceState.getString("testoTextViewRicerca")!!
             intCampo = savedInstanceState.getInt("testoSpinner")!!
         }
-        //Set spinner
-        cdSpinnerAdapter= ArrayAdapter.createFromResource(
-            mContext,
-            R.array.spinnerCD,
-            R.layout.custom_spinnercd_layout
-        )
-        cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
-        //Set recyclerView
-        recyclerViewAdapter = CreditAdapter(mutableListOf())
-        // Popolazione
-        Handler(Looper.getMainLooper()).postDelayed({
-            data = ArrayList<CreditType>()
-            data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-            data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-            data.add(CreditType("Tornag", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-            data.add(CreditType("Tornaghi", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-            recyclerViewAdapter.updateTasks(data)
-        }, 200)
-
+        Thread {
+            try {
+                //Set spinner
+                cdSpinnerAdapter= ArrayAdapter.createFromResource(
+                    mContext,
+                    R.array.spinnerCD,
+                    R.layout.custom_spinnercd_layout
+                )
+                cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
+                //Set recyclerView
+                recyclerViewAdapter = CreditAdapter(mutableListOf())
+                // Popolazione
+                data = ArrayList<CreditType>()
+                data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+                data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+                data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+                data.add(
+                    CreditType(
+                        "Tornag",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null
+                    )
+                )
+                data.add(
+                    CreditType(
+                        "Tornaghi",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null
+                    )
+                )
+                recyclerViewAdapter.updateTasks(data)
+            } catch (ignored: Exception) {
+            }
+        }.start()
     }
 
     override fun onAttach(context: Context) {

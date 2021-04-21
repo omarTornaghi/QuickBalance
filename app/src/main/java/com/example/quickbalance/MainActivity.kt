@@ -33,9 +33,12 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         topAppBar.setOnMenuItemClickListener(this)
         if(savedInstanceState != null){
             selectedFragment = savedInstanceState.getInt("selected")
-            var cf: CreditiFragment?
-            cf = getSupportFragmentManager().getFragment(savedInstanceState, "creditiFragment") as CreditiFragment?
+            var cf: CreditiFragment? = getSupportFragmentManager().getFragment(savedInstanceState, "creditiFragment") as CreditiFragment?
             creditiFragment = if(cf == null) CreditiFragment() else cf
+            var hf: HomeFragment? = getSupportFragmentManager().getFragment(savedInstanceState, "homeFragment") as HomeFragment?
+            homeFragment = if(hf == null) HomeFragment() else hf
+            var df: DebitiFragment? = getSupportFragmentManager().getFragment(savedInstanceState, "debitiFragment") as DebitiFragment?
+            debitiFragment = if(df == null) DebitiFragment() else df
         }
 
         when(selectedFragment){
@@ -144,7 +147,11 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         super.onSaveInstanceState(outState)
         outState.putInt("selected", selectedFragment)
         if(creditiFragment.isAdded())
-            getSupportFragmentManager().putFragment(outState, "creditiFragment", creditiFragment);
+            getSupportFragmentManager().putFragment(outState, "creditiFragment", creditiFragment)
+        if(homeFragment.isAdded())
+            getSupportFragmentManager().putFragment(outState, "homeFragment", homeFragment)
+        if(debitiFragment.isAdded())
+            getSupportFragmentManager().putFragment(outState, "debitiFragment", debitiFragment)
     }
 
     override fun onMenuItemClick(item: MenuItem):Boolean {
