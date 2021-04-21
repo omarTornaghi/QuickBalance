@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -55,9 +53,9 @@ class CreditiFragment : Fragment() {
             recyclerViewAdapter = CreditAdapter(mutableListOf())
             // Popolazione
             data = ArrayList<CreditType>()
-            data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-            data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null))
+            data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
+            data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
             data.add(
                 CreditType(
                     "Tornag",
@@ -66,7 +64,7 @@ class CreditiFragment : Fragment() {
                     150.00,
                     "3387135186",
                     "26/11/2000",
-                    null
+                    null, true
                 )
             )
             data.add(
@@ -77,7 +75,7 @@ class CreditiFragment : Fragment() {
                     150.00,
                     "3387135186",
                     "26/11/2000",
-                    null
+                    null, true
                 )
             )
             recyclerViewAdapter.updateTasks(data)

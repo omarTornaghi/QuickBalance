@@ -26,8 +26,8 @@ class FieldUtils {
             val primaData: Date = sdf.parse(primaDataStr)
             val secondaData:Date = sdf.parse(secondaDataStr)
             if (secondaData.after(primaData))
-                return true
-            return false
+                return false
+            return true
         }
         fun normalizzaStringa(sIn: String):String{
             return sIn.trim().capitalize()

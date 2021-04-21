@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.NotificheAdapter
 import com.example.quickbalance.Animations.AnimationUtils.collapse
 import com.example.quickbalance.Animations.AnimationUtils.expand
+import com.example.quickbalance.DataTypes.CreditType
 import com.example.quickbalance.DataTypes.NotificaType
 import com.example.quickbalance.DataTypes.PartecipanteType
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaDate
@@ -45,17 +46,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
+class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private lateinit var listPartecipanti: ArrayList<PartecipanteType>
     private var cardNotificheEspansa: Boolean = true
     private var activityModifica = false
-    private var statoToggle:Boolean = false
-    private var cardDatiUtenteEspansa:Boolean = true
-    private var cardDatiTransEspansa:Boolean = true
-    private var cardDateEspansa:Boolean = true
+    private var statoToggle: Boolean = false
+    private var cardDatiUtenteEspansa: Boolean = true
+    private var cardDatiTransEspansa: Boolean = true
+    private var cardDateEspansa: Boolean = true
     private var possoSettareTPersona = true
     private var possoSettareTTotale = true
-    private val formatoData:String = "dd/MM/yyyy"
+    private val formatoData: String = "dd/MM/yyyy"
     private lateinit var recyclerViewAdapter: NotificheAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +68,9 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         //Recupero dello stato
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             statoToggle = savedInstanceState.getBoolean("statoToggle")
-            if(statoToggle == true) setToggleCredito() else setToggleDebito()
+            if (statoToggle == true) setToggleCredito() else setToggleDebito()
             editTextNominativo.setText(savedInstanceState.getString("editTextNominativo"))
             editTextTelefono.setText(savedInstanceState.getString("editTextTelefono"))
             editTextDescrizione.setText(savedInstanceState.getString("editTextDescrizione"))
@@ -80,28 +81,43 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             cardDateEspansa = savedInstanceState.getBoolean("cardDateEspansa")
             cardNotificheEspansa = savedInstanceState.getBoolean("cardNotificheEspansa")
             activityModifica = savedInstanceState.getBoolean("activityModifica")
-            listPartecipanti = savedInstanceState.getParcelableArrayList<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
+            listPartecipanti =
+                savedInstanceState.getParcelableArrayList<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
             //Recupero notifiche selezionate
-            var nList:ArrayList<Int> = savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
+            var nList: ArrayList<Int> =
+                savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
             nList.forEach { recyclerViewAdapter.addItem(NotificaType(it, this)) }
-        }
-        else {
+        } else {
             activityModifica = intent.getBooleanExtra("activityModifica", false)
-            listPartecipanti = intent.getParcelableArrayListExtra<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
             //TODO Prendere tipo della transazione al momento lo setto nell'else sempre su credito
-            if(!activityModifica){
+            if (!activityModifica) {
                 val credito = intent.getBooleanExtra("operazioneCredito", true)
-                if(credito) setToggleCredito() else setToggleDebito()
+                listPartecipanti =
+                    intent.getParcelableArrayListExtra<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
+                if (credito) setToggleCredito() else setToggleDebito()
                 //Setto giorno corrente
                 val sdf = SimpleDateFormat(formatoData)
                 editTextDataInizio.setText(sdf.format(Date()))
                 recyclerViewAdapter.addItem(NotificaType(1, this))
-            }
-            else
-            {
+            } else {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi
-                setToggleCredito()
+                val item: CreditType = intent.getSerializableExtra("item") as CreditType
+                listPartecipanti = ArrayList()
+                listPartecipanti.add(PartecipanteType(item.generalita, item.numeroTelefono))
+                if (item.credito)
+                    setToggleCredito()
+                else
+                    setToggleDebito()
+                editTextNominativo.setText(item.generalita)
+                editTextTelefono.setText(item.numeroTelefono)
+                editTextDescrizione.setText(item.descrizione)
+                editTextimportoTotale.setText(item.soldiTotali.toString())
+                editTextImportoPersona.setText(editTextimportoTotale.text.toString())
+                editTextDataInizio.setText(item.dataInizio)
+                editTextDataScadenza.setText(item.dataFine)
+                //TODO Prendo le notifiche da una query al db
+
             }
         }
         //Visualizzo o meno card per mdoficare partecipante
@@ -121,7 +137,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         editTextimportoTotale.setOnFocusChangeListener(editTextImportoFocusListener)
         editTextImportoPersona.setOnFocusChangeListener(editTextImportoPersonaFocusListener)
         toggleButton.setOnClickListener(toggleButtonOnClickListener)
-        creditoToggleButton.setOnClickListener{setToggleCredito()}
+        creditoToggleButton.setOnClickListener { setToggleCredito() }
         debitoToggleButton.setOnClickListener({ setToggleDebito() })
         textViewCardDatiUtente.setOnClickListener(buttonColExpCardDatiUtenteOnClickListener)
         buttonColExpCardDatiUtente.setOnClickListener(buttonColExpCardDatiUtenteOnClickListener)
@@ -134,7 +150,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         buttonColExpCardNotifiche.setOnClickListener(buttonColExpCardNotificheOnClickListener)
         editTextimportoTotale.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if(possoSettareTPersona) {
+                if (possoSettareTPersona) {
                     val num: Double = if (editTextimportoTotale.text.toString()
                             .isNotBlank()
                     ) editTextimportoTotale.text.toString().toDouble() else 0.00
@@ -152,7 +168,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         })
         editTextImportoPersona.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if(possoSettareTTotale) {
+                if (possoSettareTTotale) {
                     val num: Double = if (editTextImportoPersona.text.toString()
                             .isNotBlank()
                     ) editTextImportoPersona.text.toString().toDouble() else 0.00
@@ -250,13 +266,12 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(editTextDataScadenza.text.toString().isNotBlank()){
+                if (editTextDataScadenza.text.toString().isNotBlank()) {
                     buttonCancellaDataScadenza.visibility = View.VISIBLE
                     val params = editTextDataScadenza.layoutParams as ConstraintLayout.LayoutParams
                     params.rightToLeft = buttonCancellaDataScadenza.id
                     editTextDataScadenza.requestLayout()
-                }
-                else {
+                } else {
                     buttonCancellaDataScadenza.visibility = View.GONE
                     val params = editTextDataScadenza.layoutParams as ConstraintLayout.LayoutParams
                     params.rightToLeft = consLayDate.id
@@ -287,8 +302,8 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         )
     }
 
-    private fun setCardDatiUtente(){
-        if(activityModifica) {
+    private fun setCardDatiUtente() {
+        if (activityModifica) {
             cardPartecipanteOp.visibility = View.VISIBLE
             Line1.visibility = View.GONE
             Line2.visibility = View.GONE
@@ -297,52 +312,87 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             imageView2.visibility = View.GONE
             textView13.visibility = View.GONE
             textView14.visibility = View.GONE
-        }
-        else {
+        } else {
             cardPartecipanteOp.visibility = View.GONE
         }
     }
 
-    private fun ecCardDatiUtente(){
-        if(cardDatiUtenteEspansa){
-            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_orange_24, 0, 0, 0);
+    private fun ecCardDatiUtente() {
+        if (cardDatiUtenteEspansa) {
+            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_less_orange_24,
+                0,
+                0,
+                0
+            );
             expand(consLayDatiUtente)
-        }
-        else{
-            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_orange_24, 0, 0, 0);
+        } else {
+            buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_more_orange_24,
+                0,
+                0,
+                0
+            );
             collapse(consLayDatiUtente)
         }
     }
 
-    private fun ecCardDatiTrans(){
-        if(cardDatiTransEspansa){
-            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_orange_24, 0, 0, 0);
+    private fun ecCardDatiTrans() {
+        if (cardDatiTransEspansa) {
+            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_less_orange_24,
+                0,
+                0,
+                0
+            );
             expand(consLayDatiTrans)
-        }
-        else{
-            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_orange_24, 0, 0, 0);
+        } else {
+            buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_more_orange_24,
+                0,
+                0,
+                0
+            );
             collapse(consLayDatiTrans)
         }
     }
 
-    private fun ecCardDate(){
-        if(cardDateEspansa){
-            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_orange_24, 0, 0, 0);
+    private fun ecCardDate() {
+        if (cardDateEspansa) {
+            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_less_orange_24,
+                0,
+                0,
+                0
+            );
             expand(consLayDate)
-        }
-        else{
-            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_orange_24, 0, 0, 0);
+        } else {
+            buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_more_orange_24,
+                0,
+                0,
+                0
+            );
             collapse(consLayDate)
         }
     }
 
-    private fun ecCardNotifiche(){
-        if(cardNotificheEspansa){
-            buttonColExpCardNotifiche.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_less_blue_24, 0, 0, 0);
+    private fun ecCardNotifiche() {
+        if (cardNotificheEspansa) {
+            buttonColExpCardNotifiche.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_less_blue_24,
+                0,
+                0,
+                0
+            );
             expand(recyclerView)
-        }
-        else{
-            buttonColExpCardNotifiche.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_expand_more_blue_24, 0, 0, 0);
+        } else {
+            buttonColExpCardNotifiche.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_baseline_expand_more_blue_24,
+                0,
+                0,
+                0
+            );
             collapse(recyclerView)
         }
     }
@@ -352,29 +402,29 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         ecCardDatiUtente()
     }
 
-    private val buttonColExpCardDatiTransOnClickListener = View.OnClickListener { view->
+    private val buttonColExpCardDatiTransOnClickListener = View.OnClickListener { view ->
         cardDatiTransEspansa = !cardDatiTransEspansa
         ecCardDatiTrans()
     }
 
-    private val buttonColExpCardDateOnClickListener = View.OnClickListener { view->
+    private val buttonColExpCardDateOnClickListener = View.OnClickListener { view ->
         cardDateEspansa = !cardDateEspansa
         ecCardDate()
     }
 
-    private val buttonColExpCardNotificheOnClickListener = View.OnClickListener { view->
+    private val buttonColExpCardNotificheOnClickListener = View.OnClickListener { view ->
         cardNotificheEspansa = !cardNotificheEspansa
         ecCardNotifiche()
     }
 
     private val toggleButtonOnClickListener = View.OnClickListener { view ->
-        if(creditoToggleButton.isChecked)
+        if (creditoToggleButton.isChecked)
             setToggleDebito()
         else
             setToggleCredito()
     }
 
-    private fun setToggleCredito(){
+    private fun setToggleCredito() {
         toggleButton.setBackgroundResource(R.drawable.background_switch_green)
         creditoToggleButton.setTextColor(
             ResourcesCompat.getColor(
@@ -394,7 +444,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         statoToggle = true
     }
 
-    private fun setToggleDebito(){
+    private fun setToggleDebito() {
         toggleButton.setBackgroundResource(R.drawable.background_switch_red)
         creditoToggleButton.setTextColor(
             ResourcesCompat.getColor(
@@ -482,8 +532,8 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
             }
         }
     private val editTextImportoPersonaFocusListener =
-        View.OnFocusChangeListener{ view, gainFocus->
-            if(gainFocus) {
+        View.OnFocusChangeListener { view, gainFocus ->
+            if (gainFocus) {
                 possoSettareTTotale = true
                 editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.ic_money_person_green_icon,
@@ -491,29 +541,43 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
                     0,
                     0
                 )
-            }else
-                editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_money_person_gray_icon, 0,0,0)
+            } else
+                editTextImportoPersona.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_money_person_gray_icon,
+                    0,
+                    0,
+                    0
+                )
         }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.checkIcon -> {
                 //Controllo i dati
-                var rilevatoErrore:Boolean = false
-                if(activityModifica){
-                    if(editTextNominativo.text.isNullOrBlank() || !controllaNumero(editTextTelefono.text.toString()))
+                var rilevatoErrore: Boolean = false
+                if (activityModifica) {
+                    if (editTextNominativo.text.isNullOrBlank() || !controllaNumero(editTextTelefono.text.toString()))
                         rilevatoErrore = true
                 }
-                if(controllaDate(editTextDataScadenza.text.toString(),editTextDataInizio.text.toString(), formatoData)) rilevatoErrore = true
-                if(rilevatoErrore)
-                    Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT).show()
+                if (editTextDataScadenza.text.toString().isNotBlank() && !controllaDate(
+                        editTextDataScadenza.text.toString(),
+                        editTextDataInizio.text.toString(),
+                        formatoData
+                    )
+                ) rilevatoErrore = true
+                if (rilevatoErrore)
+                    Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT)
+                        .show()
+                else {
+                    finish()
+                }
                 return true
             }
         }
         return false;
     }
 
-    val navigationIconOnClickListener= View.OnClickListener {
+    val navigationIconOnClickListener = View.OnClickListener {
         finish()
     }
 
@@ -532,7 +596,7 @@ class OpAggDataActivity : AppCompatActivity(),Toolbar.OnMenuItemClickListener  {
         outState.putBoolean("activityModifica", activityModifica)
         outState.putParcelableArrayList("listPartecipanti", listPartecipanti)
         //Salvo notifiche selezionate
-        var listNot:ArrayList<Int> = ArrayList()
+        var listNot: ArrayList<Int> = ArrayList()
         recyclerViewAdapter.getList().forEach { listNot.add(it.numGiorni) }
         outState.putIntegerArrayList("listaNotifiche", listNot)
     }

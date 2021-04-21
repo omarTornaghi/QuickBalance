@@ -93,11 +93,7 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
         val buttonModificaOnClickListener = View.OnClickListener {
             val int:Intent = Intent(view.context, OpAggDataActivity::class.java)
             int.putExtra("activityModifica", true)
-            //TODO Aggiungo all'intent l'oggetto(credito)
-            //TODO Migliorare questo passaggio
-            val ar:ArrayList<PartecipanteType> = ArrayList()
-            ar.add(PartecipanteType(item.generalita, item.numeroTelefono))
-            int.putExtra("listPartecipanti", ar)
+            int.putExtra("item", item)
             startActivity(view.context,int,null)
         }
     }
