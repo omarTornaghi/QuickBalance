@@ -2,7 +2,7 @@ package com.example.quickbalance.Utils
 
 import android.os.AsyncTask
 
-class doAsync(val handler: () -> Unit) : AsyncTask<Void, Void, Void>() {
+class InitializeAsync(val handler: () -> Unit) : AsyncTask<Void, Void, Void>() {
     init {
         execute()
     }
