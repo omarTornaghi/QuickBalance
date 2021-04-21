@@ -61,9 +61,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
 
         /*Gestione bottom navigation menu*/
-
         bottom_navigation.setOnNavigationItemSelectedListener{
-            //android.R.anim.slide_in_left, android.R.anim.slide_out_right
             var primaAnim:Int
             var secondaAnim:Int
             if(selectedFragment > getNumPagina(it.itemId)){
