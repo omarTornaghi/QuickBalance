@@ -18,11 +18,6 @@ class ContattoAdapter(private val contatti: ArrayList<ContattoType>, private var
         notifyDataSetChanged()
     }
 
-    fun addItem(item:ContattoType){
-        contatti.add(item)
-        notifyDataSetChanged()
-    }
-
     fun setItem(itemOld:ContattoType, itemNew:ContattoType){
         val id = contatti.indexOf(itemOld)
         contatti.set(id, itemNew)
