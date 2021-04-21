@@ -56,13 +56,13 @@ class CreditiFragment : Fragment() {
             recyclerViewAdapter = CreditAdapter(mutableListOf())
             // Popolazione
             data = ArrayList<CreditType>()
-            data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
-            data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
+            data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
+            data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
             data.add(
                 CreditType(
                     "Tornag",
@@ -71,7 +71,7 @@ class CreditiFragment : Fragment() {
                     150.00,
                     "3387135186",
                     "26/11/2000",
-                    null, true
+                    null, true, false
                 )
             )
             data.add(
@@ -82,7 +82,7 @@ class CreditiFragment : Fragment() {
                     150.00,
                     "3387135186",
                     "26/11/2000",
-                    null, true
+                    null, true, false
                 )
             )
             recyclerViewAdapter.updateTasks(data)

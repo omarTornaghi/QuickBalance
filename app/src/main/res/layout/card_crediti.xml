@@ -102,8 +102,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_card_credit"
             android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13">

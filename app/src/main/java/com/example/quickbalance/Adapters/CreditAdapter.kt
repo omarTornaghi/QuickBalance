@@ -1,6 +1,7 @@
 package com.example.quickbalance.Adapters
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,15 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
         private lateinit var item:CreditType
         fun bind(credit: CreditType) {
             item = credit
+            if(item.espanso == false){
+                view.CL_card_credit.visibility = View.GONE
+                collapse()
+            }
+            else
+            {
+                view.CL_card_credit.visibility = View.VISIBLE
+                expand()
+            }
             /* Cambiare i campi */
             view.textViewCreditoGeneralita.text = credit.generalita
             view.textViewCreditoDescr.text = credit.descrizione
@@ -60,30 +70,29 @@ class CreditAdapter(private val crediti: MutableList<CreditType>) : RecyclerView
             view.buttonRiscatta1.setOnClickListener(buttonRiscattaOnClickListener)
             view.buttonRiscatta2.setOnClickListener(buttonRiscattaOnClickListener)
             view.buttonModificaCredito.setOnClickListener(buttonModificaOnClickListener)
-            if(isExpanded == false){
-                itemView.CL_card_credit.visibility = View.GONE
-                itemView.buttonRiscatta1.visibility = View.GONE
-                collapse()
-            }
+            Log.d("XXXX", "Sono nella bind")
+            Log.d("XXXX", "Card: " + item.generalita + " espansa: " + item.espanso)
+
         }
 
         private fun expand()
         {
-            AnimationUtils.expand(itemView.CL_card_credit)
-            itemView.buttonRiscatta1.visibility = View.GONE
-            itemView.buttonCancellaCredito.visibility = View.VISIBLE
-            isExpanded = true
+            view.buttonRiscatta1.visibility = View.GONE
+            view.buttonCancellaCredito.visibility = View.VISIBLE
+            view.CL_card_credit.visibility = View.VISIBLE
+            AnimationUtils.expand(view.CL_card_credit)
+            item.espanso = true
         }
         private fun collapse()
         {
-            AnimationUtils.collapse(itemView.CL_card_credit)
-            itemView.buttonRiscatta1.visibility = View.VISIBLE
-            itemView.buttonCancellaCredito.visibility = View.GONE
-            isExpanded = false
+            AnimationUtils.collapse(view.CL_card_credit)
+            view.buttonRiscatta1.visibility = View.VISIBLE
+            view.buttonCancellaCredito.visibility = View.GONE
+            item.espanso = false
         }
 
         val cardOnClickListener= View.OnClickListener {
-            if (isExpanded) collapse() else expand()
+            if (item.espanso) collapse() else expand()
         }
 
         val buttonRiscattaOnClickListener= View.OnClickListener {
