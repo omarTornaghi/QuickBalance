@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
@@ -21,9 +22,11 @@ import com.example.quickbalance.Adapters.CreditAdapter
 import com.example.quickbalance.DataTypes.CreditType
 import com.example.quickbalance.NuovaOpActivity
 import com.example.quickbalance.R
-import com.example.quickbalance.Utils.doAsync
+import com.example.quickbalance.Utils.InitializeAsync
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_crediti.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CreditiFragment : Fragment() {
@@ -39,9 +42,9 @@ class CreditiFragment : Fragment() {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         if (savedInstanceState != null) {
             stringTextInput = savedInstanceState.getString("testoTextViewRicerca")!!
-            intCampo = savedInstanceState.getInt("testoSpinner")!!
+            intCampo = savedInstanceState.getInt("testoSpinner")
         }
-        doAsync {
+        InitializeAsync {
             //Set spinner
             cdSpinnerAdapter = ArrayAdapter.createFromResource(
                 mContext,
@@ -55,6 +58,10 @@ class CreditiFragment : Fragment() {
             data = ArrayList<CreditType>()
             data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
             data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
+            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
             data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true))
             data.add(
                 CreditType(
@@ -92,7 +99,7 @@ class CreditiFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_crediti, container, false)
-        doAsync {
+        InitializeAsync {
             view.post {
                 var recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
                 recycler_view.adapter = recyclerViewAdapter
@@ -100,6 +107,18 @@ class CreditiFragment : Fragment() {
                 var spinnerView = view.findViewById<Spinner>(R.id.spinnerView)
                 spinnerView.setAdapter(cdSpinnerAdapter)
                 spinnerView.setSelection(intCampo)
+                var first = true
+                spinnerView.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(!first){
+                            ricerca()
+                        }
+                        first = false
+                    }
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+                }
             }
         }
         var editTextInput = view.findViewById<EditText>(R.id.editTextInput)
@@ -110,7 +129,8 @@ class CreditiFragment : Fragment() {
                 editTextInput.clearFocus()
                 val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0)
-                Log.d("XXXX", "CERCO")
+                ricerca()
+
             }
             true
         }
@@ -120,6 +140,32 @@ class CreditiFragment : Fragment() {
         floatingButtonAggiungi.setOnClickListener(addFBOnClickListener)
 
         return view
+    }
+
+    fun ricerca(){
+        if(editTextInput.text.isNotBlank()){
+            var listaRicerca:ArrayList<CreditType> = ArrayList()
+            when(spinnerView.selectedItemPosition){
+                0->{
+                    listaRicerca =
+                        ArrayList(data.filter { it.generalita.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
+
+                }
+                1->{
+                    listaRicerca =
+                        ArrayList(data.filter { it.descrizione.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
+                }
+                2->{
+                    listaRicerca =
+                        ArrayList(data.filter { it.numeroTelefono.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
+                }
+            }
+            recyclerViewAdapter.updateTasks(listaRicerca)
+        }
+        else
+        {
+            recyclerViewAdapter.updateTasks(data)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -103,6 +103,7 @@
             android:id="@+id/CL_card_credit"
             android:layout_width="0dp"
             android:layout_height="130dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13">
@@ -118,8 +119,7 @@
                 android:drawableLeft="@drawable/ic_baseline_euro_orange_icon"
                 android:text="@string/payed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                 />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewCreditoSoldiRicevuti"
@@ -174,8 +174,7 @@
                 android:drawableLeft="@drawable/ic_baseline_calendar_blue_icon"
                 android:text="@string/credit_from"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCreditoTelefono"
-                 />
+                app:layout_constraintTop_toBottomOf="@+id/textViewCreditoTelefono" />
 
             <TextView
                 android:id="@+id/textViewCreditoDataInizio"
