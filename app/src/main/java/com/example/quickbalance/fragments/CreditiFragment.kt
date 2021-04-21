@@ -3,6 +3,7 @@ package com.example.quickbalance.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -18,8 +19,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +50,7 @@ class CreditiFragment : Fragment() {
         if (savedInstanceState != null) {
             stringTextInput = savedInstanceState.getString("testoTextViewRicerca")!!
             intCampo = savedInstanceState.getInt("testoSpinner")
+            data = savedInstanceState.getParcelableArrayList<CreditType>("data") as ArrayList<CreditType>
         }
         InitializeAsync {
             //Set spinner
@@ -59,38 +61,146 @@ class CreditiFragment : Fragment() {
             )
             cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
             //Set recyclerView
-            recyclerViewAdapter = CreditAdapter(mutableListOf(), mContext)
-            // Popolazione
-            data = ArrayList<CreditType>()
-            data.add(CreditType("Tor", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
-            data.add(CreditType("Torn", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
-            data.add(CreditType("Torna", "Prova", 300.00, 150.00, "3387135186", "26/11/2000", null, true, false))
-            data.add(
-                CreditType(
-                    "Tornag",
-                    "Prova",
-                    300.00,
-                    150.00,
-                    "3387135186",
-                    "26/11/2000",
-                    null, true, false
+            recyclerViewAdapter = CreditAdapter(mutableListOf(),
+                object : CreditAdapter.ListAdapterListener {
+                    override fun onClickAtRemoveButton(position: Int) {
+                        val dialogClickListener =
+                            DialogInterface.OnClickListener { dialog, which ->
+                                when (which) {
+                                    DialogInterface.BUTTON_POSITIVE -> {
+                                        //TODO Query per eliminare credito
+                                        data.remove(recyclerViewAdapter.getItem(position))
+                                        recyclerViewAdapter.removeItem(position)
+                                    }
+                                }
+                            }
+                        val ab: AlertDialog.Builder = AlertDialog.Builder(mContext)
+                        ab.setMessage(mContext.getString(R.string.confirm_delete_credit)).setPositiveButton(
+                            mContext.getString(
+                                R.string.yes
+                            ), dialogClickListener
+                        )
+                            .setNegativeButton(mContext.getString(R.string.no), dialogClickListener).show()
+                    }
+            })
+
+            if(savedInstanceState == null) {
+                // Popolazione
+                data = ArrayList<CreditType>()
+                data.add(
+                    CreditType(
+                        "Tor",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null,
+                        true,
+                        false
+                    )
                 )
-            )
-            data.add(
-                CreditType(
-                    "Tornaghi",
-                    "Prova",
-                    300.00,
-                    150.00,
-                    "3387135186",
-                    "26/11/2000",
-                    null, true, false
+                data.add(
+                    CreditType(
+                        "Torn",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null,
+                        true,
+                        false
+                    )
                 )
-            )
+                data.add(
+                    CreditType(
+                        "Torna",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null,
+                        true,
+                        false
+                    )
+                )
+                data.add(
+                    CreditType(
+                        "Torna",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null,
+                        true,
+                        false
+                    )
+                )
+                data.add(
+                    CreditType(
+                        "Torna",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null,
+                        true,
+                        false
+                    )
+                )
+                data.add(
+                    CreditType(
+                        "Torna",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null,
+                        true,
+                        false
+                    )
+                )
+                data.add(
+                    CreditType(
+                        "Torna",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null,
+                        true,
+                        false
+                    )
+                )
+                data.add(
+                    CreditType(
+                        "Tornag",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null, true, false
+                    )
+                )
+                data.add(
+                    CreditType(
+                        "Tornaghi",
+                        "Prova",
+                        300.00,
+                        150.00,
+                        "3387135186",
+                        "26/11/2000",
+                        null, true, false
+                    )
+                )
+            }
             recyclerViewAdapter.updateTasks(data)
         }
     }
@@ -189,16 +299,19 @@ class CreditiFragment : Fragment() {
             when(spinnerView.selectedItemPosition){
                 0->{
                     listaRicerca =
-                        ArrayList(data.filter { it.generalita.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
+                        ArrayList(data.filter {
+                            it.generalita!!.toLowerCase(Locale.ROOT)
+                                .contains(editTextInput.text.toString().toLowerCase(Locale.ROOT))
+                        })
 
                 }
                 1->{
                     listaRicerca =
-                        ArrayList(data.filter { it.descrizione.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
+                        ArrayList(data.filter { it.descrizione!!.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
                 }
                 2->{
                     listaRicerca =
-                        ArrayList(data.filter { it.numeroTelefono.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
+                        ArrayList(data.filter { it.numeroTelefono!!.toLowerCase(Locale.ROOT).contains(editTextInput.text.toString().toLowerCase(Locale.ROOT)) })
                 }
             }
             recyclerViewAdapter.updateTasks(listaRicerca)
@@ -213,6 +326,7 @@ class CreditiFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putString("testoTextViewRicerca", editTextInput.text.toString())
         outState.putInt("testoSpinner", spinnerView.selectedItemPosition)
+        outState.putParcelableArrayList("data", data)
     }
 
     val addFBOnClickListener = View.OnClickListener {

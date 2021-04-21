@@ -1,14 +1,10 @@
 package com.example.quickbalance.Adapters
 
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
@@ -18,7 +14,12 @@ import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.card_crediti.view.*
 
 
-class CreditAdapter(private val crediti: MutableList<CreditType>, private val context: Context) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
+class CreditAdapter(private val crediti: MutableList<CreditType>, private val mListener:ListAdapterListener) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
+    interface ListAdapterListener {
+        // create an interface
+        fun onClickAtRemoveButton(position: Int)
+    }
+
     fun updateTasks(nuovoCredit: List<CreditType>)
     {
         crediti.clear()
@@ -28,7 +29,10 @@ class CreditAdapter(private val crediti: MutableList<CreditType>, private val co
     fun removeItem(position: Int){
         crediti.removeAt(position)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position,crediti.size)
+        notifyItemRangeChanged(position, crediti.size)
+    }
+    fun getItem(position:Int):CreditType{
+        return crediti.get(position)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditHolder
     {
@@ -43,22 +47,9 @@ class CreditAdapter(private val crediti: MutableList<CreditType>, private val co
     override fun getItemCount(): Int = crediti.size
     override fun onBindViewHolder(holder: CreditHolder, position: Int){
         holder.bind(crediti[position])
-        holder.buttonRimuovi.setOnClickListener { clickButtonRimuovi(position) }
+        holder.buttonRimuovi.setOnClickListener { mListener.onClickAtRemoveButton(position) }
     }
-    private fun clickButtonRimuovi(position: Int){
-        val dialogClickListener =
-            DialogInterface.OnClickListener { dialog, which ->
-                when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> {
-                        //TODO Query per eliminare credito
-                        removeItem(position)
-                    }
-                }
-            }
-        val ab: AlertDialog.Builder = AlertDialog.Builder(context)
-        ab.setMessage(context.getString(R.string.confirm_delete_credit)).setPositiveButton(context.getString(R.string.yes), dialogClickListener)
-            .setNegativeButton(context.getString(R.string.no), dialogClickListener).show()
-    }
+
     class CreditHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
         private lateinit var item:CreditType

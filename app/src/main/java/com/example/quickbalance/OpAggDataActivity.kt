@@ -102,7 +102,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             } else {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi
-                val item: CreditType = intent.getSerializableExtra("item") as CreditType
+                val item: CreditType = intent.getParcelableExtra<CreditType>("item") as CreditType
                 listPartecipanti = ArrayList()
                 listPartecipanti.add(PartecipanteType(item.generalita, item.numeroTelefono))
                 if (item.credito)
