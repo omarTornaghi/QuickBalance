@@ -205,6 +205,11 @@ class CreditiFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //TODO QUERY PER RECUPERARE I CREDITI
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
@@ -332,6 +337,7 @@ class CreditiFragment : Fragment() {
     val addFBOnClickListener = View.OnClickListener {
         val int: Intent = Intent(mContext, NuovaOpActivity::class.java)
         int.putExtra("operazioneCredito", true)
+        int.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         startActivity(int)
     }
 

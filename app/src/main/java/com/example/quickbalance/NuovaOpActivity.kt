@@ -109,20 +109,34 @@ class NuovaOpActivity: AppCompatActivity() {
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            val list:ArrayList<PartecipanteType> = data?.getParcelableArrayListExtra<PartecipanteType>("listaContatti") as ArrayList<PartecipanteType>
-            list.forEach{
-                val generalita = it.generalita
-                val telefono = it.numeroTelefono
-                if (generalita != null) {
-                    if(generalita.isNotBlank() && recyclerViewAdapter.getList().find{it.generalita.equals(generalita)} == null && recyclerViewAdapter.getList().find{it.numeroTelefono.equals(
-                            telefono
-                        )} == null)
-                        recyclerViewAdapter.addItem(it)
-                    else
-                        Toast.makeText(this, "$generalita ${getString(R.string.already_exists)}", Toast.LENGTH_SHORT).show()
+            val creditoInserito:Boolean? = data?.getBooleanExtra("creditoInserito", false)
+            if(creditoInserito == false) {
+                val list: ArrayList<PartecipanteType> =
+                    data.getParcelableArrayListExtra<PartecipanteType>("listaContatti") as ArrayList<PartecipanteType>
+                list.forEach {
+                    val generalita = it.generalita
+                    val telefono = it.numeroTelefono
+                    if (generalita != null) {
+                        if (generalita.isNotBlank() && recyclerViewAdapter.getList()
+                                .find { it.generalita.equals(generalita) } == null && recyclerViewAdapter.getList()
+                                .find {
+                                    it.numeroTelefono.equals(
+                                        telefono
+                                    )
+                                } == null
+                        )
+                            recyclerViewAdapter.addItem(it)
+                        else
+                            Toast.makeText(
+                                this,
+                                "$generalita ${getString(R.string.already_exists)}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                    }
                 }
-            }
-            aggiornaStatoButtonContinua()
+                aggiornaStatoButtonContinua()
+            } //Ritorno da activity che ha inserito il credito quindi finish
+            else finish()
         }
     }
 
@@ -135,7 +149,7 @@ class NuovaOpActivity: AppCompatActivity() {
         val int: Intent = Intent(this, OpAggDataActivity::class.java)
         int.putExtra("operazioneCredito", transCredito)
         int.putExtra("listPartecipanti", recyclerViewAdapter.getList())
-        startActivity(int)
+        resultLauncher.launch(int)
     }
 
     val navigationIconOnClickListener= View.OnClickListener {

@@ -569,6 +569,11 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT)
                         .show()
                 else {
+                    //TODO Query di inserimento
+                    val intent = Intent().apply {
+                        putExtra("creditoInserito", true)
+                    }
+                    setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
                 return true
