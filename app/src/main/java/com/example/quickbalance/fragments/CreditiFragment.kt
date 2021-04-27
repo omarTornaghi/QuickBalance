@@ -275,7 +275,7 @@ class CreditiFragment : Fragment() {
                             }
                         }
                     }
-                    catch(ex:Exception){Log.d("XXXX", "CLICK")}
+                    catch(ex:Exception){}
                 }
                 return false;
             }

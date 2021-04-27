@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
+import com.example.quickbalance.CambiaImportoCreditiActivity
 import com.example.quickbalance.DataTypes.CreditType
 import com.example.quickbalance.OpAggDataActivity
 import com.example.quickbalance.R
@@ -106,7 +107,9 @@ class CreditAdapter(private val crediti: MutableList<CreditType>, private val mL
         }
 
         val buttonRiscattaOnClickListener= View.OnClickListener {
-
+            val int = Intent(view.context, CambiaImportoCreditiActivity::class.java)
+            int.putExtra("item", item)
+            startActivity(view.context, int,null)
         }
 
         val buttonModificaOnClickListener = View.OnClickListener {

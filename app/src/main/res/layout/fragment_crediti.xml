@@ -99,7 +99,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:contentDescription="Crea un nuovo credito"
+                android:contentDescription="@string/create_new_credit"
                 app:layout_constraintBottom_toTopOf="@+id/recycler_view"
                 app:layout_constraintEnd_toStartOf="@+id/recycler_view"
                 app:srcCompat="@drawable/ic_baseline_add_24" />

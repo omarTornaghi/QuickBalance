@@ -109,6 +109,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     setToggleCredito()
                 else
                     setToggleDebito()
+                //toggleButton.visibility = View.GONE
                 editTextNominativo.setText(item.generalita)
                 editTextTelefono.setText(item.numeroTelefono)
                 editTextDescrizione.setText(item.descrizione)

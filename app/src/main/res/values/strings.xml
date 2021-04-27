@@ -70,4 +70,11 @@
     <string name="confirm_delete_credit">Vuoi cancellare il credito?</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
+    <string name="create_new_credit">Crea un nuovo credito</string>
+    <string name="import_data">Dati importo</string>
+    <string name="money_received_field">Soldi ricevuti:</string>
+    <string name="money_received">Soldi ricevuti</string>
+    <string name="update_import">Modifica importo</string>
+    <string name="money_sent_field">Soldi dati:</string>
+    <string name="money_sent">Soldi dati</string>
 </resources>
