@@ -18,7 +18,7 @@ data class NotificaType(var numGiorni:Int, val context:Context){
         val QUERY_CREAZIONE = "CREATE TABLE Notifica(\n" +
                 "\tId INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "\tnumGiorniPrima INTEGER,\n" +
-                "\ttransazioneId INTEGER REFERENCES Transazione(Id)\n" +
+                "\ttransazioneId INTEGER REFERENCES Transazione(Id) ON DELETE CASCADE\n" +
                 ");"
         val QUERY_CANCELLAZIONE_TABLE = "DROP TABLE IF EXISTS Notifica"
     }

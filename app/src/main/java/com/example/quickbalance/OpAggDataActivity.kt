@@ -27,6 +27,7 @@ import com.example.quickbalance.Animations.AnimationUtils.expand
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.DataTypes.NotificaType
 import com.example.quickbalance.DataTypes.PartecipanteType
+import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaDate
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaNumero
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
@@ -55,6 +56,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private var possoSettareTPersona = true
     private var possoSettareTTotale = true
     private val formatoData: String = "dd/MM/yyyy"
+    private lateinit var transazione:TransazioneType
     private lateinit var recyclerViewAdapter: NotificheAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,21 +102,22 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             } else {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi
-                val item: TransazioneType = intent.getParcelableExtra<TransazioneType>("item") as TransazioneType
+                transazione =
+                    intent.getParcelableExtra<TransazioneType>("item") as TransazioneType
                 listPartecipanti = ArrayList()
-                listPartecipanti.add(PartecipanteType(item.generalita, item.numeroTelefono))
-                if (item.credito)
+                listPartecipanti.add(PartecipanteType(transazione.generalita, transazione.numeroTelefono))
+                if (transazione.credito)
                     setToggleCredito()
                 else
                     setToggleDebito()
                 //toggleButton.visibility = View.GONE
-                editTextNominativo.setText(item.generalita)
-                editTextTelefono.setText(item.numeroTelefono)
-                editTextDescrizione.setText(item.descrizione)
-                editTextimportoTotale.setText(item.soldiTotali.toString())
+                editTextNominativo.setText(transazione.generalita)
+                editTextTelefono.setText(transazione.numeroTelefono)
+                editTextDescrizione.setText(transazione.descrizione)
+                editTextimportoTotale.setText(transazione.soldiTotali.toString())
                 editTextImportoPersona.setText(editTextimportoTotale.text.toString())
-                editTextDataInizio.setText(item.dataInizio)
-                editTextDataScadenza.setText(item.dataFine)
+                editTextDataInizio.setText(transazione.dataInizio)
+                editTextDataScadenza.setText(transazione.dataFine)
                 //TODO Prendo le notifiche da una query al db
 
             }
@@ -564,11 +567,32 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                         formatoData
                     )
                 ) rilevatoErrore = true
+                if(editTextImportoPersona.text.isNullOrBlank()) rilevatoErrore = true
                 if (rilevatoErrore)
                     Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT)
                         .show()
                 else {
-                    //TODO Query di inserimento
+                    val dbHelper: DbHelper = DbHelper(this)
+                    if (!activityModifica) {
+                        listPartecipanti.forEach {
+                        val t = TransazioneType(
+                            0,
+                            it.generalita,
+                            editTextDescrizione.text.toString(),
+                            editTextImportoPersona.text.toString().toDouble(),
+                            0.00,
+                            it.numeroTelefono,
+                            editTextDataInizio.text.toString(),
+                            editTextDataScadenza.text.toString(),
+                            statoToggle,
+                            false
+                        )
+                        dbHelper.insertTransazione(t)
+                        }
+                    } else {
+                        //TODO Query di aggiornamento
+
+                    }
                     val intent = Intent().apply {
                         putExtra("creditoInserito", true)
                     }

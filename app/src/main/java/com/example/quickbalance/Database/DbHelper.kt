@@ -22,8 +22,6 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
             db.execSQL(TransazioneType.QUERY_CANCELLAZIONE_TABLE)
             onCreate(db)
         }
-
-
     }
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         onUpgrade(db, oldVersion, newVersion)
@@ -68,6 +66,10 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
         }
         result.close()
         return list
+    }
+
+    fun deleteTransazione(transazione:TransazioneType){
+        this.writableDatabase.delete(TransazioneType.TABLE_NAME, TransazioneType.COL_ID + "=" + transazione.id, null)
     }
 
     fun getCreditiAttivi():MutableList<TransazioneType>{

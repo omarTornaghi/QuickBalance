@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
-
-        val dbHelper = DbHelper(this)
         topAppBar.setOnMenuItemClickListener(this)
         if(savedInstanceState != null){
             selectedFragment = savedInstanceState.getInt("selected")

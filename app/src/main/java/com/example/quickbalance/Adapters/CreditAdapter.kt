@@ -75,7 +75,7 @@ class CreditAdapter(private val crediti: MutableList<TransazioneType>, private v
             view.textViewCreditoSoldiTotali.text = "€" + transazione.soldiTotali
             view.textViewCreditoTelefono.text = transazione.numeroTelefono
             view.textViewCreditoDataInizio.text = transazione.dataInizio
-            val dataFine: String = if(transazione.dataFine.isNullOrBlank()) "Non definito" else transazione.dataFine.toString()
+            val dataFine: String = if(transazione.dataFine.isNullOrBlank()) view.getResources().getString(R.string.not_defined) else transazione.dataFine.toString()
             view.textViewCreditoDataFine.text = dataFine
 
             //Set dei listener

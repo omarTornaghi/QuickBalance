@@ -71,6 +71,7 @@ class CreditiFragment : Fragment() {
                                 when (which) {
                                     DialogInterface.BUTTON_POSITIVE -> {
                                         //TODO Query per eliminare credito
+                                        dbHelper.deleteTransazione(recyclerViewAdapter.getItem(position))
                                         data.remove(recyclerViewAdapter.getItem(position))
                                         recyclerViewAdapter.removeItem(position)
                                     }
@@ -91,7 +92,6 @@ class CreditiFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //TODO QUERY PER RECUPERARE I CREDITI
         dbHelper = DbHelper(mContext)
         data = dbHelper.getCreditiAttivi() as ArrayList<TransazioneType>
         recyclerViewAdapter.updateTasks(data)
