@@ -1,6 +1,9 @@
 package com.example.quickbalance.Utils
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -21,7 +24,7 @@ class FieldUtils {
             }
             return false
         }
-        fun controllaDate(primaDataStr: String, secondaDataStr: String, format:String):Boolean{
+        fun controllaDate(primaDataStr: String, secondaDataStr: String, format: String):Boolean{
             val sdf = SimpleDateFormat(format)
             val primaData: Date = sdf.parse(primaDataStr)
             val secondaData:Date = sdf.parse(secondaDataStr)
@@ -31,6 +34,26 @@ class FieldUtils {
         }
         fun normalizzaStringa(sIn: String):String{
             return sIn.trim().capitalize()
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun fromDateDBTONormal(dateInStr: String):String{
+            if(dateInStr.isBlank()) return ""
+            var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val dateIn:Date? = simpleDateFormat.parse(dateInStr)
+            simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            if(dateIn == null) return ""
+            return simpleDateFormat.format(dateIn)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun fromDateNormalTODb(dateInStr: String?):String{
+            if(dateInStr.isNullOrBlank()) return ""
+            var simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val dateIn:Date? = simpleDateFormat.parse(dateInStr)
+            simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+            if(dateIn == null) return ""
+            return simpleDateFormat.format(dateIn)
         }
     }
 }

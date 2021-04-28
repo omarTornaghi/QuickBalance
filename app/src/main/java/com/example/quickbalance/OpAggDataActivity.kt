@@ -8,10 +8,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.Telephony
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -26,7 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.NotificheAdapter
 import com.example.quickbalance.Animations.AnimationUtils.collapse
 import com.example.quickbalance.Animations.AnimationUtils.expand
-import com.example.quickbalance.DataTypes.CreditType
+import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.DataTypes.NotificaType
 import com.example.quickbalance.DataTypes.PartecipanteType
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaDate
@@ -102,7 +100,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             } else {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi
-                val item: CreditType = intent.getParcelableExtra<CreditType>("item") as CreditType
+                val item: TransazioneType = intent.getParcelableExtra<TransazioneType>("item") as TransazioneType
                 listPartecipanti = ArrayList()
                 listPartecipanti.add(PartecipanteType(item.generalita, item.numeroTelefono))
                 if (item.credito)

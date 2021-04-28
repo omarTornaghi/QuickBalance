@@ -25,7 +25,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Adapters.CreditAdapter
-import com.example.quickbalance.DataTypes.CreditType
+import com.example.quickbalance.DataTypes.TransazioneType
+import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.NuovaOpActivity
 import com.example.quickbalance.R
 import com.example.quickbalance.Utils.InitializeAsync
@@ -37,8 +38,9 @@ import kotlin.collections.ArrayList
 
 
 class CreditiFragment : Fragment() {
+    private lateinit var dbHelper: DbHelper
     private lateinit var mContext: Context
-    private lateinit var data: ArrayList<CreditType>
+    private lateinit var data: ArrayList<TransazioneType>
     private lateinit var recyclerViewAdapter: CreditAdapter
     private lateinit var cdSpinnerAdapter: ArrayAdapter<CharSequence>
     private var stringTextInput: String = ""
@@ -50,7 +52,7 @@ class CreditiFragment : Fragment() {
         if (savedInstanceState != null) {
             stringTextInput = savedInstanceState.getString("testoTextViewRicerca")!!
             intCampo = savedInstanceState.getInt("testoSpinner")
-            data = savedInstanceState.getParcelableArrayList<CreditType>("data") as ArrayList<CreditType>
+            data = savedInstanceState.getParcelableArrayList<TransazioneType>("data") as ArrayList<TransazioneType>
         }
         InitializeAsync {
             //Set spinner
@@ -84,130 +86,15 @@ class CreditiFragment : Fragment() {
                     }
             })
 
-            if(savedInstanceState == null) {
-                // Popolazione
-                data = ArrayList<CreditType>()
-                data.add(
-                    CreditType(
-                        "Tor",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null,
-                        true,
-                        false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Torn",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null,
-                        true,
-                        false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Torna",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null,
-                        true,
-                        false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Torna",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null,
-                        true,
-                        false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Torna",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null,
-                        true,
-                        false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Torna",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null,
-                        true,
-                        false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Torna",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null,
-                        true,
-                        false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Tornag",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null, true, false
-                    )
-                )
-                data.add(
-                    CreditType(
-                        "Tornaghi",
-                        "Prova",
-                        300.00,
-                        150.00,
-                        "3387135186",
-                        "26/11/2000",
-                        null, true, false
-                    )
-                )
-            }
-            recyclerViewAdapter.updateTasks(data)
         }
     }
 
     override fun onResume() {
         super.onResume()
         //TODO QUERY PER RECUPERARE I CREDITI
+        dbHelper = DbHelper(mContext)
+        data = dbHelper.getCreditiAttivi() as ArrayList<TransazioneType>
+        recyclerViewAdapter.updateTasks(data)
     }
 
     override fun onAttach(context: Context) {
@@ -300,7 +187,7 @@ class CreditiFragment : Fragment() {
 
     fun ricerca(){
         if(editTextInput.text.isNotBlank()){
-            var listaRicerca:ArrayList<CreditType> = ArrayList()
+            var listaRicerca:ArrayList<TransazioneType> = ArrayList()
             when(spinnerView.selectedItemPosition){
                 0->{
                     listaRicerca =

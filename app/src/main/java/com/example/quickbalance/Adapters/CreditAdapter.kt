@@ -9,22 +9,22 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
 import com.example.quickbalance.CambiaImportoCreditiActivity
-import com.example.quickbalance.DataTypes.CreditType
+import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.OpAggDataActivity
 import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.card_crediti.view.*
 
 
-class CreditAdapter(private val crediti: MutableList<CreditType>, private val mListener:ListAdapterListener) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
+class CreditAdapter(private val crediti: MutableList<TransazioneType>, private val mListener:ListAdapterListener) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
     interface ListAdapterListener {
         // create an interface
         fun onClickAtRemoveButton(position: Int)
     }
 
-    fun updateTasks(nuovoCredit: List<CreditType>)
+    fun updateTasks(nuovoTransazione: List<TransazioneType>)
     {
         crediti.clear()
-        crediti.addAll(nuovoCredit)
+        crediti.addAll(nuovoTransazione)
         notifyDataSetChanged()
     }
     fun removeItem(position: Int){
@@ -32,7 +32,7 @@ class CreditAdapter(private val crediti: MutableList<CreditType>, private val mL
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, crediti.size)
     }
-    fun getItem(position:Int):CreditType{
+    fun getItem(position:Int):TransazioneType{
         return crediti.get(position)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditHolder
@@ -53,10 +53,10 @@ class CreditAdapter(private val crediti: MutableList<CreditType>, private val mL
 
     class CreditHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
-        private lateinit var item:CreditType
+        private lateinit var item:TransazioneType
         lateinit var buttonRimuovi: Button
-        fun bind(credit: CreditType) {
-            item = credit
+        fun bind(transazione: TransazioneType) {
+            item = transazione
             if(item.espanso == false){
                 view.CL_card_credit.visibility = View.GONE
                 collapse()
@@ -68,14 +68,14 @@ class CreditAdapter(private val crediti: MutableList<CreditType>, private val mL
             }
             buttonRimuovi = view.buttonCancellaCredito
             /* Cambiare i campi */
-            view.textViewCreditoGeneralita.text = credit.generalita
-            view.textViewCreditoDescr.text = credit.descrizione
-            view.textViewCreditoSoldiRimanenti.text = "€" + (credit.soldiTotali - credit.soldiRicevuti).toString()
-            view.textViewCreditoSoldiRicevuti.text = "€" + credit.soldiRicevuti
-            view.textViewCreditoSoldiTotali.text = "€" + credit.soldiTotali
-            view.textViewCreditoTelefono.text = credit.numeroTelefono
-            view.textViewCreditoDataInizio.text = credit.dataInizio
-            val dataFine: String = if(credit.dataFine == null) "Non definito" else credit.dataFine.toString()
+            view.textViewCreditoGeneralita.text = transazione.generalita
+            view.textViewCreditoDescr.text = transazione.descrizione
+            view.textViewCreditoSoldiRimanenti.text = "€" + (transazione.soldiTotali - transazione.soldiRicevuti).toString()
+            view.textViewCreditoSoldiRicevuti.text = "€" + transazione.soldiRicevuti
+            view.textViewCreditoSoldiTotali.text = "€" + transazione.soldiTotali
+            view.textViewCreditoTelefono.text = transazione.numeroTelefono
+            view.textViewCreditoDataInizio.text = transazione.dataInizio
+            val dataFine: String = if(transazione.dataFine.isNullOrBlank()) "Non definito" else transazione.dataFine.toString()
             view.textViewCreditoDataFine.text = dataFine
 
             //Set dei listener

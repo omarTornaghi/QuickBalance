@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import com.example.quickbalance.DataTypes.CreditType
+import com.example.quickbalance.DataTypes.TransazioneType
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonAzzera
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonMeta
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonTotale
@@ -24,11 +23,11 @@ import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.topAppBar
 import java.lang.Exception
 
 class CambiaImportoDebitiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
-    lateinit var item:CreditType
+    lateinit var item:TransazioneType
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cambia_importo_debiti)
-        item = intent.getParcelableExtra<CreditType>("item") as CreditType
+        item = intent.getParcelableExtra<TransazioneType>("item") as TransazioneType
         if(savedInstanceState != null){
             editTextImportoTransazione.setText(savedInstanceState.getString("editTextImportoTransazione"))
         }

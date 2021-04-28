@@ -13,6 +13,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.quickbalance.DataTypes.TransazioneType
+import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.fragments.CreditiFragment
 import com.example.quickbalance.fragments.DebitiFragment
 import com.example.quickbalance.fragments.HomeFragment
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
+
+        val dbHelper = DbHelper(this)
         topAppBar.setOnMenuItemClickListener(this)
         if(savedInstanceState != null){
             selectedFragment = savedInstanceState.getInt("selected")

@@ -13,4 +13,13 @@ data class NotificaType(var numGiorni:Int, val context:Context){
             else-> return "$numGiorni ${context.getString(R.string.days_before)}"
         }
     }
+
+    companion object{
+        val QUERY_CREAZIONE = "CREATE TABLE Notifica(\n" +
+                "\tId INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "\tnumGiorniPrima INTEGER,\n" +
+                "\ttransazioneId INTEGER REFERENCES Transazione(Id)\n" +
+                ");"
+        val QUERY_CANCELLAZIONE_TABLE = "DROP TABLE IF EXISTS Notifica"
+    }
 }

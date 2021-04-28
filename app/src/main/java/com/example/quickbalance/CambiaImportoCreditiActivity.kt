@@ -1,33 +1,29 @@
 package com.example.quickbalance
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import com.example.quickbalance.DataTypes.CreditType
+import com.example.quickbalance.DataTypes.TransazioneType
 import kotlinx.android.synthetic.main.activity_cambia_importo_crediti.*
 import kotlinx.android.synthetic.main.activity_cambia_importo_crediti.topAppBar
 import java.lang.Exception
 
 class CambiaImportoCreditiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
-    lateinit var item:CreditType
+    lateinit var item:TransazioneType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cambia_importo_crediti)
-        item = intent.getParcelableExtra<CreditType>("item") as CreditType
+        item = intent.getParcelableExtra<TransazioneType>("item") as TransazioneType
         if(savedInstanceState != null){
             editTextImportoTransazione.setText(savedInstanceState.getString("editTextImportoTransazione"))
         }
