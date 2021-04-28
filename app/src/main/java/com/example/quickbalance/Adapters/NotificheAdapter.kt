@@ -61,10 +61,10 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
     override fun onBindViewHolder(holder: NotificaHolder, position: Int) {
         if (position == notifiche.size) {
             holder.buttonAggiungi?.setOnClickListener {
-                var n = NotificaType(0, context)
+                var n = NotificaType(0,0,0, context)
                 if (notifiche.size > 0)
                     n = notifiche.get(notifiche.size - 1)
-                addItem(NotificaType((((n.numGiorni + 1)-1) % 7)+1, context))
+                addItem(NotificaType(0,(((n.numGiorni + 1)-1) % 7)+1,0, context))
             }
         } else {
             val notifica: NotificaType = notifiche.get(position)
@@ -81,14 +81,15 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
         var list:ArrayList<String> = ArrayList()
         list.add(context.getString(R.string.nothing))
         for(i in 1..7){
-            list.add(NotificaType(i, context).toString())
+            list.add(NotificaType(0,i, 0,context).toString())
         }
 
         builder.setItems(list.toTypedArray()) { dialog, which ->
             when (which) {
                 0 -> {  removeItem(position)}
                 else -> {
-                    updateItem(position, NotificaType(which, context))
+                    val not = notifiche.get(position)
+                    updateItem(position, NotificaType(not.id, which,not.idTransazione, context))
                 }
             }
         }

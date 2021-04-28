@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -46,6 +47,7 @@ import kotlin.collections.ArrayList
 
 
 class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
+    private var dbHelper: DbHelper = DbHelper(this)
     private lateinit var listPartecipanti: ArrayList<PartecipanteType>
     private var cardNotificheEspansa: Boolean = true
     private var activityModifica = false
@@ -83,13 +85,16 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             activityModifica = savedInstanceState.getBoolean("activityModifica")
             listPartecipanti =
                 savedInstanceState.getParcelableArrayList<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
-            //Recupero notifiche selezionate
-            var nList: ArrayList<Int> =
-                savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
-            nList.forEach { recyclerViewAdapter.addItem(NotificaType(it, this)) }
+                //Recupero notifiche selezionate
+                val nList: ArrayList<Int> =
+                    savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
+                for(i in 0 until nList.size step 3) {
+                    //0 id 1 giorni 2 idTrans
+                    recyclerViewAdapter.addItem(NotificaType(nList.get(i), nList.get(i+1), nList.get((i+2)), this))
+                }
+
         } else {
             activityModifica = intent.getBooleanExtra("activityModifica", false)
-            //TODO Prendere tipo della transazione al momento lo setto nell'else sempre su credito
             if (!activityModifica) {
                 val credito = intent.getBooleanExtra("operazioneCredito", true)
                 listPartecipanti =
@@ -98,7 +103,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 //Setto giorno corrente
                 val sdf = SimpleDateFormat(formatoData)
                 editTextDataInizio.setText(sdf.format(Date()))
-                recyclerViewAdapter.addItem(NotificaType(1, this))
+                recyclerViewAdapter.addItem(NotificaType(0,1, 0,this))
             } else {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi
@@ -110,6 +115,9 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     setToggleCredito()
                 else
                     setToggleDebito()
+                //Prendo le notifiche dal db
+                val nList:ArrayList<NotificaType> = dbHelper.getNotifiche(transazione) as ArrayList<NotificaType>
+                nList.forEach{recyclerViewAdapter.addItem(NotificaType(it.id, it.numGiorni, it.idTransazione, this))}
                 //toggleButton.visibility = View.GONE
                 editTextNominativo.setText(transazione.generalita)
                 editTextTelefono.setText(transazione.numeroTelefono)
@@ -118,11 +126,9 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 editTextImportoPersona.setText(editTextimportoTotale.text.toString())
                 editTextDataInizio.setText(transazione.dataInizio)
                 editTextDataScadenza.setText(transazione.dataFine)
-                //TODO Prendo le notifiche da una query al db
-
             }
         }
-        //Visualizzo o meno card per mdoficare partecipante
+        //Visualizzo o meno card per modificare partecipante
         setCardDatiUtente()
         ecCardDatiUtente()
         ecCardDatiTrans()
@@ -572,7 +578,6 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT)
                         .show()
                 else {
-                    val dbHelper: DbHelper = DbHelper(this)
                     if (!activityModifica) {
                         listPartecipanti.forEach {
                         val t = TransazioneType(
@@ -587,7 +592,8 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                             statoToggle,
                             false
                         )
-                        dbHelper.insertTransazione(t)
+                            val id:Int = dbHelper.insertTransazione(t)
+                            dbHelper.insertNotifiche(recyclerViewAdapter.getList(), id)
                         }
                     } else {
                         //TODO Query di aggiornamento
@@ -625,7 +631,11 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         outState.putParcelableArrayList("listPartecipanti", listPartecipanti)
         //Salvo notifiche selezionate
         var listNot: ArrayList<Int> = ArrayList()
-        recyclerViewAdapter.getList().forEach { listNot.add(it.numGiorni) }
+        recyclerViewAdapter.getList().forEach {
+            listNot.add(it.id)
+            listNot.add(it.numGiorni)
+            listNot.add(it.idTransazione)
+        }
         outState.putIntegerArrayList("listaNotifiche", listNot)
     }
 

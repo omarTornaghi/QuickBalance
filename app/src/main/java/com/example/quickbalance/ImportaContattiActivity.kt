@@ -78,7 +78,6 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         }else
         {
             richiediPermessoContatti()
-            listContatti = ArrayList(recyclerViewAdapter.getList().map { it.copy() })
             circularProgress.visibility = View.GONE
         }
     }
@@ -181,6 +180,7 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
             contactList.add(ContattoType(value, key, false))
         }
         recyclerViewAdapter.updateTasks(ArrayList(contactList.sortedWith(compareBy({ it.generalita }))))
+        listContatti = ArrayList(recyclerViewAdapter.getList().map { it.copy() })
         if (phones != null) {
             phones.close()
         }
@@ -191,6 +191,7 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
         val recyclerViewAdapter = ContattoAdapter(arrayListOf(), textViewDatiVuoti) {
             val rIt: ContattoType = it
             var idUno:Int= listContatti.indexOf(it)
+            if(idUno == -1) return@ContattoAdapter
             rIt.selezionato = !rIt.selezionato!!
             recyclerViewAdapter.setItem(it, rIt)
             listContatti.set(idUno, rIt)
