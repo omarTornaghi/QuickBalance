@@ -68,12 +68,12 @@ class CreditAdapter(private val crediti: MutableList<TransazioneType>, private v
             }
             buttonRimuovi = view.buttonCancellaCredito
             /* Cambiare i campi */
-            view.textViewCreditoGeneralita.text = transazione.generalita
-            view.textViewCreditoDescr.text = transazione.descrizione
+            view.textViewCreditoGeneralita.text = if(transazione.generalita.isNullOrBlank()) view.getResources().getString(R.string.not_defined) else transazione.generalita
+            view.textViewCreditoDescr.text = if(transazione.descrizione.isNullOrBlank()) view.getResources().getString(R.string.not_defined) else transazione.descrizione
             view.textViewCreditoSoldiRimanenti.text = "€" + (transazione.soldiTotali - transazione.soldiRicevuti).toString()
             view.textViewCreditoSoldiRicevuti.text = "€" + transazione.soldiRicevuti
             view.textViewCreditoSoldiTotali.text = "€" + transazione.soldiTotali
-            view.textViewCreditoTelefono.text = transazione.numeroTelefono
+            view.textViewCreditoTelefono.text = if(transazione.numeroTelefono.isNullOrBlank()) view.getResources().getString(R.string.not_defined) else transazione.numeroTelefono
             view.textViewCreditoDataInizio.text = transazione.dataInizio
             val dataFine: String = if(transazione.dataFine.isNullOrBlank()) view.getResources().getString(R.string.not_defined) else transazione.dataFine.toString()
             view.textViewCreditoDataFine.text = dataFine
