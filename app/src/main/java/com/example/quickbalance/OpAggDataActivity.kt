@@ -25,22 +25,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.NotificheAdapter
 import com.example.quickbalance.Animations.AnimationUtils.collapse
 import com.example.quickbalance.Animations.AnimationUtils.expand
-import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.DataTypes.NotificaType
 import com.example.quickbalance.DataTypes.PartecipanteType
+import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaDate
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaNumero
 import kotlinx.android.synthetic.main.activity_op_agg_data.*
-import kotlinx.android.synthetic.main.activity_op_agg_data.Line1
-import kotlinx.android.synthetic.main.activity_op_agg_data.Line2
-import kotlinx.android.synthetic.main.activity_op_agg_data.Line3
-import kotlinx.android.synthetic.main.activity_op_agg_data.imageView1
-import kotlinx.android.synthetic.main.activity_op_agg_data.imageView2
-import kotlinx.android.synthetic.main.activity_op_agg_data.recyclerView
-import kotlinx.android.synthetic.main.activity_op_agg_data.textView13
-import kotlinx.android.synthetic.main.activity_op_agg_data.textView14
-import kotlinx.android.synthetic.main.activity_op_agg_data.topAppBar
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -58,7 +49,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private var possoSettareTPersona = true
     private var possoSettareTTotale = true
     private val formatoData: String = "dd/MM/yyyy"
-    private lateinit var transazione:TransazioneType
+    private lateinit var transazione: TransazioneType
     private lateinit var recyclerViewAdapter: NotificheAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,13 +76,20 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             activityModifica = savedInstanceState.getBoolean("activityModifica")
             listPartecipanti =
                 savedInstanceState.getParcelableArrayList<PartecipanteType>("listPartecipanti") as ArrayList<PartecipanteType>
-                //Recupero notifiche selezionate
-                val nList: ArrayList<Int> =
-                    savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
-                for(i in 0 until nList.size step 3) {
-                    //0 id 1 giorni 2 idTrans
-                    recyclerViewAdapter.addItem(NotificaType(nList.get(i), nList.get(i+1), nList.get((i+2)), this))
-                }
+            //Recupero notifiche selezionate
+            val nList: ArrayList<Int> =
+                savedInstanceState.getIntegerArrayList("listaNotifiche") as ArrayList<Int>
+            for (i in 0 until nList.size step 3) {
+                //0 id 1 giorni 2 idTrans
+                recyclerViewAdapter.addItem(
+                    NotificaType(
+                        nList.get(i),
+                        nList.get(i + 1),
+                        nList.get((i + 2)),
+                        this
+                    )
+                )
+            }
 
         } else {
             activityModifica = intent.getBooleanExtra("activityModifica", false)
@@ -103,21 +101,36 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 //Setto giorno corrente
                 val sdf = SimpleDateFormat(formatoData)
                 editTextDataInizio.setText(sdf.format(Date()))
-                recyclerViewAdapter.addItem(NotificaType(0,1, 0,this))
+                recyclerViewAdapter.addItem(NotificaType(0, 1, 0, this))
             } else {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi
                 transazione =
                     intent.getParcelableExtra<TransazioneType>("item") as TransazioneType
                 listPartecipanti = ArrayList()
-                listPartecipanti.add(PartecipanteType(transazione.generalita, transazione.numeroTelefono))
+                listPartecipanti.add(
+                    PartecipanteType(
+                        transazione.generalita,
+                        transazione.numeroTelefono
+                    )
+                )
                 if (transazione.credito)
                     setToggleCredito()
                 else
                     setToggleDebito()
                 //Prendo le notifiche dal db
-                val nList:ArrayList<NotificaType> = dbHelper.getNotifiche(transazione) as ArrayList<NotificaType>
-                nList.forEach{recyclerViewAdapter.addItem(NotificaType(it.id, it.numGiorni, it.idTransazione, this))}
+                val nList: ArrayList<NotificaType> =
+                    dbHelper.getNotifiche(transazione) as ArrayList<NotificaType>
+                nList.forEach {
+                    recyclerViewAdapter.addItem(
+                        NotificaType(
+                            it.id,
+                            it.numGiorni,
+                            it.idTransazione,
+                            this
+                        )
+                    )
+                }
                 //toggleButton.visibility = View.GONE
                 editTextNominativo.setText(transazione.generalita)
                 editTextTelefono.setText(transazione.numeroTelefono)
@@ -135,15 +148,15 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         ecCardDate()
         ecCardNotifiche()
         //Setto textView numero partecipanti
-        textViewNumPersone.setText("(${listPartecipanti.size}):")
+        textViewNumPersone.text = "(${listPartecipanti.size}):"
         //Listeners vari
         topAppBar.setOnMenuItemClickListener(this)
         topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
-        editTextNominativo.setOnFocusChangeListener(editTextNominativoFocusListener)
-        editTextTelefono.setOnFocusChangeListener(editTextTelefonoFocusListener)
-        editTextDescrizione.setOnFocusChangeListener(editTextDescrizioneFocusListener)
-        editTextimportoTotale.setOnFocusChangeListener(editTextImportoFocusListener)
-        editTextImportoPersona.setOnFocusChangeListener(editTextImportoPersonaFocusListener)
+        editTextNominativo.onFocusChangeListener = editTextNominativoFocusListener
+        editTextTelefono.onFocusChangeListener = editTextTelefonoFocusListener
+        editTextDescrizione.onFocusChangeListener = editTextDescrizioneFocusListener
+        editTextimportoTotale.onFocusChangeListener = editTextImportoFocusListener
+        editTextImportoPersona.onFocusChangeListener = editTextImportoPersonaFocusListener
         toggleButton.setOnClickListener(toggleButtonOnClickListener)
         creditoToggleButton.setOnClickListener { setToggleCredito() }
         debitoToggleButton.setOnClickListener({ setToggleDebito() })
@@ -293,15 +306,15 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     fun getCurrentLocale(context: Context): Locale? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            context.getResources().getConfiguration().getLocales().get(0)
+            context.resources.configuration.locales.get(0)
         } else {
-            context.getResources().getConfiguration().locale
+            context.resources.configuration.locale
         }
     }
 
     private fun updateLabelDatePicker(myCalendar: Calendar, editText: EditText) {
         val sdf = SimpleDateFormat(formatoData, getCurrentLocale(this))
-        editText.setText(sdf.format(myCalendar.getTime()))
+        editText.setText(sdf.format(myCalendar.time))
         editText.setCompoundDrawablesWithIntrinsicBounds(
             R.drawable.ic_baseline_calendar_gray_icon,
             0,
@@ -332,7 +345,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             expand(consLayDatiUtente)
         } else {
             buttonColExpCardDatiUtente.setCompoundDrawablesWithIntrinsicBounds(
@@ -340,7 +353,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             collapse(consLayDatiUtente)
         }
     }
@@ -352,7 +365,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             expand(consLayDatiTrans)
         } else {
             buttonColExpCardDatiTrans.setCompoundDrawablesWithIntrinsicBounds(
@@ -360,7 +373,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             collapse(consLayDatiTrans)
         }
     }
@@ -372,7 +385,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             expand(consLayDate)
         } else {
             buttonColExpCardDate.setCompoundDrawablesWithIntrinsicBounds(
@@ -380,7 +393,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             collapse(consLayDate)
         }
     }
@@ -392,7 +405,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             expand(recyclerView)
         } else {
             buttonColExpCardNotifiche.setCompoundDrawablesWithIntrinsicBounds(
@@ -400,7 +413,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 0,
                 0,
                 0
-            );
+            )
             collapse(recyclerView)
         }
     }
@@ -436,14 +449,14 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         toggleButton.setBackgroundResource(R.drawable.background_switch_green)
         creditoToggleButton.setTextColor(
             ResourcesCompat.getColor(
-                getResources(),
+                resources,
                 R.color.green,
                 null
             )
         )
         debitoToggleButton.setTextColor(
             ResourcesCompat.getColor(
-                getResources(),
+                resources,
                 R.color.white,
                 null
             )
@@ -456,12 +469,12 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         toggleButton.setBackgroundResource(R.drawable.background_switch_red)
         creditoToggleButton.setTextColor(
             ResourcesCompat.getColor(
-                getResources(),
+                resources,
                 R.color.white,
                 null
             )
         )
-        debitoToggleButton.setTextColor(ResourcesCompat.getColor(getResources(), R.color.red, null))
+        debitoToggleButton.setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
         debitoToggleButton.isChecked = true
         statoToggle = false
     }
@@ -573,32 +586,64 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                         formatoData
                     )
                 ) rilevatoErrore = true
-                if(editTextImportoPersona.text.isNullOrBlank()) rilevatoErrore = true
-                if (rilevatoErrore)
-                    Toast.makeText(this, getString(R.string.fields_not_valid), Toast.LENGTH_SHORT)
-                        .show()
+                var toast = true
+                if (editTextImportoPersona.text.isNullOrBlank()) rilevatoErrore = true
                 else {
+                    if (activityModifica && editTextImportoPersona.text.toString()
+                            .toDouble() < transazione.soldiRicevuti
+                    ) {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.impossible_update) + "(" + transazione.soldiRicevuti.toString() + ")",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                        rilevatoErrore = true
+                        toast = false
+                    }
+                }
+                if (rilevatoErrore) {
+                    if (toast) Toast.makeText(
+                        this,
+                        getString(R.string.fields_not_valid),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                } else {
                     if (!activityModifica) {
                         listPartecipanti.forEach {
-                        val t = TransazioneType(
-                            0,
-                            it.generalita,
-                            editTextDescrizione.text.toString(),
-                            editTextImportoPersona.text.toString().toDouble(),
-                            0.00,
-                            it.numeroTelefono,
-                            editTextDataInizio.text.toString(),
-                            editTextDataScadenza.text.toString(),
-                            statoToggle,
-                            false
-                        )
-                            val id:Int = dbHelper.insertTransazione(t)
+                            val t = TransazioneType(
+                                0,
+                                it.generalita,
+                                editTextDescrizione.text.toString(),
+                                editTextImportoPersona.text.toString().toDouble(),
+                                0.00,
+                                it.numeroTelefono,
+                                editTextDataInizio.text.toString(),
+                                editTextDataScadenza.text.toString(),
+                                statoToggle,
+                                false
+                            )
+                            val id: Int = dbHelper.insertTransazione(t)
                             dbHelper.insertNotifiche(recyclerViewAdapter.getList(), id)
                         }
                     } else {
                         //TODO Query di aggiornamento
+                        val t = TransazioneType(
+                            transazione.id,
+                            editTextNominativo.text.toString(),
+                            editTextDescrizione.text.toString(),
+                            editTextImportoPersona.text.toString().toDouble(),
+                            transazione.soldiRicevuti,
+                            editTextTelefono.text.toString(),
+                            editTextDataInizio.text.toString(),
+                            editTextDataScadenza.text.toString(),
+                            transazione.credito,
+                            false
+                        )
 
                     }
+                    Log.d("XXXX", "NESSUN ERRORE")
                     val intent = Intent().apply {
                         putExtra("creditoInserito", true)
                     }
@@ -608,7 +653,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 return true
             }
         }
-        return false;
+        return false
     }
 
     val navigationIconOnClickListener = View.OnClickListener {
