@@ -641,9 +641,9 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                             transazione.credito,
                             false
                         )
-
+                        dbHelper.updateTransazione(t)
+                        dbHelper.updateNotifiche(recyclerViewAdapter.getList(), t.id)
                     }
-                    Log.d("XXXX", "NESSUN ERRORE")
                     val intent = Intent().apply {
                         putExtra("creditoInserito", true)
                     }

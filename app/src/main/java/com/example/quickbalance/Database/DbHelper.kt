@@ -34,7 +34,16 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
 
     fun insertTransazione(transazione: TransazioneType):Int{
         val database = this.writableDatabase
-        var contentValues = ContentValues()
+        val contentValues = getTransContentValues(transazione)
+        database.insert(TransazioneType.TABLE_NAME, null, contentValues)
+        val selectQuery = "SELECT * FROM " + TransazioneType.TABLE_NAME + " sqlite_sequence"
+        val cursor = database.rawQuery(selectQuery, null)
+        cursor.moveToLast()
+        return cursor.getInt(cursor.getColumnIndex(TransazioneType.COL_ID))
+    }
+
+    private fun getTransContentValues(transazione: TransazioneType): ContentValues {
+        val contentValues = ContentValues()
         contentValues.put(TransazioneType.COL_GENERALITA, transazione.generalita)
         contentValues.put(TransazioneType.COL_DESCRIZIONE, transazione.descrizione)
         contentValues.put(TransazioneType.COL_TELEFONO, transazione.numeroTelefono)
@@ -49,11 +58,7 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
         contentValues.put(TransazioneType.COL_IMPORTO_TOTALE, transazione.soldiTotali)
         contentValues.put(TransazioneType.COL_IMPORTO_DATO, transazione.soldiRicevuti)
         contentValues.put(TransazioneType.COL_TIPO, if (transazione.credito) 1 else 0)
-        database.insert(TransazioneType.TABLE_NAME, null, contentValues)
-        val selectQuery = "SELECT * FROM " + TransazioneType.TABLE_NAME + " sqlite_sequence"
-        val cursor = database.rawQuery(selectQuery, null)
-        cursor.moveToLast()
-        return cursor.getInt(cursor.getColumnIndex(TransazioneType.COL_ID))
+        return contentValues
     }
 
     fun getTransazioniAttive(tipo: Int):MutableList<TransazioneType>{
@@ -94,6 +99,11 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
         return list
     }
 
+    fun updateTransazione(transazione: TransazioneType){
+        val db = this.writableDatabase
+        db.update(TransazioneType.TABLE_NAME, getTransContentValues(transazione), "${TransazioneType.COL_ID}= ${transazione.id}", null);
+    }
+
     fun deleteTransazione(transazione: TransazioneType){
         this.writableDatabase.delete(
             TransazioneType.TABLE_NAME,
@@ -114,11 +124,19 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
     fun insertNotifiche(notifiche: ArrayList<NotificaType>, id: Int){
         val database = this.writableDatabase
         notifiche.forEach {
-            var contentValues = ContentValues()
-            contentValues.put(NotificaType.COL_NUM_GIORNI_PRIMA, it.numGiorni)
-            contentValues.put(NotificaType.COL_TRANSAZIONE_ID, id)
+            var contentValues = getNotifcontentValues(it, id)
             database.insert(NotificaType.TABLE_NAME, null, contentValues)
         }
+    }
+
+    private fun getNotifcontentValues(
+        it: NotificaType,
+        id: Int
+    ): ContentValues {
+        var contentValues = ContentValues()
+        contentValues.put(NotificaType.COL_NUM_GIORNI_PRIMA, it.numGiorni)
+        contentValues.put(NotificaType.COL_TRANSAZIONE_ID, id)
+        return contentValues
     }
 
     fun getAllNotifiche():MutableList<NotificaType>{
@@ -159,6 +177,15 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
         }
         result.close()
         return list
+    }
+
+    fun updateNotifiche(list:ArrayList<NotificaType>, id:Int){
+        this.writableDatabase.delete(
+            NotificaType.TABLE_NAME,
+            NotificaType.COL_TRANSAZIONE_ID + "=" + id,
+            null
+        )
+        insertNotifiche(list, id)
     }
 
     fun deleteNotifica(notifica:NotificaType){
