@@ -1,6 +1,7 @@
 package com.example.quickbalance
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
@@ -65,8 +66,35 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(editTextRicercaContatto.text.toString().isNotBlank())
+                    editTextRicercaContatto.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,R.drawable.ic_baseline_clear_24, 0)
+                else
+                    editTextRicercaContatto.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,0, 0)
             }
         })
+
+        editTextRicercaContatto.setOnTouchListener(object : View.OnTouchListener {
+            @SuppressLint("ClickableViewAccessibility")
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                val DRAWABLE_RIGHT = 2;
+                if (event != null) {
+                    try {
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            if (event.getRawX() >= (editTextRicercaContatto.getRight() - editTextRicercaContatto.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds()
+                                    .width())
+                            ) {
+                                editTextRicercaContatto.text.clear()
+                                editTextRicercaContatto.requestFocus()
+                                return true;
+                            }
+                        }
+                    }
+                    catch(ex:Exception){}
+                }
+                return false;
+            }
+        })
+
         //RecyclerView
         recyclerViewAdapter = setRecyclerView()
         if (savedInstanceState != null) {

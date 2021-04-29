@@ -34,29 +34,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
-        <EditText
-            android:id="@+id/editTextRicercaContatto"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardRicerca"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:drawableStart="@drawable/ic_search_icon"
-            android:drawableLeft="@drawable/ic_search_icon"
-            android:ems="10"
-            android:hint="@string/search_by_name"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColorHighlight="@color/orange"
-            android:textColorLink="@color/orange"
-            android:theme="@style/editTextOrange"
-            app:backgroundTint="@color/orange"
+            app:contentPaddingBottom="5dp"
+            app:contentPaddingLeft="10dp"
+            app:contentPaddingRight="10dp"
+            app:contentPaddingTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/editTextRicercaContatto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_search_icon"
+                android:drawableLeft="@drawable/ic_search_icon"
+                android:ems="10"
+                android:hint="@string/search_by_name"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColorHighlight="@color/orange"
+                android:textColorLink="@color/orange"
+                android:theme="@style/editTextOrange"
+                app:backgroundTint="@color/orange" />
+        </com.google.android.material.card.MaterialCardView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -70,7 +81,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextRicercaContatto" />
+            app:layout_constraintTop_toBottomOf="@+id/cardRicerca" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/circularProgress"
