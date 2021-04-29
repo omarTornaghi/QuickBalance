@@ -139,6 +139,11 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 editTextImportoPersona.setText(editTextimportoTotale.text.toString())
                 editTextDataInizio.setText(transazione.dataInizio)
                 editTextDataScadenza.setText(transazione.dataFine)
+                if(editTextDataScadenza.text.toString().isNotBlank()) {
+                    buttonCancellaDataScadenza.visibility = View.VISIBLE
+                    val params = editTextDataScadenza.layoutParams as ConstraintLayout.LayoutParams
+                    params.rightToLeft = buttonCancellaDataScadenza.id
+                }
             }
         }
         //Visualizzo o meno card per modificare partecipante
