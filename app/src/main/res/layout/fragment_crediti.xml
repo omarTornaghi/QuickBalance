@@ -103,6 +103,15 @@
                 app:layout_constraintBottom_toTopOf="@+id/recycler_view"
                 app:layout_constraintEnd_toStartOf="@+id/recycler_view"
                 app:srcCompat="@drawable/ic_baseline_add_24" />
+
+            <ImageView
+                android:id="@+id/imageViewEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_no_data_foreground" />
+
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

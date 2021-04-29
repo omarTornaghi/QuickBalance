@@ -70,10 +70,10 @@ class CreditiFragment : Fragment() {
                             DialogInterface.OnClickListener { dialog, which ->
                                 when (which) {
                                     DialogInterface.BUTTON_POSITIVE -> {
-                                        //TODO Query per eliminare credito
                                         dbHelper.deleteTransazione(recyclerViewAdapter.getItem(position))
                                         data.remove(recyclerViewAdapter.getItem(position))
                                         recyclerViewAdapter.removeItem(position)
+                                        if(data.size == 0) imageViewEmpty.visibility = View.VISIBLE
                                     }
                                 }
                             }
@@ -95,6 +95,7 @@ class CreditiFragment : Fragment() {
         dbHelper = DbHelper(mContext)
         data = dbHelper.getCreditiAttivi() as ArrayList<TransazioneType>
         recyclerViewAdapter.updateTasks(data)
+        if(data.size > 0) imageViewEmpty.visibility = View.GONE else imageViewEmpty.visibility = View.VISIBLE
     }
 
     override fun onAttach(context: Context) {
