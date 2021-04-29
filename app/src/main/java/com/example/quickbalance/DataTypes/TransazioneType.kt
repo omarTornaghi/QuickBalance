@@ -55,6 +55,8 @@ data class TransazioneType(var id:Int,var generalita: String?, var descrizione: 
         val COL_IMPORTO_TOTALE = "importoTotale"
         val COL_IMPORTO_DATO = "importoDato"
         val COL_TIPO = "tipo"
+        val TIPO_CREDITO = 1
+        val TIPO_DEBITO = 0
 
         val QUERY_CREAZIONE_TABLE = "CREATE TABLE $TABLE_NAME(\n" +
                 "\t$COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,\n" +

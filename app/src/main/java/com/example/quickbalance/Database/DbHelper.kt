@@ -57,14 +57,14 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
         )
         contentValues.put(TransazioneType.COL_IMPORTO_TOTALE, transazione.soldiTotali)
         contentValues.put(TransazioneType.COL_IMPORTO_DATO, transazione.soldiRicevuti)
-        contentValues.put(TransazioneType.COL_TIPO, if (transazione.credito) 1 else 0)
+        contentValues.put(TransazioneType.COL_TIPO, if (transazione.credito) TransazioneType.TIPO_CREDITO else TransazioneType.TIPO_DEBITO)
         return contentValues
     }
 
     fun getTransazioniAttive(tipo: Int):MutableList<TransazioneType>{
         val list: MutableList<TransazioneType> = ArrayList()
         val db = this.readableDatabase
-        val query = "SELECT * FROM ${TransazioneType.TABLE_NAME} WHERE ${TransazioneType.COL_TIPO} = tipo AND ${TransazioneType.COL_IMPORTO_DATO} < ${TransazioneType.COL_IMPORTO_TOTALE}"
+        val query = "SELECT * FROM ${TransazioneType.TABLE_NAME} WHERE ${TransazioneType.COL_TIPO} = ${tipo} AND ${TransazioneType.COL_IMPORTO_DATO} < ${TransazioneType.COL_IMPORTO_TOTALE}"
         val result = db.rawQuery(query, null)
         if (result.moveToFirst())
         {
@@ -114,11 +114,11 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
     }
 
     fun getCreditiAttivi():MutableList<TransazioneType>{
-        return getTransazioniAttive(1)
+        return getTransazioniAttive(TransazioneType.TIPO_CREDITO)
     }
 
     fun getDebitiAttivi():MutableList<TransazioneType>{
-        return getTransazioniAttive(0)
+        return getTransazioniAttive(TransazioneType.TIPO_DEBITO)
     }
 
     fun insertNotifiche(notifiche: ArrayList<NotificaType>, id: Int){
@@ -194,6 +194,26 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
             NotificaType.COL_ID + "=" + notifica.id,
             null
         )
+    }
+
+    private fun getTotalImportTransaction(t:Int):Double{
+        val db = this.readableDatabase
+        val query = "SELECT SUM(${TransazioneType.COL_IMPORTO_TOTALE}) FROM ${TransazioneType.TABLE_NAME} WHERE ${TransazioneType.COL_TIPO} = ${t} AND ${TransazioneType.COL_IMPORTO_DATO} < ${TransazioneType.COL_IMPORTO_TOTALE}"
+        val result = db.rawQuery(query, null)
+        var imp = 0.00
+        if (result.moveToFirst()){
+            imp = result.getDouble(0);
+        }
+        result.close()
+        return imp
+    }
+
+    fun getTotalImportCredit():Double{
+        return getTotalImportTransaction(TransazioneType.TIPO_CREDITO)
+    }
+
+    fun getTotalImportDebit():Double{
+        return getTotalImportTransaction(TransazioneType.TIPO_DEBITO)
     }
 
     companion object {

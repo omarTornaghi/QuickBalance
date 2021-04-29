@@ -3,11 +3,13 @@ package com.example.quickbalance.fragments
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
@@ -20,9 +22,16 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
     private lateinit var mContext: Context
+    private lateinit var dbHelper: DbHelper
+    private var totCrediti:Double = 0.00
+    private var totDebiti:Double = 0.00
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        dbHelper = DbHelper(mContext)
+        totCrediti = dbHelper.getTotalImportCredit()
+        totDebiti = dbHelper.getTotalImportDebit()
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -73,17 +82,14 @@ class HomeFragment : Fragment() {
     private fun popolaGrafico(){
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = ""
-
         //initializing data
-        val typeAmountMap: MutableMap<String, Int> = HashMap()
-        typeAmountMap[getString(R.string.credits)] = 200
-        typeAmountMap[getString(R.string.debts)] = 230
+        val typeAmountMap: MutableMap<String, Double> = HashMap()
+        typeAmountMap[getString(R.string.credits)] = totCrediti
+        typeAmountMap[getString(R.string.debts)] = totDebiti
         //initializing colors for the entries
         val colors: ArrayList<Int> = ArrayList()
         colors.add(Color.parseColor(resources.getString(R.color.green.toInt())))
         colors.add(Color.parseColor(resources.getString(R.color.orange.toInt())))
-        //input data and fit data into pie chart entry
-
         //input data and fit data into pie chart entry
         for (type in typeAmountMap.keys) {
             pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat(), type))
