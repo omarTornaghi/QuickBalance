@@ -68,6 +68,7 @@
     <string name="user_data">Dati utente</string>
     <string name="cellphone_field">Numero di telefono:</string>
     <string name="confirm_delete_credit">Vuoi cancellare il credito?</string>
+    <string name="confirm_delete_debts">Vuoi cancellare il debito?</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="create_new_credit">Crea un nuovo credito</string>
@@ -80,4 +81,11 @@
     <string name="impossible_update">L\'importo totale deve essere maggiore dell\'importo dato</string>
     <string name="no_credit">Nessun credito</string>
     <string name="transaction_removed">Transazione spostata nelle sezione completate</string>
+    <string name="search_debt">Cerca debito...</string>
+    <string name="create_new_debt">crea un nuovo debito</string>
+    <string name="no_debt">Nessun debito</string>
+    <string name="give">Devo:</string>
+    <string name="pay">Paga</string>
+    <string name="i_payed">Ho pagato:</string>
+    <string name="debt_from">Debito dal:</string>
 </resources>

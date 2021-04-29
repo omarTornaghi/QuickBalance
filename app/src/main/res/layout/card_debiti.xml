@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/shape"
+            android:layout_width="5dp"
+            android:layout_height="0dp"
+            android:src="@drawable/red_rectangle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewCreditoGeneralita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="7dp"
+            android:drawableStart="@drawable/ic_baseline_identity_blue_icon"
+            android:drawableLeft="@drawable/ic_baseline_identity_blue_icon"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/buttonCancellaCredito"
+            style="@style/Widget.App.Button.TextButton.IconOnly"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            app:icon="@drawable/ic_baseline_delete_icon"
+            app:iconTint="@color/red"
+            app:iconTintMode="multiply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewCreditoDescr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="5dp"
+            android:drawableStart="@drawable/ic_baseline_description_gray_icon"
+            android:drawableLeft="@drawable/ic_baseline_description_gray_icon"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCreditoGeneralita" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="5dp"
+            android:drawableStart="@drawable/ic_baseline_euro_orange_icon"
+            android:drawableLeft="@drawable/ic_baseline_euro_orange_icon"
+            android:text="@string/give"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCreditoDescr" />
+
+        <TextView
+            android:id="@+id/textViewCreditoSoldiRimanenti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/orange_dark"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
+            app:layout_constraintStart_toEndOf="@+id/textView13" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonRiscatta1"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:text="@string/pay"
+            android:textSize="12sp"
+            app:backgroundTint="@color/red"
+            app:cornerRadius="7dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCreditoDescr" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CL_card_credit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView13">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="5dp"
+                android:drawableStart="@drawable/ic_baseline_euro_green_icon"
+                android:drawableLeft="@drawable/ic_baseline_euro_green_icon"
+                android:text="@string/i_payed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewCreditoSoldiRicevuti"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/green"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView9"
+                app:layout_constraintStart_toEndOf="@+id/textView9" />
+
+            <TextView
+                android:id="@+id/textViewCreditoTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="5dp"
+                android:drawableStart="@drawable/ic_baseline_smartphone_gray_icon"
+                android:drawableLeft="@drawable/ic_baseline_smartphone_gray_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="@string/of"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewCreditoSoldiRicevuti"
+                app:layout_constraintStart_toEndOf="@+id/textViewCreditoSoldiRicevuti" />
+
+            <TextView
+                android:id="@+id/textViewCreditoSoldiTotali"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/green"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
+                app:layout_constraintStart_toEndOf="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="5dp"
+                android:drawableStart="@drawable/ic_baseline_calendar_blue_icon"
+                android:drawableLeft="@drawable/ic_baseline_calendar_blue_icon"
+                android:text="@string/debt_from"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCreditoTelefono" />
+
+            <TextView
+                android:id="@+id/textViewCreditoDataInizio"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/blue_light"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
+                app:layout_constraintStart_toEndOf="@+id/textView16" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="11dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="@string/to"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewCreditoDataInizio"
+                app:layout_constraintStart_toEndOf="@+id/textViewCreditoDataInizio" />
+
+            <TextView
+                android:id="@+id/textViewCreditoDataFine"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/blue_light"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView18"
+                app:layout_constraintStart_toEndOf="@+id/textView18" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonRiscatta2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:text="@string/pay"
+                android:textSize="12sp"
+                app:backgroundTint="@color/red"
+                app:cornerRadius="7dp"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonModificaCredito"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonModificaCredito" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonModificaCredito"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:text="@string/update"
+                android:textColor="@color/orange_light"
+                android:textSize="12sp"
+                app:cornerRadius="7dp"
+                app:layout_constraintEnd_toStartOf="@+id/buttonRiscatta2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

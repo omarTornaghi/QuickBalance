@@ -8,7 +8,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -24,7 +23,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quickbalance.Adapters.CreditAdapter
+import com.example.quickbalance.Adapters.TransazioneAdapter
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.NuovaOpActivity
@@ -41,7 +40,7 @@ class CreditiFragment : Fragment() {
     private lateinit var dbHelper: DbHelper
     private lateinit var mContext: Context
     private lateinit var data: ArrayList<TransazioneType>
-    private lateinit var recyclerViewAdapter: CreditAdapter
+    private lateinit var recyclerViewAdapter: TransazioneAdapter
     private lateinit var cdSpinnerAdapter: ArrayAdapter<CharSequence>
     private var stringTextInput: String = ""
     private var intCampo: Int = 0
@@ -63,8 +62,8 @@ class CreditiFragment : Fragment() {
             )
             cdSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);
             //Set recyclerView
-            recyclerViewAdapter = CreditAdapter(mutableListOf(),
-                object : CreditAdapter.ListAdapterListener {
+            recyclerViewAdapter = TransazioneAdapter(mutableListOf(),
+                object : TransazioneAdapter.ListAdapterListener {
                     override fun onClickAtRemoveButton(position: Int) {
                         val dialogClickListener =
                             DialogInterface.OnClickListener { dialog, which ->

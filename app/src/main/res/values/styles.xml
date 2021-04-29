@@ -10,12 +10,16 @@
         <item name="android:minHeight">48dp</item>
     </style>
 
+    <style name="editTextGreen">
+        <item name="colorControlNormal">@color/green</item>
+        <item name="colorControlActivated">@color/green</item>
+        <item name="colorControlHighlight">@color/green</item>
+    </style>
+
     <style name="editTextRed">
-        <!-- Used for the bottom line when not selected / focused -->
         <item name="colorControlNormal">@color/red</item>
         <item name="colorControlActivated">@color/red</item>
         <item name="colorControlHighlight">@color/red</item>
-        <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
     </style>
 
     <style name="editTextOrange">

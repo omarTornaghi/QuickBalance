@@ -9,49 +9,63 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
 import com.example.quickbalance.CambiaImportoCreditiActivity
+import com.example.quickbalance.CambiaImportoDebitiActivity
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.OpAggDataActivity
 import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.card_crediti.view.*
 
 
-class CreditAdapter(private val crediti: MutableList<TransazioneType>, private val mListener:ListAdapterListener) : RecyclerView.Adapter<CreditAdapter.CreditHolder>(){
+class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, private val mListener:ListAdapterListener) : RecyclerView.Adapter<TransazioneAdapter.TransazioneHolder>(){
     interface ListAdapterListener {
-        // create an interface
         fun onClickAtRemoveButton(position: Int)
     }
 
     fun updateTasks(nuovoTransazione: List<TransazioneType>)
     {
-        crediti.clear()
-        crediti.addAll(nuovoTransazione)
+        transazioni.clear()
+        transazioni.addAll(nuovoTransazione)
         notifyDataSetChanged()
     }
     fun removeItem(position: Int){
-        crediti.removeAt(position)
+        transazioni.removeAt(position)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position, crediti.size)
+        notifyItemRangeChanged(position, transazioni.size)
     }
     fun getItem(position:Int):TransazioneType{
-        return crediti.get(position)
+        return transazioni.get(position)
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditHolder
+
+    override fun getItemViewType(position: Int): Int {
+        val trans = transazioni.get(position)
+        return if (trans.credito) R.layout.card_crediti else R.layout.card_debiti
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransazioneHolder
     {
-        return CreditHolder(
-            LayoutInflater.from(parent.context).inflate(
+        val itemView: View
+        if (viewType == R.layout.card_crediti) {
+            itemView = LayoutInflater.from(parent.context).inflate(
                 R.layout.card_crediti,
                 parent,
                 false
             )
-        )
+        } else {
+            itemView = LayoutInflater.from(parent.context).inflate(
+                R.layout.card_debiti,
+                parent,
+                false
+            )
+        }
+        return TransazioneHolder(itemView)
     }
-    override fun getItemCount(): Int = crediti.size
-    override fun onBindViewHolder(holder: CreditHolder, position: Int){
-        holder.bind(crediti[position])
+    override fun getItemCount(): Int = transazioni.size
+    override fun onBindViewHolder(holder: TransazioneHolder, position: Int){
+        holder.bind(transazioni[position])
         holder.buttonRimuovi.setOnClickListener { mListener.onClickAtRemoveButton(position) }
     }
 
-    class CreditHolder(v: View) : RecyclerView.ViewHolder(v){
+    class TransazioneHolder(v: View) : RecyclerView.ViewHolder(v){
         private var view: View = v
         private lateinit var item:TransazioneType
         lateinit var buttonRimuovi: Button
@@ -107,7 +121,11 @@ class CreditAdapter(private val crediti: MutableList<TransazioneType>, private v
         }
 
         val buttonRiscattaOnClickListener= View.OnClickListener {
-            val int = Intent(view.context, CambiaImportoCreditiActivity::class.java)
+            var int: Intent
+            if(item.credito)
+                int = Intent(view.context, CambiaImportoCreditiActivity::class.java)
+            else
+                int = Intent(view.context, CambiaImportoDebitiActivity::class.java)
             int.putExtra("item", item)
             startActivity(view.context, int,null)
         }
