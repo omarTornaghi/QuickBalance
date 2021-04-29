@@ -78,4 +78,5 @@
     <string name="money_sent_field">Soldi dati:</string>
     <string name="money_sent">Soldi dati</string>
     <string name="impossible_update">L\'importo totale deve essere maggiore dell\'importo dato</string>
+    <string name="no_credit">Nessun credito</string>
 </resources>

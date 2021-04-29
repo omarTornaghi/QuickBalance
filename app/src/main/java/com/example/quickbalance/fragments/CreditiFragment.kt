@@ -73,7 +73,10 @@ class CreditiFragment : Fragment() {
                                         dbHelper.deleteTransazione(recyclerViewAdapter.getItem(position))
                                         data.remove(recyclerViewAdapter.getItem(position))
                                         recyclerViewAdapter.removeItem(position)
-                                        if(data.size == 0) imageViewEmpty.visibility = View.VISIBLE
+                                        if(data.size == 0){
+                                            imageViewEmpty.visibility = View.VISIBLE
+                                            textViewEmpty.visibility = View.VISIBLE
+                                        }
                                     }
                                 }
                             }
@@ -95,7 +98,13 @@ class CreditiFragment : Fragment() {
         dbHelper = DbHelper(mContext)
         data = dbHelper.getCreditiAttivi() as ArrayList<TransazioneType>
         recyclerViewAdapter.updateTasks(data)
-        if(data.size > 0) imageViewEmpty.visibility = View.GONE else imageViewEmpty.visibility = View.VISIBLE
+        if(data.size > 0) {
+            imageViewEmpty.visibility = View.GONE
+            textViewEmpty.visibility = View.GONE
+        }else {
+            imageViewEmpty.visibility = View.VISIBLE
+            textViewEmpty.visibility = View.VISIBLE
+        }
     }
 
     override fun onAttach(context: Context) {
