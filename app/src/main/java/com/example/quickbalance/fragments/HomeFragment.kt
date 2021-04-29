@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.R
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlin.math.absoluteValue
 
 class HomeFragment : Fragment() {
     private lateinit var mContext: Context
@@ -50,7 +52,23 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         cardStorico.setOnClickListener(cardOnClickListener)
         inizializzaGrafico()
+        if(totCrediti==0.00 && totDebiti==0.00)
+            pieChart_graph.visibility = View.GONE
+        else
+            textViewNodata.visibility = View.GONE
         popolaGrafico()
+        textViewCrediti.setText("€$totCrediti")
+        textViewDebiti.setText("€$totDebiti")
+        val daPag:Double = if(totDebiti >= totCrediti) totDebiti - totCrediti else 0.00
+        textViewDaPagare.setText("€$daPag")
+        if(daPag == 0.00) {
+            textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
+            textViewDaPagare.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+        }
+        else {
+            textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sad, 0, 0, 0)
+            textViewDaPagare.setTextColor(ContextCompat.getColor(mContext, R.color.red))
+        }
     }
 
     private fun inizializzaGrafico() {
@@ -111,13 +129,6 @@ class HomeFragment : Fragment() {
         pieChart_graph.data = pieData
         pieChart_graph.invalidate()
     }
-
-
-
-    /* Codice per cambiare icona a textView */
-    /*
-    textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
-    */
 
     /*Gestione click card */
     val cardOnClickListener= View.OnClickListener { view ->
