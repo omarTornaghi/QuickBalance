@@ -79,4 +79,5 @@
     <string name="money_sent">Soldi dati</string>
     <string name="impossible_update">L\'importo totale deve essere maggiore dell\'importo dato</string>
     <string name="no_credit">Nessun credito</string>
+    <string name="transaction_removed">Transazione spostata nelle sezione completate</string>
 </resources>

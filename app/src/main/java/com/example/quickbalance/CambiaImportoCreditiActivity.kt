@@ -13,13 +13,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.quickbalance.DataTypes.TransazioneType
+import com.example.quickbalance.Database.DbHelper
 import kotlinx.android.synthetic.main.activity_cambia_importo_crediti.*
 import kotlinx.android.synthetic.main.activity_cambia_importo_crediti.topAppBar
 import java.lang.Exception
 
 class CambiaImportoCreditiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     lateinit var item:TransazioneType
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cambia_importo_crediti)
@@ -64,7 +64,7 @@ class CambiaImportoCreditiActivity : AppCompatActivity(), Toolbar.OnMenuItemClic
             }
         })
         buttonAzzera.setOnClickListener{editTextImportoTransazione.setText("0")}
-        buttonMeta.setOnClickListener{editTextImportoTransazione.setText("${item.soldiRicevuti + (item.soldiTotali - item.soldiRicevuti)/2}")}
+        buttonMeta.setOnClickListener{editTextImportoTransazione.setText("${item.soldiTotali/2}")}
         buttonTotale.setOnClickListener { editTextImportoTransazione.setText(item.soldiTotali.toString()) }
         editTextImportoTransazione.setOnFocusChangeListener(editTextImportoTransazioneFocusListener)
         topAppBar.setOnMenuItemClickListener(this)
@@ -94,7 +94,6 @@ class CambiaImportoCreditiActivity : AppCompatActivity(), Toolbar.OnMenuItemClic
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.checkIcon -> {
-                //Controllo i dati
                 cambiaImporto()
                 return true
             }
@@ -106,7 +105,11 @@ class CambiaImportoCreditiActivity : AppCompatActivity(), Toolbar.OnMenuItemClic
         if(editTextImportoTransazione.text.toString().isNotBlank()) {
             val imp = editTextImportoTransazione.text.toString().toDouble()
             if(imp <= item.soldiTotali){
-                //TODO QUERY DI AGGIORNAMENTO
+                item.soldiRicevuti = imp
+                val dbHelper = DbHelper(this)
+                dbHelper.updateTransazione(item)
+                if(imp == item.soldiTotali)
+                    Toast.makeText(this, getString(R.string.transaction_removed), Toast.LENGTH_SHORT).show()
                 finish()
             }
             else

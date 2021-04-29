@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.quickbalance.DataTypes.TransazioneType
+import com.example.quickbalance.Database.DbHelper
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonAzzera
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonMeta
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonTotale
@@ -68,7 +69,7 @@ class CambiaImportoDebitiActivity : AppCompatActivity(), Toolbar.OnMenuItemClick
             }
         })
         buttonAzzera.setOnClickListener{editTextImportoTransazione.setText("0")}
-        buttonMeta.setOnClickListener{editTextImportoTransazione.setText("${item.soldiRicevuti + (item.soldiTotali - item.soldiRicevuti)/2}")}
+        buttonMeta.setOnClickListener{editTextImportoTransazione.setText("${item.soldiTotali/2}")}
         buttonTotale.setOnClickListener { editTextImportoTransazione.setText(item.soldiTotali.toString()) }
         editTextImportoTransazione.setOnFocusChangeListener(editTextImportoTransazioneFocusListener)
         topAppBar.setOnMenuItemClickListener(this)
@@ -110,7 +111,11 @@ class CambiaImportoDebitiActivity : AppCompatActivity(), Toolbar.OnMenuItemClick
         if(editTextImportoTransazione.text.toString().isNotBlank()) {
             val imp = editTextImportoTransazione.text.toString().toDouble()
             if(imp <= item.soldiTotali){
-                //TODO QUERY DI AGGIORNAMENTO
+                item.soldiRicevuti = imp
+                val dbHelper = DbHelper(this)
+                dbHelper.updateTransazione(item)
+                if(imp == item.soldiTotali)
+                    Toast.makeText(this, getString(R.string.transaction_removed), Toast.LENGTH_SHORT).show()
                 finish()
             }
             else
