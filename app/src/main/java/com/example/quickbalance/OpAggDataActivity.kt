@@ -101,7 +101,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 //Setto giorno corrente
                 val sdf = SimpleDateFormat(formatoData)
                 editTextDataInizio.setText(sdf.format(Date()))
-                recyclerViewAdapter.addItem(NotificaType(0, 1, 0, this))
+                recyclerViewAdapter.addItem(NotificaType(0, 0, 0, this))
             } else {
                 //Modifica una transazione(o credito o debito) quindi recupero i dati
                 //e li inserisco negli appositi campi

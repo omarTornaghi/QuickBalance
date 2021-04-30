@@ -80,7 +80,7 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
         builder.setTitle(context.getString(R.string.add_reminder))
         var list:ArrayList<String> = ArrayList()
         list.add(context.getString(R.string.nothing))
-        for(i in 1..7){
+        for(i in 0..7){
             list.add(NotificaType(0,i, 0,context).toString())
         }
 
@@ -89,7 +89,7 @@ class NotificheAdapter(private val notifiche: ArrayList<NotificaType>, val conte
                 0 -> {  removeItem(position)}
                 else -> {
                     val not = notifiche.get(position)
-                    updateItem(position, NotificaType(not.id, which,not.idTransazione, context))
+                    updateItem(position, NotificaType(not.id, which-1,not.idTransazione, context))
                 }
             }
         }

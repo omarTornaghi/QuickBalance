@@ -10,6 +10,9 @@ data class NotificaType(var id:Int, var numGiorni:Int, var idTransazione:Int , v
     constructor(): this(0, 0,0,null)
     override fun toString(): String {
         when(numGiorni){
+            0-> if(context != null){
+                return context.getString(R.string.day)
+            }
             1-> if (context != null) {
                 return "$numGiorni ${context.getString(R.string.day_before)}"
             }

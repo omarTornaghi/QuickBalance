@@ -48,6 +48,7 @@
     <string name="debit">DEBITO</string>
     <string name="cancel">Annulla</string>
     <string name="none">Nessuno</string>
+    <string name="day">Il giorno stesso</string>
     <string name="day_before">giorno prima</string>
     <string name="days_before">giorni prima</string>
     <string name="add_reminder">Aggiungi promemoria</string>
