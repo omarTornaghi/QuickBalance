@@ -48,7 +48,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/circle_solid_shape" />
+                app:srcCompat="@drawable/circle_solid_shape_green" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -58,7 +58,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imageView1"
                 app:layout_constraintTop_toTopOf="@+id/imageView1"
-                app:srcCompat="@drawable/circle_solid_shape" />
+                app:srcCompat="@drawable/circle_solid_shape_green" />
 
             <View
                 android:id="@+id/Line1"

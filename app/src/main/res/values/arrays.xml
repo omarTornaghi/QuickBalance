@@ -5,4 +5,11 @@
         <item>Descrizione</item>
         <item>Telefono</item>
     </string-array>
+    <string-array name="spinnerStoricoCompletate">
+        <item>Tutte</item>
+        <item>Ultimi 7 giorni</item>
+        <item>Ultimi 30 giorni</item>
+        <item>Ultimi 120 giorni</item>
+        <item>Ultimo anno</item>
+    </string-array>
 </resources>

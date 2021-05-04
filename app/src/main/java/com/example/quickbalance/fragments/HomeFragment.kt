@@ -1,6 +1,7 @@
 package com.example.quickbalance.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.R
+import com.example.quickbalance.StoricoActivity
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -19,8 +21,6 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlin.math.absoluteValue
 
 class HomeFragment : Fragment() {
     private lateinit var mContext: Context
@@ -132,7 +132,8 @@ class HomeFragment : Fragment() {
 
     /*Gestione click card */
     val cardOnClickListener= View.OnClickListener { view ->
-        textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
+        val int = Intent(mContext, StoricoActivity::class.java)
+        startActivity(int)
     }
 
 }
