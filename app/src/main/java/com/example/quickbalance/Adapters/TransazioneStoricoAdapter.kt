@@ -52,7 +52,7 @@ class TransazioneStoricoAdapter(private val transazioni: MutableList<Transazione
             item = transazione
             view.textViewGen.text = if(transazione.generalita.isNullOrBlank()) view.getResources().getString(R.string.not_defined).capitalize() else transazione.generalita
             view.textViewDescrizione.text = if(transazione.descrizione.isNullOrBlank()) view.getResources().getString(R.string.not_defined).capitalize() else transazione.descrizione
-            view.textViewImporto.text = transazione.soldiTotali.toString()
+            view.textViewImporto.text = "€" + transazione.soldiTotali.toString()
             view.textViewData.text = transazione.dataEstinzione
         }
     }
