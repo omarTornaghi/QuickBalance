@@ -39,7 +39,9 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
         val selectQuery = "SELECT * FROM " + TransazioneType.TABLE_NAME + " sqlite_sequence"
         val cursor = database.rawQuery(selectQuery, null)
         cursor.moveToLast()
-        return cursor.getInt(cursor.getColumnIndex(TransazioneType.COL_ID))
+        val id = cursor.getInt(cursor.getColumnIndex(TransazioneType.COL_ID))
+        cursor.close()
+        return id
     }
 
     private fun getTransContentValues(transazione: TransazioneType): ContentValues {
@@ -55,16 +57,16 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
             TransazioneType.COL_DATASCADENZA,
             fromDateNormalTODb(transazione.dataFine)
         )
+        contentValues.put(TransazioneType.COL_DATAESTINZIONE, fromDateNormalTODb(transazione.dataEstinzione))
         contentValues.put(TransazioneType.COL_IMPORTO_TOTALE, transazione.soldiTotali)
         contentValues.put(TransazioneType.COL_IMPORTO_DATO, transazione.soldiRicevuti)
         contentValues.put(TransazioneType.COL_TIPO, if (transazione.credito) TransazioneType.TIPO_CREDITO else TransazioneType.TIPO_DEBITO)
         return contentValues
     }
 
-    fun getTransazioniAttive(tipo: Int):MutableList<TransazioneType>{
+    fun getTransazioni(query:String):MutableList<TransazioneType>{
         val list: MutableList<TransazioneType> = ArrayList()
         val db = this.readableDatabase
-        val query = "SELECT * FROM ${TransazioneType.TABLE_NAME} WHERE ${TransazioneType.COL_TIPO} = ${tipo} AND ${TransazioneType.COL_IMPORTO_DATO} < ${TransazioneType.COL_IMPORTO_TOTALE}"
         val result = db.rawQuery(query, null)
         if (result.moveToFirst())
         {
@@ -88,15 +90,30 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
                         )
                     )
                 )
+                transazione.dataEstinzione = fromDateDBTONormal(result.getString(
+                    result.getColumnIndex(
+                        TransazioneType.COL_DATAESTINZIONE
+                    )
+                ))
                 transazione.soldiTotali = result.getDouble(result.getColumnIndex(TransazioneType.COL_IMPORTO_TOTALE))
                 transazione.soldiRicevuti = result.getDouble(result.getColumnIndex(TransazioneType.COL_IMPORTO_DATO))
-                transazione.credito = if(tipo == 1)true else false
+                transazione.credito = if(result.getInt(result.getColumnIndex(TransazioneType.COL_TIPO)) == TransazioneType.TIPO_CREDITO)true else false
                 list.add(transazione)
             }
             while (result.moveToNext())
         }
         result.close()
         return list
+    }
+
+    fun getTransazioniCompletate(numGiorni:Int):MutableList<TransazioneType>{
+        if(numGiorni > 0) return getTransazioni("SELECT * FROM ${TransazioneType.TABLE_NAME} WHERE ${TransazioneType.COL_IMPORTO_DATO} = ${TransazioneType.COL_IMPORTO_TOTALE} AND ${TransazioneType.COL_DATAESTINZIONE} >= date('now', '-${numGiorni} days')")
+        return getTransazioni("SELECT * FROM ${TransazioneType.TABLE_NAME} WHERE ${TransazioneType.COL_IMPORTO_DATO} = ${TransazioneType.COL_IMPORTO_TOTALE}")
+    }
+
+    fun getTransazioniAttive(tipo: Int):MutableList<TransazioneType>{
+        val query = "SELECT * FROM ${TransazioneType.TABLE_NAME} WHERE ${TransazioneType.COL_TIPO} = ${tipo} AND ${TransazioneType.COL_IMPORTO_DATO} < ${TransazioneType.COL_IMPORTO_TOTALE}"
+        return getTransazioni(query)
     }
 
     fun updateTransazione(transazione: TransazioneType){
@@ -217,7 +234,7 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
     }
 
     companion object {
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
         const val DATABASE_NAME = "QB_data.db"
     }
 

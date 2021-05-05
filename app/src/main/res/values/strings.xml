@@ -89,4 +89,6 @@
     <string name="pay">Paga</string>
     <string name="i_payed">Ho pagato:</string>
     <string name="debt_from">Debito dal:</string>
+    <string name="transaction_import">Importo transazione:</string>
+    <string name="no_completed_transactions">Nessuna transazione completata</string>
 </resources>

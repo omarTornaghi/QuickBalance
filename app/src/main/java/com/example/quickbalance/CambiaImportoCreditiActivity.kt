@@ -17,6 +17,8 @@ import com.example.quickbalance.Database.DbHelper
 import kotlinx.android.synthetic.main.activity_cambia_importo_crediti.*
 import kotlinx.android.synthetic.main.activity_cambia_importo_crediti.topAppBar
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CambiaImportoCreditiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     lateinit var item:TransazioneType
@@ -107,6 +109,10 @@ class CambiaImportoCreditiActivity : AppCompatActivity(), Toolbar.OnMenuItemClic
             if(imp <= item.soldiTotali){
                 item.soldiRicevuti = imp
                 val dbHelper = DbHelper(this)
+                if(imp == item.soldiTotali) {
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    item.dataEstinzione = sdf.format(Date())
+                }
                 dbHelper.updateTransazione(item)
                 if(imp == item.soldiTotali)
                     Toast.makeText(this, getString(R.string.transaction_removed), Toast.LENGTH_SHORT).show()

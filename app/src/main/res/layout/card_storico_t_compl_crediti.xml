@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewCerchioVerde"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/circle_solid_shape_green" />
+
+    <ImageView
+        android:id="@+id/imageViewCerchioBianco"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCerchioVerde"
+        app:srcCompat="@drawable/circle_solid_shape_white" />
+
+    <View
+        android:id="@+id/Line1"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/green"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/green"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCerchioVerde" />
+
+    <TextView
+        android:id="@+id/textViewGen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="4dp"
+        android:drawableStart="@drawable/ic_baseline_identity_blue_icon"
+        android:drawableLeft="@drawable/ic_baseline_identity_blue_icon"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toEndOf="@+id/textViewData"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewDescrizione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/ic_baseline_description_gray_icon"
+        android:drawableLeft="@drawable/ic_baseline_description_gray_icon"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewGen"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGen" />
+
+    <TextView
+        android:id="@+id/textViewData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="1dp"
+        android:textColor="@color/green"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCerchioVerde"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCerchioVerde" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/ic_baseline_euro_green_icon"
+        android:drawableLeft="@drawable/ic_baseline_euro_green_icon"
+        android:paddingBottom="10dp"
+        android:text="@string/transaction_import"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewDescrizione"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione" />
+
+    <TextView
+        android:id="@+id/textViewImporto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:textColor="@color/green"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textView11" />
+</androidx.constraintlayout.widget.ConstraintLayout>

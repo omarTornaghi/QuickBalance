@@ -625,7 +625,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                                 0.00,
                                 it.numeroTelefono,
                                 editTextDataInizio.text.toString(),
-                                editTextDataScadenza.text.toString(),
+                                editTextDataScadenza.text.toString(),null,
                                 statoToggle,
                                 false
                             )
@@ -643,6 +643,7 @@ class OpAggDataActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                             editTextTelefono.text.toString(),
                             editTextDataInizio.text.toString(),
                             editTextDataScadenza.text.toString(),
+                            transazione.dataEstinzione,
                             transazione.credito,
                             false
                         )
