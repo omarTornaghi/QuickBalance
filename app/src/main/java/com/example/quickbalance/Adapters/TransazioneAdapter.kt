@@ -1,5 +1,6 @@
 package com.example.quickbalance.Adapters
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,11 @@ import com.example.quickbalance.CambiaImportoDebitiActivity
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.OpAggDataActivity
 import com.example.quickbalance.R
+import com.example.quickbalance.Utils.ValutaUtils
 import kotlinx.android.synthetic.main.card_crediti.view.*
 
 
-class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, private val mListener:ListAdapterListener) : RecyclerView.Adapter<TransazioneAdapter.TransazioneHolder>(){
+class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, private val mListener:ListAdapterListener, private val activity: Activity) : RecyclerView.Adapter<TransazioneAdapter.TransazioneHolder>(){
     interface ListAdapterListener {
         fun onClickAtRemoveButton(position: Int)
     }
@@ -57,7 +59,7 @@ class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, 
                 false
             )
         }
-        return TransazioneHolder(itemView)
+        return TransazioneHolder(itemView, activity)
     }
     override fun getItemCount(): Int = transazioni.size
     override fun onBindViewHolder(holder: TransazioneHolder, position: Int){
@@ -65,7 +67,7 @@ class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, 
         holder.buttonRimuovi.setOnClickListener { mListener.onClickAtRemoveButton(position) }
     }
 
-    class TransazioneHolder(v: View) : RecyclerView.ViewHolder(v){
+    class TransazioneHolder(v: View, val activity: Activity) : RecyclerView.ViewHolder(v){
         private var view: View = v
         private lateinit var item:TransazioneType
         lateinit var buttonRimuovi: Button
@@ -84,9 +86,9 @@ class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, 
             /* Cambiare i campi */
             view.textViewCreditoGeneralita.text = if(transazione.generalita.isNullOrBlank()) view.getResources().getString(R.string.not_defined).capitalize() else transazione.generalita
             view.textViewCreditoDescr.text = if(transazione.descrizione.isNullOrBlank()) view.getResources().getString(R.string.not_defined).capitalize() else transazione.descrizione
-            view.textViewCreditoSoldiRimanenti.text = "€" + (transazione.soldiTotali - transazione.soldiRicevuti).toString()
-            view.textViewCreditoSoldiRicevuti.text = "€" + transazione.soldiRicevuti
-            view.textViewCreditoSoldiTotali.text = "€" + transazione.soldiTotali
+            view.textViewCreditoSoldiRimanenti.text = ValutaUtils.getSelectedCurrencySymbol(activity) + " "+(transazione.soldiTotali - transazione.soldiRicevuti).toString()
+            view.textViewCreditoSoldiRicevuti.text = ValutaUtils.getSelectedCurrencySymbol(activity) + " "+ transazione.soldiRicevuti
+            view.textViewCreditoSoldiTotali.text = ValutaUtils.getSelectedCurrencySymbol(activity) + " "+ transazione.soldiTotali
             view.textViewCreditoTelefono.text = if(transazione.numeroTelefono.isNullOrBlank()) view.getResources().getString(R.string.not_defined).capitalize() else transazione.numeroTelefono
             view.textViewCreditoDataInizio.text = transazione.dataInizio
             val dataFine: String = if(transazione.dataFine.isNullOrBlank()) view.getResources().getString(R.string.not_defined) else transazione.dataFine.toString()

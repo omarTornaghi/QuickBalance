@@ -1,5 +1,6 @@
 package com.example.quickbalance.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.quickbalance.Database.DbHelper
 import com.example.quickbalance.R
 import com.example.quickbalance.StoricoActivity
+import com.example.quickbalance.Utils.ValutaUtils
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -22,7 +24,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment() {
+class HomeFragment(val activity:Activity) : Fragment() {
     private lateinit var mContext: Context
     private lateinit var dbHelper: DbHelper
     private var totCrediti:Double = 0.00
@@ -35,6 +37,23 @@ class HomeFragment : Fragment() {
         totCrediti = dbHelper.getTotalImportCredit()
         totDebiti = dbHelper.getTotalImportDebit()
     }
+
+    override fun onResume() {
+        super.onResume()
+        textViewCrediti.setText("${ValutaUtils.getSelectedCurrencySymbol(activity)} $totCrediti")
+        textViewDebiti.setText("${ValutaUtils.getSelectedCurrencySymbol(activity)} $totDebiti")
+        val daPag:Double = if(totDebiti >= totCrediti) totDebiti - totCrediti else 0.00
+        textViewDaPagare.setText("${ValutaUtils.getSelectedCurrencySymbol(activity)} $daPag")
+        if(daPag == 0.00) {
+            textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
+            textViewDaPagare.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+        }
+        else {
+            textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sad, 0, 0, 0)
+            textViewDaPagare.setTextColor(ContextCompat.getColor(mContext, R.color.red))
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
@@ -57,18 +76,6 @@ class HomeFragment : Fragment() {
         else
             textViewNodata.visibility = View.GONE
         popolaGrafico()
-        textViewCrediti.setText("€$totCrediti")
-        textViewDebiti.setText("€$totDebiti")
-        val daPag:Double = if(totDebiti >= totCrediti) totDebiti - totCrediti else 0.00
-        textViewDaPagare.setText("€$daPag")
-        if(daPag == 0.00) {
-            textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
-            textViewDaPagare.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-        }
-        else {
-            textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sad, 0, 0, 0)
-            textViewDaPagare.setTextColor(ContextCompat.getColor(mContext, R.color.red))
-        }
     }
 
     private fun inizializzaGrafico() {

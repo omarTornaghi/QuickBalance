@@ -1,6 +1,7 @@
 package com.example.quickbalance.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.DialogInterface
@@ -36,7 +37,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class CreditiFragment : Fragment() {
+class CreditiFragment(private val activity: Activity) : Fragment() {
     private lateinit var dbHelper: DbHelper
     private lateinit var mContext: Context
     private lateinit var data: ArrayList<TransazioneType>
@@ -87,7 +88,7 @@ class CreditiFragment : Fragment() {
                         )
                             .setNegativeButton(mContext.getString(R.string.no), dialogClickListener).show()
                     }
-            })
+            }, activity)
 
         }
     }

@@ -82,7 +82,7 @@
     <string name="impossible_update">L\'importo totale deve essere maggiore dell\'importo dato</string>
     <string name="no_credit">Nessun credito</string>
     <string name="transaction_removed">Transazione spostata nelle sezione completate</string>
-    <string name="search_debt">Cerca debito...</string>
+    <string name="search_debt">Cerca debito…</string>
     <string name="create_new_debt">crea un nuovo debito</string>
     <string name="no_debt">Nessun debito</string>
     <string name="give">Devo:</string>

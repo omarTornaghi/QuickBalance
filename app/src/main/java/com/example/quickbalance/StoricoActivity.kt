@@ -28,7 +28,7 @@ class StoricoActivity : AppCompatActivity() {
             R.layout.custom_spinnerstoricocompl_layout
         )
         topAppBar.setNavigationOnClickListener(navigationIconOnClickListener)
-        recyclerViewAdapter = TransazioneStoricoAdapter(ArrayList(),textViewNoData)
+        recyclerViewAdapter = TransazioneStoricoAdapter(ArrayList(),textViewNoData, this)
         recycler_view.adapter = recyclerViewAdapter
         recycler_view.layoutManager = LinearLayoutManager(this)
         transTSpinnerAdapter.setDropDownViewResource(R.layout.custom_spinnercd_dropdown_layout);

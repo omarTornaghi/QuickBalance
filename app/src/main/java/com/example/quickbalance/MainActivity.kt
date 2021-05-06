@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
+import com.example.quickbalance.Utils.ValutaUtils
 import com.example.quickbalance.fragments.CreditiFragment
 import com.example.quickbalance.fragments.DebitiFragment
 import com.example.quickbalance.fragments.HomeFragment
@@ -23,9 +24,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private var selectedFragment:Int = 2
-    private var homeFragment:HomeFragment = HomeFragment()
-    private  var creditiFragment: CreditiFragment = CreditiFragment()
-    private  var debitiFragment: DebitiFragment = DebitiFragment()
+    private var homeFragment:HomeFragment = HomeFragment(this)
+    private  var creditiFragment: CreditiFragment = CreditiFragment(this)
+    private  var debitiFragment: DebitiFragment = DebitiFragment(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +35,19 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
         topAppBar.setOnMenuItemClickListener(this)
+
+        /*setto se necessario valuta di default */
+        var codiceValuta = ValutaUtils.getSelectedCurrencyCode(this)
+        if(codiceValuta.isBlank())
+            ValutaUtils.saveCurrencyCode(this, ValutaUtils.getCurrencyCodeLocale())
         if(savedInstanceState != null){
             selectedFragment = savedInstanceState.getInt("selected")
             var cf: CreditiFragment? = getSupportFragmentManager().getFragment(savedInstanceState, "creditiFragment") as CreditiFragment?
-            creditiFragment = if(cf == null) CreditiFragment() else cf
+            creditiFragment = if(cf == null) CreditiFragment(this) else cf
             var hf: HomeFragment? = getSupportFragmentManager().getFragment(savedInstanceState, "homeFragment") as HomeFragment?
-            homeFragment = if(hf == null) HomeFragment() else hf
+            homeFragment = if(hf == null) HomeFragment(this) else hf
             var df: DebitiFragment? = getSupportFragmentManager().getFragment(savedInstanceState, "debitiFragment") as DebitiFragment?
-            debitiFragment = if(df == null) DebitiFragment() else df
+            debitiFragment = if(df == null) DebitiFragment(this) else df
         }
 
         when(selectedFragment){
@@ -80,17 +86,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             when(it.itemId){
                 /*Cambio fragment*/
                 R.id.ic_home->{
-                    homeFragment = HomeFragment()
+                    homeFragment = HomeFragment(this)
                     selezionaFHome(homeFragment, primaAnim, secondaAnim)
                     true
                 }
                 R.id.ic_crediti->{
-                    creditiFragment = CreditiFragment()
+                    creditiFragment = CreditiFragment(this)
                     selezionaFCrediti(creditiFragment, primaAnim, secondaAnim)
                     true
                 }
                 R.id.ic_debiti->{
-                    debitiFragment = DebitiFragment()
+                    debitiFragment = DebitiFragment(this)
                     selezionaFDebiti(debitiFragment, primaAnim, secondaAnim)
                     true
                 }

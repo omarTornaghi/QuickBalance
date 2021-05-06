@@ -1,6 +1,5 @@
 package com.example.quickbalance.Adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +36,7 @@ class ContattoAdapter(private val contatti: ArrayList<ContattoType>, private var
         )
     }
     override fun getItemCount(): Int = contatti.size
+
     override fun onBindViewHolder(holder: ContattoHolder, position: Int){
         holder.bind(contatti[position])
         holder?.view?.setOnClickListener { clickListener(contatti[position]) }
