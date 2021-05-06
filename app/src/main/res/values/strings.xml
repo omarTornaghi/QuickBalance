@@ -94,4 +94,6 @@
     <string name="app_made_by">App sviluppata da\nTornaghi Omar</string>
     <string name="change_currency">Cambia valuta</string>
     <string name="change_language">Cambia lingua</string>
+    <string name="transaction_history">Storico transazioni</string>
+    <string name="settings">Impostazioni</string>
 </resources>
