@@ -11,15 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickBalance">
-        <activity android:name=".StoricoActivity"></activity>
-        <activity android:name=".CambiaImportoDebitiActivity" />
-        <activity android:name=".CambiaImportoCreditiActivity" />
         <activity
             android:name=".MainActivity"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustPan">
-
-            <!-- TODO RIMETTERLA COME MAIN -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +30,12 @@
         <activity
             android:name=".ImportaContattiActivity"
             android:windowSoftInputMode="adjustPan" />
-
+        <activity
+            android:name=".ImpostazioniActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".StoricoActivity"  android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".CambiaImportoDebitiActivity"  android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".CambiaImportoCreditiActivity"  android:windowSoftInputMode="adjustPan"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

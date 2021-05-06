@@ -91,4 +91,7 @@
     <string name="debt_from">Debito dal:</string>
     <string name="transaction_import">Importo transazione:</string>
     <string name="no_completed_transactions">Nessuna transazione completata</string>
+    <string name="app_made_by">App sviluppata da\nTornaghi Omar</string>
+    <string name="change_currency">Cambia valuta</string>
+    <string name="change_language">Cambia lingua</string>
 </resources>

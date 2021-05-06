@@ -1,6 +1,7 @@
 package com.example.quickbalance
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -158,7 +159,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem):Boolean {
         when (item.itemId){
             R.id.search-> {
-                //Start activity delle impostazioni
+                val int = Intent(this, ImpostazioniActivity::class.java)
+                startActivity(int)
                 return true
             }
         }
