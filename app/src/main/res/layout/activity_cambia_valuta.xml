@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_icon"
-            app:title="Cambia valuta" />
+            app:title="@string/change_currency" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.card.MaterialCardView
@@ -46,7 +46,7 @@
             android:drawableStart="@drawable/ic_search_icon"
             android:drawableLeft="@drawable/ic_search_icon"
             android:ems="10"
-            android:hint="Ricerca per boh..."
+            android:hint="@string/search_by_name"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:singleLine="true"

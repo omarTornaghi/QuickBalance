@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinnerCD">
-        <item>Nominativo</item>
-        <item>Descrizione</item>
-        <item>Telefono</item>
+        <item>Fullname</item>
+        <item>Description</item>
+        <item>Cellphone</item>
     </string-array>
     <string-array name="spinnerStoricoCompletate">
-        <item>Tutte</item>
-        <item>Ultimi 7 giorni</item>
-        <item>Ultimi 30 giorni</item>
-        <item>Ultimi 120 giorni</item>
-        <item>Ultimo anno</item>
+        <item>All</item>
+        <item>Last 7 days</item>
+        <item>Last 30 days</item>
+        <item>Last 120 days</item>
+        <item>Last year</item>
     </string-array>
 </resources>
