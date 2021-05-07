@@ -24,7 +24,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment(val activity:Activity) : Fragment() {
+class HomeFragment : Fragment() {
     private lateinit var mContext: Context
     private lateinit var dbHelper: DbHelper
     private var totCrediti:Double = 0.00
@@ -40,10 +40,10 @@ class HomeFragment(val activity:Activity) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        textViewCrediti.setText("${ValutaUtils.getSelectedCurrencySymbol(activity)} $totCrediti")
-        textViewDebiti.setText("${ValutaUtils.getSelectedCurrencySymbol(activity)} $totDebiti")
+        textViewCrediti.setText("${ValutaUtils.getSelectedCurrencySymbol(mContext)} $totCrediti")
+        textViewDebiti.setText("${ValutaUtils.getSelectedCurrencySymbol(mContext)} $totDebiti")
         val daPag:Double = if(totDebiti >= totCrediti) totDebiti - totCrediti else 0.00
-        textViewDaPagare.setText("${ValutaUtils.getSelectedCurrencySymbol(activity)} $daPag")
+        textViewDaPagare.setText("${ValutaUtils.getSelectedCurrencySymbol(mContext)} $daPag")
         if(daPag == 0.00) {
             textViewDaPag.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smile, 0, 0, 0)
             textViewDaPagare.setTextColor(ContextCompat.getColor(mContext, R.color.green))

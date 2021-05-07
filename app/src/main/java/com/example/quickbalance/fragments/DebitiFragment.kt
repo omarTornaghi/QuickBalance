@@ -35,7 +35,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DebitiFragment(private val activity: Activity) : Fragment() {
+class DebitiFragment : Fragment() {
     private lateinit var dbHelper: DbHelper
     private lateinit var mContext: Context
     private lateinit var data: ArrayList<TransazioneType>
@@ -86,7 +86,7 @@ class DebitiFragment(private val activity: Activity) : Fragment() {
                         )
                             .setNegativeButton(mContext.getString(R.string.no), dialogClickListener).show()
                     }
-                }, activity)
+                }, mContext)
 
         }
     }

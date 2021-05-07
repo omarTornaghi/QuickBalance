@@ -9,7 +9,7 @@ class ValutaUtils {
         private val NAME_SHARE_PREF = "VALUTA"
         private val KEY_CURRENCY_CODE = "valutaSelezionata"
 
-        fun getSelectedCurrencyCode(activity:Activity):String{
+        fun getSelectedCurrencyCode(activity:Context):String{
             val sharedPref = activity.getSharedPreferences(NAME_SHARE_PREF, Context.MODE_PRIVATE)
             val codiceValutaSelezionata = sharedPref.getString(KEY_CURRENCY_CODE, "")
             return if(codiceValutaSelezionata == null)"" else codiceValutaSelezionata
@@ -20,12 +20,12 @@ class ValutaUtils {
             return cur.currencyCode
         }
 
-        fun getSelectedCurrencySymbol(activity: Activity):String{
+        fun getSelectedCurrencySymbol(activity: Context):String{
             val cur: Currency = Currency.getInstance(getSelectedCurrencyCode(activity))
             return cur.symbol
         }
 
-        fun saveCurrencyCode(activity: Activity, currencyCode:String){
+        fun saveCurrencyCode(activity: Context, currencyCode:String){
             val sharedPref = activity.getSharedPreferences(NAME_SHARE_PREF, Context.MODE_PRIVATE) ?: return
             with (sharedPref.edit()) {
                 putString(KEY_CURRENCY_CODE, currencyCode)

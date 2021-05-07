@@ -37,7 +37,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class CreditiFragment(private val activity: Activity) : Fragment() {
+class CreditiFragment : Fragment() {
     private lateinit var dbHelper: DbHelper
     private lateinit var mContext: Context
     private lateinit var data: ArrayList<TransazioneType>
@@ -88,7 +88,7 @@ class CreditiFragment(private val activity: Activity) : Fragment() {
                         )
                             .setNegativeButton(mContext.getString(R.string.no), dialogClickListener).show()
                     }
-            }, activity)
+            }, mContext)
 
         }
     }

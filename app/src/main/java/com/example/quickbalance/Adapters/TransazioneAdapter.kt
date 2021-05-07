@@ -1,6 +1,7 @@
 package com.example.quickbalance.Adapters
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ import com.example.quickbalance.Utils.ValutaUtils
 import kotlinx.android.synthetic.main.card_crediti.view.*
 
 
-class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, private val mListener:ListAdapterListener, private val activity: Activity) : RecyclerView.Adapter<TransazioneAdapter.TransazioneHolder>(){
+class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, private val mListener:ListAdapterListener, private val activity: Context) : RecyclerView.Adapter<TransazioneAdapter.TransazioneHolder>(){
     interface ListAdapterListener {
         fun onClickAtRemoveButton(position: Int)
     }
@@ -67,7 +68,7 @@ class TransazioneAdapter(private val transazioni: MutableList<TransazioneType>, 
         holder.buttonRimuovi.setOnClickListener { mListener.onClickAtRemoveButton(position) }
     }
 
-    class TransazioneHolder(v: View, val activity: Activity) : RecyclerView.ViewHolder(v){
+    class TransazioneHolder(v: View, val activity: Context) : RecyclerView.ViewHolder(v){
         private var view: View = v
         private lateinit var item:TransazioneType
         lateinit var buttonRimuovi: Button
