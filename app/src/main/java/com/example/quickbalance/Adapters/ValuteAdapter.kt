@@ -28,6 +28,8 @@ class ValuteAdapter(private val valute: ArrayList<ValutaType>, private val codSe
         return valute.get(position)
     }
 
+    fun getList():ArrayList<ValutaType>{ return valute}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ValutaHolder
     {
         return ValutaHolder(
