@@ -97,4 +97,8 @@
     <string name="transaction_history">Storico transazioni</string>
     <string name="settings">Impostazioni</string>
     <string name="no_data_available">Nessun dato disponibile</string>
+    <string name="will_expire">in scadenza</string>
+    <string name="today">oggi</string>
+    <string name="in">tra</string>
+    <string name="with">con</string>
 </resources>
