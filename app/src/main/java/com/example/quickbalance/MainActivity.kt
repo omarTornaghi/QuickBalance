@@ -1,6 +1,5 @@
 package com.example.quickbalance
 
-import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -19,11 +18,12 @@ import androidx.fragment.app.Fragment
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.quickbalance.Activities.ImpostazioniActivity
 import com.example.quickbalance.Services.NotificationWorker
 import com.example.quickbalance.Utils.ValutaUtils
-import com.example.quickbalance.fragments.CreditiFragment
-import com.example.quickbalance.fragments.DebitiFragment
-import com.example.quickbalance.fragments.HomeFragment
+import com.example.quickbalance.Fragments.CreditiFragment
+import com.example.quickbalance.Fragments.DebitiFragment
+import com.example.quickbalance.Fragments.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 

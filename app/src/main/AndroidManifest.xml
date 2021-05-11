@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickBalance">
-        <activity android:name=".CambiaValutaActivity" android:windowSoftInputMode="adjustPan">
+        <activity android:name=".Activities.CambiaValutaActivity" android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".MainActivity"
@@ -23,25 +23,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NuovaOpActivity"
+            android:name=".Activities.NuovaOpActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".OpAggDataActivity"
+            android:name=".Activities.OpAggDataActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ImportaContattiActivity"
+            android:name=".Activities.ImportaContattiActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ImpostazioniActivity"
+            android:name=".Activities.ImpostazioniActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".StoricoActivity"
+            android:name=".Activities.StoricoActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".CambiaImportoDebitiActivity"
+            android:name=".Activities.CambiaImportoDebitiActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".CambiaImportoCreditiActivity"
+            android:name=".Activities.CambiaImportoCreditiActivity"
             android:windowSoftInputMode="adjustPan" />
         <service
             android:name=".Services.NotificationJobService"

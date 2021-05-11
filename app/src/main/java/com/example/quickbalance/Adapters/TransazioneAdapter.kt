@@ -1,6 +1,5 @@
 package com.example.quickbalance.Adapters
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,10 +9,10 @@ import android.widget.Button
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Animations.AnimationUtils
-import com.example.quickbalance.CambiaImportoCreditiActivity
-import com.example.quickbalance.CambiaImportoDebitiActivity
+import com.example.quickbalance.Activities.CambiaImportoCreditiActivity
+import com.example.quickbalance.Activities.CambiaImportoDebitiActivity
 import com.example.quickbalance.DataTypes.TransazioneType
-import com.example.quickbalance.OpAggDataActivity
+import com.example.quickbalance.Activities.OpAggDataActivity
 import com.example.quickbalance.R
 import com.example.quickbalance.Utils.ValutaUtils
 import kotlinx.android.synthetic.main.card_crediti.view.*

@@ -1,15 +1,14 @@
-package com.example.quickbalance
+package com.example.quickbalance.Activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.TransazioneStoricoAdapter
-import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
+import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.activity_storico.*
 import kotlinx.android.synthetic.main.activity_storico.topAppBar
 

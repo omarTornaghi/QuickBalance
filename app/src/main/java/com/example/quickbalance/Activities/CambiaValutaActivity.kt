@@ -1,11 +1,10 @@
-package com.example.quickbalance
+package com.example.quickbalance.Activities
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -13,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.ValuteAdapter
 import com.example.quickbalance.DataTypes.ValutaType
+import com.example.quickbalance.R
 import com.example.quickbalance.Utils.JSONUtils.Companion.getJsonDataFromAsset
 import com.example.quickbalance.Utils.ValutaUtils
 import kotlinx.android.synthetic.main.activity_cambia_valuta.*
@@ -66,7 +66,9 @@ class CambiaValutaActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(editTextRicercaValuta.text.toString().isNotBlank())
-                    editTextRicercaValuta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,R.drawable.ic_baseline_clear_24, 0)
+                    editTextRicercaValuta.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.ic_search_icon,0,
+                        R.drawable.ic_baseline_clear_24, 0)
                 else
                     editTextRicercaValuta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,0, 0)
             }

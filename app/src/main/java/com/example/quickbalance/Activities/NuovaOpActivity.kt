@@ -1,4 +1,4 @@
-package com.example.quickbalance
+package com.example.quickbalance.Activities
 
 import android.app.Activity
 import android.content.Context
@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.PartecipanteAdapter
 import com.example.quickbalance.DataTypes.PartecipanteType
-import com.example.quickbalance.Utils.FieldUtils
+import com.example.quickbalance.R
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaNumero
 import com.example.quickbalance.Utils.FieldUtils.Companion.normalizzaStringa
 import kotlinx.android.synthetic.main.activity_creazione_stepuno.*

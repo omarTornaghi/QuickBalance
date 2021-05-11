@@ -1,4 +1,4 @@
-package com.example.quickbalance
+package com.example.quickbalance.Activities
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quickbalance.Adapters.ContattoAdapter
 import com.example.quickbalance.DataTypes.ContattoType
 import com.example.quickbalance.DataTypes.PartecipanteType
+import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.activity_importa_contatti.*
 import kotlinx.android.synthetic.main.activity_importa_contatti.recyclerView
 import kotlinx.android.synthetic.main.activity_importa_contatti.textViewDatiVuoti
@@ -66,7 +67,9 @@ class ImportaContattiActivity : AppCompatActivity(), Toolbar.OnMenuItemClickList
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(editTextRicercaContatto.text.toString().isNotBlank())
-                    editTextRicercaContatto.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,R.drawable.ic_baseline_clear_24, 0)
+                    editTextRicercaContatto.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.ic_search_icon,0,
+                        R.drawable.ic_baseline_clear_24, 0)
                 else
                     editTextRicercaContatto.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_icon,0,0, 0)
             }

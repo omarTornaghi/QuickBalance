@@ -1,7 +1,6 @@
-package com.example.quickbalance.fragments
+package com.example.quickbalance.Fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -26,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quickbalance.Adapters.TransazioneAdapter
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
-import com.example.quickbalance.NuovaOpActivity
+import com.example.quickbalance.Activities.NuovaOpActivity
 import com.example.quickbalance.R
 import com.example.quickbalance.Utils.InitializeAsync
 import com.google.android.material.floatingactionbutton.FloatingActionButton

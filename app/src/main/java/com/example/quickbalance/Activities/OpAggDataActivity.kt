@@ -1,4 +1,4 @@
-package com.example.quickbalance
+package com.example.quickbalance.Activities
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -29,6 +28,7 @@ import com.example.quickbalance.DataTypes.NotificaType
 import com.example.quickbalance.DataTypes.PartecipanteType
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
+import com.example.quickbalance.R
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaDate
 import com.example.quickbalance.Utils.FieldUtils.Companion.controllaNumero
 import kotlinx.android.synthetic.main.activity_op_agg_data.*

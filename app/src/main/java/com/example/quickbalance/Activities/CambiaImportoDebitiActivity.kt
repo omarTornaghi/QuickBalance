@@ -1,4 +1,4 @@
-package com.example.quickbalance
+package com.example.quickbalance.Activities
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
+import com.example.quickbalance.R
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonAzzera
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonMeta
 import kotlinx.android.synthetic.main.activity_cambia_importo_debiti.buttonTotale
@@ -44,7 +45,9 @@ class CambiaImportoDebitiActivity : AppCompatActivity(), Toolbar.OnMenuItemClick
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(editTextImportoTransazione.text.toString().isNotBlank())
-                    editTextImportoTransazione.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_euro_red_icon,0,R.drawable.ic_baseline_clear_24, 0)
+                    editTextImportoTransazione.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.ic_baseline_euro_red_icon,0,
+                        R.drawable.ic_baseline_clear_24, 0)
                 else
                     editTextImportoTransazione.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_euro_red_icon,0,0, 0)
             }

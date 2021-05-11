@@ -1,14 +1,14 @@
-package com.example.quickbalance
+package com.example.quickbalance.Activities
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quickbalance.MainActivity
+import com.example.quickbalance.R
 import com.example.quickbalance.Utils.NotificationUtils
 import com.example.quickbalance.Utils.ValutaUtils
 import kotlinx.android.synthetic.main.activity_impostazioni.*
