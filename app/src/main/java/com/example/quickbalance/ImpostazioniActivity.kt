@@ -7,7 +7,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quickbalance.Utils.NotificationUtils
 import com.example.quickbalance.Utils.ValutaUtils
 import kotlinx.android.synthetic.main.activity_impostazioni.*
 import java.util.*
@@ -18,8 +20,9 @@ class ImpostazioniActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_impostazioni)
         topAppBar.setNavigationOnClickListener{finish()}
-
         textViewLinguaSelezionata.setText(Locale.getDefault().displayLanguage)
+        switchNotifiche.isChecked = NotificationUtils.notificationsEnabled(this)
+        switchNotifiche.setOnClickListener { NotificationUtils.saveNotificationSetting(this, switchNotifiche.isChecked) }
         cardCambiaValuta.setOnClickListener {
             val int = Intent(this, CambiaValutaActivity::class.java)
             startActivity(int)

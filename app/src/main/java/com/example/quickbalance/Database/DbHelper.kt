@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.quickbalance.DataTypes.NotificaType
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Utils.FieldUtils.Companion.fromDateDBTONormal
@@ -144,12 +145,12 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
     }
 
     fun deleteTransazione(transazione: TransazioneType) {
+        getNotifiche(transazione).forEach { deleteNotifica(it) }
         this.writableDatabase.delete(
             TransazioneType.TABLE_NAME,
             TransazioneType.COL_ID + "=" + transazione.id,
             null
         )
-        getNotifiche(transazione).forEach { deleteNotifica(it) }
     }
 
     fun getCreditiAttivi(): MutableList<TransazioneType> {
@@ -314,13 +315,16 @@ class DbHelper(var context: Context) : SQLiteOpenHelper(
                 c.add(Calendar.DATE, it.numGiorni)
                 dataConfrontoDT = c.getTime()
                 val dataConfrontoStr = sdf.format(dataConfrontoDT)
-                if(trans.dataFine == dataConfrontoStr)
+                if(trans.dataFine == dataConfrontoStr) {
                     listTransazioniInScadenza.add(trans)
+                    //Rimuovo la notifica
+                    deleteNotifica(it)
+                }
 
             }
         }
         result.close()
-        return listTransazioniSetScadenza
+        return listTransazioniInScadenza
     }
 
     companion object {

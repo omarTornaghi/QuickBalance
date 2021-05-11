@@ -1,40 +1,52 @@
 package com.example.quickbalance.Services
 
-import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.job.JobParameters
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.app.job.JobService
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.example.quickbalance.DataTypes.TransazioneType
 import com.example.quickbalance.Database.DbHelper
+import com.example.quickbalance.MainActivity
 import com.example.quickbalance.R
+import com.example.quickbalance.Utils.NotificationUtils
 import com.example.quickbalance.Utils.ValutaUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
+class NotificationWorker(val appContext: Context, workerParams: WorkerParameters):Worker(appContext, workerParams) {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun doWork(): Result {
+        if(NotificationUtils.notificationsEnabled(appContext))
+            sendNotifications()
+        return Result.success()
+    }
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class NotificationJobService : JobService() {
-    override fun onStartJob(params: JobParameters): Boolean {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun sendNotifications(){
         val dbHelper = DbHelper(applicationContext)
         val listaTransazioni = dbHelper.getTransazioniInScadenza()
         listaTransazioni.forEach {
             createNotification(it)
         }
-        return true
     }
 
-    private fun createNotification(transazione:TransazioneType) {
-
-        val mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun createNotification(transazione: TransazioneType) {
+        val mNotificationManager:NotificationManager = appContext.getSystemService(JobService.NOTIFICATION_SERVICE) as NotificationManager
         val mBuilder: NotificationCompat.Builder =
-            NotificationCompat.Builder(applicationContext, default_notification_channel_id)
+            NotificationCompat.Builder(applicationContext,
+                default_notification_channel_id
+            )
         var titoloNotifica:String = ""
         var tipo:String=""
         if(transazione.credito)
@@ -49,12 +61,20 @@ class NotificationJobService : JobService() {
         else
             titoloNotifica+= " " + transazione.dataFine
 
-        val contentNotifica:String = tipo + " " + applicationContext.getString(R.string.with) + " " + transazione.generalita + "\n" + applicationContext.getString(R.string.total_import_field) + " " + transazione.soldiTotali + ValutaUtils.getSelectedCurrencySymbol(applicationContext)
+        val contentNotifica:String = tipo + " " + applicationContext.getString(R.string.with) + " " + transazione.generalita + "\n" + applicationContext.getString(
+            R.string.total_import_field) + " " + transazione.soldiTotali + ValutaUtils.getSelectedCurrencySymbol(applicationContext)
         mBuilder.setContentTitle(titoloNotifica)
         mBuilder.setContentText(contentNotifica)
         mBuilder.setTicker(applicationContext.getString(R.string.app_name))
         mBuilder.setSmallIcon(R.mipmap.ic_logo)
         mBuilder.setAutoCancel(true)
+        // Intent
+        val resultIntent = Intent(applicationContext, MainActivity::class.java)
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(applicationContext).run {
+            addNextIntentWithParentStack(resultIntent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+        mBuilder.setContentIntent(resultPendingIntent)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
             val notificationChannel = NotificationChannel(
@@ -73,13 +93,9 @@ class NotificationJobService : JobService() {
         }
         mNotificationManager.notify(System.currentTimeMillis().toInt(), mBuilder.build())
     }
-
-    override fun onStopJob(jobParameters: JobParameters): Boolean {
-        return true
-    }
-
     companion object {
+        const val TAG = "NotificationWorker"
         const val NOTIFICATION_CHANNEL_ID = "10001"
-        private const val default_notification_channel_id = "default"
+        const val default_notification_channel_id = "default"
     }
 }
